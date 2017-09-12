@@ -1,0 +1,22 @@
+# OS
+.DS_Store
+
+# Styles
+.sass-cache/
+
+# Node
+node_modules/
+npm-debug.log
+
+# Testing
+.nyc_output
+.coveralls.yml
+
+# Package Config.
+.ftpconfig
+.remote-sync.json
+sftp-config.json
+
+# Misc
+temp/
+tmp/
