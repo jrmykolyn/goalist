@@ -22,6 +22,7 @@
   "devDependencies": {},
   "dependencies": {
     "bluebird": "^3.5.0",
-    "minimist": "^1.2.0"
+    "minimist": "^1.2.0",
+    "moment": "^2.18.1"
   }
 }
