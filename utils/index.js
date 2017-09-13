@@ -6,6 +6,7 @@ const fs = require( 'fs' );
 const os = require( 'os' );
 
 // Vendor
+const moment = require( 'moment' );
 
 // Project
 
@@ -43,7 +44,6 @@ function getTodayDir() {
 	return fs.readdirSync( getTodayDirPath(), 'utf8' );
 }
 
-
 function getTodayLogName() {
 	return `goalist_${getTodayDirName()}.log`;
 }
@@ -54,6 +54,36 @@ function getTodayLogPath() {
 
 function getTodayLog() {
 	return fs.readFileSync( getTodayLogPath(), 'utf8' );
+}
+
+function getYesterdayDirName() {
+	var yesterday = moment().subtract( 1, 'days' );
+
+	return `${yesterday.year()}-${yesterday.month() + 1}-${yesterday.date()}`;
+}
+
+function getYesterdayDirPath() {
+	return `${getGoalistDirPath()}/${getYesterdayDirName()}`;
+}
+
+function getYesterdayDir() {
+	return fs.readdirSync( getYesterdayDirPath(), 'utf8' );
+}
+
+function getYesterdayLogName() {
+	return `goalist_${getYesterdayDirName()}.log`;
+}
+
+function getYesterdayLogPath() {
+	return `${getYesterdayDirPath()}/${getYesterdayLogName()}`;
+}
+
+function getYesterdayLog() {
+	try {
+		return fs.readFileSync( getYesterdayLogPath(), 'utf8' );
+	} catch ( err ) {
+		return null;
+	}
 }
 
 // --------------------------------------------------
@@ -69,4 +99,10 @@ module.exports = {
 	getTodayLogName,
 	getTodayLogPath,
 	getTodayLog,
+	getYesterdayDirName,
+	getYesterdayDirPath,
+	getYesterdayDir,
+	getYesterdayLogName,
+	getYesterdayLogPath,
+	getYesterdayLog,
 };
