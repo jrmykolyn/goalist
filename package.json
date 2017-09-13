@@ -1,0 +1,27 @@
+{
+  "name": "goalist",
+  "version": "0.0.0",
+  "description": "Goalist is a command line tool for managing daily goals.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "gl": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jrmykolyn/goalist.git"
+  },
+  "author": "Jesse R Mykolyn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jrmykolyn/goalist/issues"
+  },
+  "homepage": "https://github.com/jrmykolyn/goalist#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "minimist": "^1.2.0"
+  }
+}
