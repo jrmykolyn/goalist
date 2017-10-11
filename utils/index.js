@@ -30,7 +30,11 @@ function getGoalistDir() {
 }
 
 function getTodayDirName() {
-	var today = new Date();
+	var d = new Date();
+
+	// NOTE: Take into account UTC offset when calculating 'today'.
+	var today = new Date( d.getTime() - ( d.getTimezoneOffset() * 60 * 1000 ) );
+
 	var todayDirName = `${today.getFullYear()}-${today.getUTCMonth() + 1}-${today.getUTCDate()}`;
 
 	return todayDirName;
