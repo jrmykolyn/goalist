@@ -20,7 +20,7 @@ const utils = require( './utils' );
 var COMMAND = process.argv.slice( 2, 3 );
 var ARGS = parseArgs( process.argv.slice( 2 ) );
 
-var logTemplate = fs.readFileSync( `${__dirname}/data/goalist.log` );
+var logTemplate = JSON.parse( fs.readFileSync( `${__dirname}/data/goalist.log` ) );
 
 // --------------------------------------------------
 // DECLARE FUNCTIONS
@@ -54,10 +54,27 @@ function init( ARGS ) {
 	try {
 		todayLogData = fs.readFileSync( `${utils.getTodayLogPath()}`, 'utf8' );
 	} catch ( err ) {
-		fs.writeFileSync( `${utils.getTodayLogPath()}`, logTemplate, 'utf8' );
+		// Fetch log data from yesterday.
+		var yesterdayLog = JSON.parse( utils.getYesterdayLog() );
+		var yesterdayGoals = ( yesterdayLog && yesterdayLog.goals ) ? yesterdayLog.goals : {};
+
+		// Remove any goals which are not 'incomplete'.
+		for ( let key in yesterdayGoals ) {
+			let goal = yesterdayGoals[ key ];
+
+			if ( goal.status !== 'incomplete' ) {
+				delete yesterdayGoals[ key ];
+			}
+		}
+
+		// Update template with additional 'goals'.
+		logTemplate.goals = Object.assign( logTemplate.goals, yesterdayGoals );
+
+		// Write data to file system.
+		fs.writeFileSync( `${utils.getTodayLogPath()}`, JSON.stringify( logTemplate ), 'utf8' );
 	}
 
-	// Invoke `COMMAND` if failed, log error message otherwise.
+	// Invoke `COMMAND` if it's valid, log error message otherwise.
 	 if ( COMMAND in commands ) {
 		 commands[ COMMAND ]( ARGS )
 			 .then(
