@@ -40,6 +40,13 @@ This command is used to update a specific goal within the log file for the curre
 gl update {{ ID }} --title="This is the new title of the goal."
 ```
 
+### `progress`
+This command is used to display progress-related information for the current day (eg. total number of goals, number of completed goals, etc.).
+
+```
+gl progress
+```
+
 
 ## Documentation
 Currently, Goalist does not include any external documentation.
