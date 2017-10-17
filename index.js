@@ -55,7 +55,7 @@ function init( ARGS ) {
 		todayLogData = fs.readFileSync( `${utils.getTodayLogPath()}`, 'utf8' );
 	} catch ( err ) {
 		// Fetch log data from yesterday.
-		var yesterdayLog = JSON.parse( utils.getYesterdayLog() );
+		var yesterdayLog = utils.getYesterdayLog();
 		var yesterdayGoals = ( yesterdayLog && yesterdayLog.goals ) ? yesterdayLog.goals : {};
 
 		// Remove any goals which are not 'incomplete'.

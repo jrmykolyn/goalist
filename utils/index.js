@@ -57,7 +57,16 @@ function getTodayLogPath() {
 }
 
 function getTodayLog() {
-	return fs.readFileSync( getTodayLogPath(), 'utf8' );
+	try {
+		return JSON.parse( fs.readFileSync( getTodayLogPath(), 'utf8' ) );
+	} catch ( err ) {
+		console.log( 'Whoops, unable to get log file for current day!' );
+
+		/// TODO[@jrmykolyn]: Consider only logging error message if program is running in 'verbose' mode.
+		console.log( err.message );
+
+		return null;
+	}
 }
 
 function getYesterdayDirName() {
@@ -84,8 +93,13 @@ function getYesterdayLogPath() {
 
 function getYesterdayLog() {
 	try {
-		return fs.readFileSync( getYesterdayLogPath(), 'utf8' );
+		return JSON.parse( fs.readFileSync( getYesterdayLogPath(), 'utf8' ) );
 	} catch ( err ) {
+		console.log( 'Whoops, unable to get log file for yesterday!' );
+
+		/// TODO[@jrmykolyn]: Consider only logging error message if program is running in 'verbose' mode.
+		console.log( err.message );
+
 		return null;
 	}
 }
