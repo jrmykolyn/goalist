@@ -33,11 +33,28 @@ This command is used to list all goals present in the log file for the current d
 gl list
 ```
 
+`list` may be invoked with the `--only` flag/argument. When provided with a series of comma delimited strings, `--only` limits to output of `list` to the the strings provided. Please note that the ID for each goal will always be displayed.
+
+```
+gl list --only=title,status
+
+// Identifer: 1234567890
+// Title: My New Goal
+// Status: Incomplete
+```
+
 ### `update`
 This command is used to update a specific goal within the log file for the current day.
 
 ```
 gl update {{ ID }} --title="This is the new title of the goal."
+```
+
+### `remove`
+This command is use to remove a specific goal within the log file for the current day.
+
+```
+gl remove {{ ID }}
 ```
 
 ### `progress`
