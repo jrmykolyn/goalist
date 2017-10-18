@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.3.0] - 2017-10-18
+### Added
+- Added `remove` subcommand.
+
+### Changed
+- Updated `list` subcommand to accept `--only` flag/argument. See `README` file for usage details.
+
 ## [0.2.0] - 2017-10-17
 ### Added
 - Added `progress` subcommand.
