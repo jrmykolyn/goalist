@@ -104,6 +104,27 @@ function getYesterdayLog() {
 	}
 }
 
+function writeLog( target, data, options ) {
+	target = ( target && typeof target === 'string' ) ? target : null;
+	data = ( typeof data !== 'undefined' && data !== null ) ? data : null;
+	options = ( options && typeof options === 'object' ) ? options : {};
+
+	let resolvedPath = ( target === 'today' ) ? getTodayLogPath() : null;
+
+	if ( !resolvedPath ) {
+		console.log( 'Whoops, `writeLog()` ony accepts the following value(s) for the `path` argument: "today"' ); /// TEMP
+		return;
+	}
+
+	try {
+		fs.writeFileSync( resolvedPath, data, 'utf8' );
+
+		return true;
+	} catch ( err ) {
+		return false;
+	}
+}
+
 // --------------------------------------------------
 // PUBLIC API
 // --------------------------------------------------
@@ -123,4 +144,5 @@ module.exports = {
 	getYesterdayLogName,
 	getYesterdayLogPath,
 	getYesterdayLog,
+	writeLog,
 };
