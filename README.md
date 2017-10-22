@@ -33,7 +33,7 @@ This command is used to list all goals present in the log file for the current d
 gl list
 ```
 
-`list` may be invoked with the `--only` flag/argument. When provided with a series of comma delimited strings, `--only` limits to output of `list` to the the strings provided. Please note that the ID for each goal will always be displayed.
+`list` may be invoked with the `--only` flag/argument. When provided with a series of comma delimited strings, `--only` limits the output of `list` to the the strings provided. Please note that the ID for each goal will always be displayed.
 
 ```
 gl list --only=title,status
