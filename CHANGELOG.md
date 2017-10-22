@@ -3,9 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - 2017-10-19
+## [0.4.0] - 2017-10-21
 ### Added
-- Added `writeLog()` method to `utils` module.
+- Added `complete` subcommand.
+- Added single character aliases for each existing subcommand.
 
 ### Changed
 - Updated `add` subcommand: display message on success.
