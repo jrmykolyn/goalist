@@ -50,6 +50,23 @@ This command is used to update a specific goal within the log file for the curre
 gl update {{ ID }} --title="This is the new title of the goal."
 ```
 
+### `complete`
+This command is used to set the status of a specific goal to 'complete'.
+
+```
+gl complete {{ ID }}
+
+// Please note: this is equivalent to invoking: gl update {{ ID }} --status="complete"
+```
+
+This command can also be used to set the status of a goal to 'incomplete'.
+
+```
+gl complete {{ ID }} --false
+
+// Please note: this is equivalent to invoking: gl update {{ ID }} --status="incomplete"
+```
+
 ### `remove`
 This command is use to remove a specific goal within the log file for the current day.
 
