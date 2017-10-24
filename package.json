@@ -4,7 +4,8 @@
   "description": "Goalist is a command line tool for managing daily goals.",
   "main": "index.js",
   "scripts": {
-    "test": "node ./node_modules/.bin/ava"
+    "test": "node ./node_modules/.bin/ava",
+    "test:verbose": "node ./node_modules/.bin/ava --verbose"
   },
   "bin": {
     "gl": "./index.js"
