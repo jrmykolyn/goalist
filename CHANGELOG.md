@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- Add [ava](https://github.com/avajs/ava) testing framework to project.
+
 ## [0.4.0] - 2017-10-21
 ### Added
 - Added `complete` subcommand.
