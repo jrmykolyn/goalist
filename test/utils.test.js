@@ -31,3 +31,29 @@ test( 'Test `getGoalistDir()`', ( t ) => {
 
 	t.true( Array.isArray( dir ) );
 } );
+
+test.todo( 'Test `getTodayDirName()`' );
+
+test.todo( 'Test `getTodayDirPath()`' );
+
+test.todo( 'Test `getTodayDir()`' );
+
+test.todo( 'Test `getTodayLogName()`' );
+
+test.todo( 'Test `getTodayLogPath()`' );
+
+test.todo( 'Test `getTodayLog()`' );
+
+test.todo( 'Test `getYesterdayDirName()`' );
+
+test.todo( 'Test `getYesterdayDirPath()`' );
+
+test.todo( 'Test `getYesterdayDir()`' );
+
+test.todo( 'Test `getYesterdayLogName()`' );
+
+test.todo( 'Test `getYesterdayLogPath()`' );
+
+test.todo( 'Test `getYesterdayLog()`' );
+
+test.todo( 'Test `writeLog()`' );
