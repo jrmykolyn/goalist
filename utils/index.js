@@ -65,7 +65,7 @@ function getTodayLogPath() {
 
 function getTodayLog() {
 	try {
-		return JSON.parse( fs.readFileSync( getTodayLogPath(), 'utf8' ) );
+		return readLog( getTodayLogPath() );
 	} catch ( err ) {
 		console.log( 'Whoops, unable to get log file for current day!' );
 
@@ -100,7 +100,7 @@ function getYesterdayLogPath() {
 
 function getYesterdayLog() {
 	try {
-		return JSON.parse( fs.readFileSync( getYesterdayLogPath(), 'utf8' ) );
+		return readLog( getYesterdayLogPath() );
 	} catch ( err ) {
 		console.log( 'Whoops, unable to get log file for yesterday!' );
 
@@ -111,17 +111,42 @@ function getYesterdayLog() {
 	}
 }
 
-/// TODO
-// - GET LATEST LOG PATH
-// - GET LATEST LOG
-// - GET LOG NAME
-// - GET LOG PATH
-// - GET LOG
-// - GET DIR NAME
-// - GET DIR PATH
-// - GET DIR NAME
+function getLogName( identifier ) {
+	identifier = ( identifier && typeof identifier === 'string' ) ? identifier : null;
 
-function getLatestLogName() {
+	if ( !identifier ) {
+		/// TODO
+		console.log( 'Received invalid argument for `identifier`' );
+		return null;
+	}
+
+	return `goalist_${identifier}.log`;
+}
+
+function getLogPath( identifier ) {
+	let logName = getLogName( identifier );
+	let dirPath = getDirPath( identifier );
+
+	return ( logName && dirPath ) ? `${dirPath}/${logName}` : null;
+}
+
+function getLog( identifier ) {
+	try {
+		return readLog( getLogPath( identifier ) );
+	} catch ( err ) {
+		return null;
+	}
+}
+
+function getDirName( identifier ) {
+	identifier = ( identifier && typeof identifier === 'string' ) ? identifier : null;
+
+	if ( !identifier ) {
+		/// TODO
+		console.log( 'Received invalid argument for `identifier`' );
+		return null;
+	}
+
 	try {
 		let logs = getGoalistDir();
 
@@ -129,19 +154,84 @@ function getLatestLogName() {
 			throw new Error( 'Failed to fetch log files from Goalist dir.' );
 		}
 
-		let latestLog = logs.filter( ( log ) => {
+		return logs.includes( identifier ) ? identifier : null;
+	} catch ( err ) {
+		return null;
+	}
+}
+
+function getDirPath( identifier ) {
+	let dirName = getDirName( identifier );
+	let goalistDir = getGoalistDir();
+
+	return ( dirName && goalistDir ) ? `${goalistDir}/${dirName}` : null;
+}
+
+function getLatestDirName() {
+	try {
+		let dirs = getGoalistDir();
+
+		if ( !dirs || !Array.isArray( dirs ) || !dirs.length ) {
+			throw new Error( 'Failed to fetch log files from Goalist dir.' );
+		}
+
+		let latestDir = dirs.filter( ( log ) => {
 			return log.substring( 0, 1 ) !== '.'; /// TODO[@jrmykolyn]: Filter by regex/pattern match.
 		} )
 		.sort()
 		.reverse()[ 0 ];
 
-		if ( !latestLog ) {
+		if ( !latestDir ) {
 			throw new Error( 'Failed to extract latest log file from collection' );
 		}
 
-		return latestLog;
+		return latestDir;
 
 	} catch ( err ) {
+		return null;
+	}
+}
+
+function getLatestDirPath() {
+	let latestDir = getLatestDirName();
+
+	return ( latestDir && typeof latestDir === 'string' ) ? `${getGoalistDirPath()}/${latestDir}` : null;
+}
+
+function getLatestLogName() {
+	let latestDir = getLatestDirName();
+
+	return ( latestDir ) ? getLogName( latestDir ) : null;
+}
+
+function getLatestLogPath() {
+	let latestLog = getLatestLogName();
+	let dirPath = getLatestDirPath();
+
+	return ( latestLog && dirPath ) ? `${dirPath}/${latestLog}` : null;
+}
+
+function getLatestLog() {
+	try {
+		return readLog( getLatestLogPath() );
+	} catch ( err ) {
+		return null;
+	}
+}
+
+function readLog( path, options ) {
+	path = ( path && typeof path === 'string' ) ? path : null;
+	options = ( options && typeof options === 'object' ) ? options : {};
+
+	if ( !path ) {
+		console.log( 'Received invalid argument for `path`' ); /// TEMP
+		return;
+	}
+
+	try {
+		return JSON.parse( fs.readFileSync( path ), 'utf8' ); /// TEMP
+	} catch ( err ) {
+		console.log( err.message );
 		return null;
 	}
 }
@@ -186,6 +276,16 @@ module.exports = {
 	getYesterdayLogName,
 	getYesterdayLogPath,
 	getYesterdayLog,
+	getLatestDirName,
+	getLatestDirPath,
 	getLatestLogName,
+	getLatestLogPath,
+	getLatestLog,
+	getLogName,
+	getLogPath,
+	getLog,
+	getDirName,
+	getDirPath,
+	readLog,
 	writeLog,
 };
