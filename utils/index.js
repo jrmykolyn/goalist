@@ -35,7 +35,14 @@ function getTodayDirName() {
 	// NOTE: Take into account UTC offset when calculating 'today'.
 	var today = new Date( d.getTime() - ( d.getTimezoneOffset() * 60 * 1000 ) );
 
-	var todayDirName = `${today.getFullYear()}-${today.getUTCMonth() + 1}-${today.getUTCDate()}`;
+	var year = today.getFullYear();
+	var month = ( today.getUTCMonth() + 1 );
+	var day = today.getUTCDate();
+
+	// Ensure that `month` identifier is always two characters (eg. '09'). Required for sorting purposes.
+	month = ( month >= 10 ) ? month : '0' + month;
+
+	var todayDirName = `${year}-${month}-${day}`;
 
 	return todayDirName;
 }
@@ -104,6 +111,41 @@ function getYesterdayLog() {
 	}
 }
 
+/// TODO
+// - GET LATEST LOG PATH
+// - GET LATEST LOG
+// - GET LOG NAME
+// - GET LOG PATH
+// - GET LOG
+// - GET DIR NAME
+// - GET DIR PATH
+// - GET DIR NAME
+
+function getLatestLogName() {
+	try {
+		let logs = getGoalistDir();
+
+		if ( !logs || !Array.isArray( logs ) || !logs.length ) {
+			throw new Error( 'Failed to fetch log files from Goalist dir.' );
+		}
+
+		let latestLog = logs.filter( ( log ) => {
+			return log.substring( 0, 1 ) !== '.'; /// TODO[@jrmykolyn]: Filter by regex/pattern match.
+		} )
+		.sort()
+		.reverse()[ 0 ];
+
+		if ( !latestLog ) {
+			throw new Error( 'Failed to extract latest log file from collection' );
+		}
+
+		return latestLog;
+
+	} catch ( err ) {
+		return null;
+	}
+}
+
 function writeLog( target, data, options ) {
 	target = ( target && typeof target === 'string' ) ? target : null;
 	data = ( typeof data !== 'undefined' && data !== null ) ? data : null;
@@ -144,5 +186,6 @@ module.exports = {
 	getYesterdayLogName,
 	getYesterdayLogPath,
 	getYesterdayLog,
+	getLatestLogName,
 	writeLog,
 };
