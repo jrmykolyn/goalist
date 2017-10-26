@@ -32,28 +32,25 @@ test( 'Test `getGoalistDir()`', ( t ) => {
 	t.true( Array.isArray( dir ) );
 } );
 
-test.todo( 'Test `getTodayDirName()`' );
-
-test.todo( 'Test `getTodayDirPath()`' );
-
-test.todo( 'Test `getTodayDir()`' );
-
 test.todo( 'Test `getTodayLogName()`' );
 
 test.todo( 'Test `getTodayLogPath()`' );
 
 test.todo( 'Test `getTodayLog()`' );
 
-test.todo( 'Test `getYesterdayDirName()`' );
-
-test.todo( 'Test `getYesterdayDirPath()`' );
-
-test.todo( 'Test `getYesterdayDir()`' );
-
-test.todo( 'Test `getYesterdayLogName()`' );
-
-test.todo( 'Test `getYesterdayLogPath()`' );
-
-test.todo( 'Test `getYesterdayLog()`' );
-
 test.todo( 'Test `writeLog()`' );
+
+test( 'Test `getLogName()`', ( t ) => {
+	/// TODO
+	let logName1 = utils.getLogName( '2001-01-01' );
+	let logName2 = utils.getLogName( [] );
+	let logName3 = utils.getLogName( {} );
+	let logName4 = utils.getLogName( 1 );
+	let logName5 = utils.getLogName( false );
+
+	t.is( logName1, 'goalist_2001-01-01.log' );
+	t.is( logName2, null );
+	t.is( logName3, null );
+	t.is( logName4, null );
+	t.is( logName5, null );
+} );
