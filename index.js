@@ -33,7 +33,6 @@ function init( ARGS ) {
 	}
 
 	var goalistDirData;
-	var todayDirData;
 	var todayLogData;
 
 	// Create `goalist` directory if it doesn't exist.
@@ -43,32 +42,32 @@ function init( ARGS ) {
 		fs.mkdirSync( `${utils.getGoalistDirPath()}` );
 	}
 
-	// Create directory for current day if it doesn't exist.
+	// Create `logs` directory if it doesn't exist.
 	try {
-		todayDirData = fs.readdirSync( `${utils.getTodayDirPath()}` );
+		logsDir = fs.readdirSync( `${utils.getDirPath()}` );
 	} catch ( err ) {
-		fs.mkdirSync( `${utils.getTodayDirPath()}` );
+		fs.mkdirSync( `${utils.getDirPath()}` );
 	}
 
 	// Create log file for current day if it doesn't exist.
 	try {
 		todayLogData = fs.readFileSync( `${utils.getTodayLogPath()}`, 'utf8' );
 	} catch ( err ) {
-		// Fetch log data from yesterday.
-		var yesterdayLog = utils.getYesterdayLog();
-		var yesterdayGoals = ( yesterdayLog && yesterdayLog.goals ) ? yesterdayLog.goals : {};
+		// Fetch latest log data.
+		var latestLog = utils.getLatestLog();
+		var latestGoals = ( latestLog && latestLog.goals ) ? latestLog.goals : {};
 
 		// Remove any goals which are not 'incomplete'.
-		for ( let key in yesterdayGoals ) {
-			let goal = yesterdayGoals[ key ];
+		for ( let key in latestGoals ) {
+			let goal = latestGoals[ key ];
 
 			if ( goal.status !== 'incomplete' ) {
-				delete yesterdayGoals[ key ];
+				delete latestGoals[ key ];
 			}
 		}
 
 		// Update template with additional 'goals'.
-		logTemplate.goals = Object.assign( logTemplate.goals, yesterdayGoals );
+		logTemplate.goals = Object.assign( logTemplate.goals, latestGoals );
 
 		// Write data to file system.
 		fs.writeFileSync( `${utils.getTodayLogPath()}`, JSON.stringify( logTemplate ), 'utf8' );
