@@ -72,33 +72,6 @@ function getTodayLog() {
 	}
 }
 
-function getYesterdayHandle() {
-	var yesterday = moment().subtract( 1, 'days' );
-
-	return `${yesterday.year()}-${yesterday.month() + 1}-${yesterday.date()}`;
-}
-
-function getYesterdayLogName() {
-	return `goalist_${getYesterdayHandle()}.log`;
-}
-
-function getYesterdayLogPath() {
-	return `${getDirPath()}/${getYesterdayLogName()}`;
-}
-
-function getYesterdayLog() {
-	try {
-		return readLog( getYesterdayLogPath() );
-	} catch ( err ) {
-		console.log( 'Whoops, unable to get log file for yesterday!' );
-
-		/// TODO[@jrmykolyn]: Consider only logging error message if program is running in 'verbose' mode.
-		console.log( err.message );
-
-		return null;
-	}
-}
-
 function getLatestLogName() {
 	try {
 		let logs = getLogs();
@@ -223,10 +196,6 @@ module.exports = {
 	getTodayLogName,
 	getTodayLogPath,
 	getTodayLog,
-	getYesterdayHandle,
-	getYesterdayLogName,
-	getYesterdayLogPath,
-	getYesterdayLog,
 	getLatestLogName,
 	getLatestLogPath,
 	getLatestLog,
