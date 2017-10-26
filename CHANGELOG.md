@@ -3,9 +3,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [0.5.0] - 2017-10-26
 ### Added
-- Add [ava](https://github.com/avajs/ava) testing framework to project.
+- Added [ava](https://github.com/avajs/ava) testing framework to project. Test suite can be run by invoking `npm run test` or `npm run test:verbose`.
+- Started implementing tests for `utils` module.
+- New log files now include any 'incomplete' goals present within the most recent log.
+
+### Changed
+- Updated program to read/write logs from/to `.goalist/logs/`. Previously, each log had a corresponding directory (eh. `.goalist/2017-01-01/goatlist_2017-01-01.log`, etc.).
+- Various refactoring: removed `getYesterday*()` methods; added `readLog()`, etc.
 
 ## [0.4.0] - 2017-10-21
 ### Added
