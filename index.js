@@ -11,7 +11,7 @@ const os = require( 'os' );
 const parseArgs = require( 'minimist' );
 
 // Project
-const commands = require( './lib' );
+const goalist = require( './lib' );
 const utils = require( './utils' );
 
 // --------------------------------------------------
@@ -74,8 +74,8 @@ function init( ARGS ) {
 	}
 
 	// Invoke `COMMAND` if it's valid, log error message otherwise.
-	 if ( COMMAND in commands ) {
-		 commands[ COMMAND ]( ARGS )
+	 if ( COMMAND in goalist.commands ) {
+		 goalist.commands[ COMMAND ]( ARGS )
 			 .then(
 				 ( data ) => {
 					 // DO THE NEEDFUL;
