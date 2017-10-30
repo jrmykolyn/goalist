@@ -25,7 +25,7 @@ function getGoalistDirPath() {
 	return `${os.homedir()}/${getGoalistDirName()}`;
 }
 
-function getGoalistDir() {
+function readGoalistDir() {
 	return fs.readdirSync( getGoalistDirPath(), 'utf8' );
 }
 
@@ -59,7 +59,7 @@ function getTodayLogPath() {
 	return `${getDirPath()}/${getTodayLogName()}`;
 }
 
-function getTodayLog() {
+function readTodayLog() {
 	try {
 		return readLog( getTodayLogPath() );
 	} catch ( err ) {
@@ -74,7 +74,7 @@ function getTodayLog() {
 
 function getLatestLogName() {
 	try {
-		let logs = getLogs();
+		let logs = getLogNames();
 
 		if ( !logs || !Array.isArray( logs ) || !logs.length ) {
 			throw new Error( 'Failed to fetch log files.' );
@@ -103,7 +103,7 @@ function getLatestLogPath() {
 	return ( dirPath && latestLog ) ? `${dirPath}/${latestLog}` : null;
 }
 
-function getLatestLog() {
+function readLatestLog() {
 	try {
 		return readLog( getLatestLogPath() );
 	} catch ( err ) {
@@ -130,6 +130,7 @@ function getLogPath( identifier ) {
 	return ( logName && dirPath ) ? `${dirPath}/${logName}` : null;
 }
 
+/// TODO: Consolidate with `readLog()`.
 function getLog( identifier ) {
 	try {
 		return readLog( getLogPath( identifier ) );
@@ -138,7 +139,8 @@ function getLog( identifier ) {
 	}
 }
 
-function getLogs() {
+/// TODO: Update method name and references: `getLogNames()`.
+function getLogNames() {
  	try {
 		return fs.readdirSync( getDirPath(), 'utf8' );
  	} catch ( err ) {
@@ -190,19 +192,19 @@ function writeLog( target, data, options ) {
 module.exports = {
 	getGoalistDirName,
 	getGoalistDirPath,
-	getGoalistDir,
+	readGoalistDir,
 	getDirPath,
 	getTodayHandle,
 	getTodayLogName,
 	getTodayLogPath,
-	getTodayLog,
+	readTodayLog,
 	getLatestLogName,
 	getLatestLogPath,
-	getLatestLog,
+	readLatestLog,
 	getLogName,
 	getLogPath,
 	getLog,
-	getLogs,
+	getLogNames,
 	readLog,
 	writeLog,
 };
