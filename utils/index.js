@@ -36,19 +36,19 @@ function getDirPath() {
 }
 
 function getTodayHandle() {
-	var d = new Date();
+	let d = new Date();
 
 	// NOTE: Take into account UTC offset when calculating 'today'.
-	var today = new Date( d.getTime() - ( d.getTimezoneOffset() * 60 * 1000 ) );
+	let today = new Date( d.getTime() - ( d.getTimezoneOffset() * 60 * 1000 ) );
 
-	var year = today.getFullYear();
-	var month = ( today.getUTCMonth() + 1 );
-	var day = today.getUTCDate();
+	let year = today.getFullYear();
+	let month = ( today.getUTCMonth() + 1 );
+	let day = today.getUTCDate();
 
 	// Ensure that `month` identifier is always two characters (eg. '09'). Required for sorting purposes.
 	month = ( month >= 10 ) ? month : '0' + month;
 
-	var todayDirName = `${year}-${month}-${day}`;
+	let todayDirName = `${year}-${month}-${day}`;
 
 	return todayDirName;
 }
@@ -216,9 +216,9 @@ function getOrCreateTodayLog() {
 		return fs.readFileSync( `${getTodayLogPath()}`, 'utf8' );
 	} catch ( err ) {
 		// Fetch: template; latest log data.
-		var template = getLogTemplate();
-		var latestLog = readLatestLog();
-		var latestGoals = ( latestLog && latestLog.goals ) ? latestLog.goals : {};
+		let template = getLogTemplate();
+		let latestLog = readLatestLog();
+		let latestGoals = ( latestLog && latestLog.goals ) ? latestLog.goals : {};
 
 		// Remove any goals which are not 'incomplete'.
 		for ( let key in latestGoals ) {
