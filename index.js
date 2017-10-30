@@ -20,6 +20,7 @@ const utils = require( './utils' );
 var COMMAND = process.argv.slice( 2, 3 );
 var ARGS = parseArgs( process.argv.slice( 2 ) );
 
+/// TODO: Move into appropriate method/remove.
 var logTemplate = JSON.parse( fs.readFileSync( `${__dirname}/data/goalist.log` ) );
 
 // --------------------------------------------------
@@ -35,6 +36,7 @@ function init( ARGS ) {
 	var goalistDirData;
 	var todayLogData;
 
+	/// TODO: Move into dedicated `getOrCreateGoalistDir()`.
 	// Create `goalist` directory if it doesn't exist.
 	try {
 		goalistDirData =  fs.readdirSync( `${utils.getGoalistDirPath()}` );
@@ -42,6 +44,7 @@ function init( ARGS ) {
 		fs.mkdirSync( `${utils.getGoalistDirPath()}` );
 	}
 
+	/// TODO: Move into dedicated `getOrCreateLogsDir()`.
 	// Create `logs` directory if it doesn't exist.
 	try {
 		logsDir = fs.readdirSync( `${utils.getDirPath()}` );
@@ -49,6 +52,7 @@ function init( ARGS ) {
 		fs.mkdirSync( `${utils.getDirPath()}` );
 	}
 
+	/// TODO: Move into dedicated `getOrCreateTodayLog()`.
 	// Create log file for current day if it doesn't exist.
 	try {
 		todayLogData = fs.readFileSync( `${utils.getTodayLogPath()}`, 'utf8' );
