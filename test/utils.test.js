@@ -26,22 +26,53 @@ test( 'Test `getGoalistDirPath()`', ( t ) => {
 } );
 
 /// TODO: Make more robust. Does this really tell us whether or not the method is working?
-test( 'Test `getGoalistDir()`', ( t ) => {
-	let dir = utils.getGoalistDir();
+test( 'Test `readGoalistDir()`', ( t ) => {
+	let dir = utils.readGoalistDir();
 
 	t.true( Array.isArray( dir ) );
 } );
 
-test.todo( 'Test `getTodayLogName()`' );
+test( 'Test `getDirPath()`', ( t ) => {
+	let dirPath = utils.getDirPath();
 
-test.todo( 'Test `getTodayLogPath()`' );
+	t.is( dirPath, `${utils.getGoalistDirPath()}/logs` );
+} );
 
-test.todo( 'Test `getTodayLog()`' );
+test( 'Test `getTodayHandle()`', ( t ) => {
+	let todayHandle = utils.getTodayHandle();
 
-test.todo( 'Test `writeLog()`' );
+	let today = new Date();
+	let y = today.getFullYear();
+	let m = ( today.getMonth() + 1 );
+	let d = today.getDate();
+
+	if ( m < 10 ) { m = ( '0' + m ).slice( 0, 2 ); }
+
+	t.is( todayHandle, `${y}-${m}-${d}`);
+} );
+
+test( 'Test `getTodayLogName()`', ( t ) => {
+	let todayLogName = utils.getTodayLogName();
+
+	t.is( todayLogName, `goalist_${utils.getTodayHandle()}.log` );
+} );
+
+test( 'Test `getTodayLogPath()`', ( t ) => {
+	let todayLogPath = utils.getTodayLogPath();
+
+	t.is( todayLogPath, `${utils.getDirPath()}/${utils.getTodayLogName()}` );
+} );
+
+test.todo( 'Test `readTodayLog()`' );
+
+test.todo( 'Test `getLatestLogName()`' );
+
+test.todo( 'Test `getLatestLogPath()`' );
+
+test.todo( 'Test `readLatestLog()`' );
 
 test( 'Test `getLogName()`', ( t ) => {
-	/// TODO
+	/// TODO: Refactor creation/testing of `getLogName()` invocations.
 	let logName1 = utils.getLogName( '2001-01-01' );
 	let logName2 = utils.getLogName( [] );
 	let logName3 = utils.getLogName( {} );
@@ -54,3 +85,13 @@ test( 'Test `getLogName()`', ( t ) => {
 	t.is( logName4, null );
 	t.is( logName5, null );
 } );
+
+test.todo( 'Test `getLogPath()`' );
+
+test.todo( 'Test `getLog()`' );
+
+test.todo( 'Test `getLogNames()`' );
+
+test.todo( 'Test `readLog()`' );
+
+test.todo( 'Test `writeLog()`' );
