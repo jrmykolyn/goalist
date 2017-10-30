@@ -54,7 +54,7 @@ function init( ARGS ) {
 		todayLogData = fs.readFileSync( `${utils.getTodayLogPath()}`, 'utf8' );
 	} catch ( err ) {
 		// Fetch latest log data.
-		var latestLog = utils.getLatestLog();
+		var latestLog = utils.readLatestLog();
 		var latestGoals = ( latestLog && latestLog.goals ) ? latestLog.goals : {};
 
 		// Remove any goals which are not 'incomplete'.
