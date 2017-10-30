@@ -95,3 +95,11 @@ test.todo( 'Test `getLogNames()`' );
 test.todo( 'Test `readLog()`' );
 
 test.todo( 'Test `writeLog()`' );
+
+test.todo( 'Test `getLogTemplate()`' );
+
+test.todo( 'Test `getOrCreateGoalistDir()`' );
+
+test.todo( 'Test `getOrCreateLogsDir()`' );
+
+test.todo( 'Test `getOrCreateTodayLog()`' );

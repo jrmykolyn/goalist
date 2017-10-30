@@ -7,12 +7,14 @@ const os = require( 'os' );
 
 // Vendor
 const moment = require( 'moment' );
+const pkgDir = require( 'pkg-dir' );
 
 // Project
 
 // --------------------------------------------------
 // DECLARE VARS
 // --------------------------------------------------
+const root = pkgDir.sync( __dirname );
 
 // --------------------------------------------------
 // DECLARE FUNCTIONS
@@ -186,6 +188,55 @@ function writeLog( target, data, options ) {
 	}
 }
 
+function getLogTemplate() {
+	return JSON.parse( fs.readFileSync( `${root}/data/goalist.log` ) );
+}
+
+function getOrCreateGoalistDir() {
+	// Create `goalist` directory if it doesn't exist.
+	try {
+		return fs.readdirSync( `${getGoalistDirPath()}` );
+	} catch ( err ) {
+		return fs.mkdirSync( `${getGoalistDirPath()}` );
+	}
+}
+
+function getOrCreateLogsDir() {
+	// Create `logs` directory if it doesn't exist.
+	try {
+		return fs.readdirSync( `${getDirPath()}` );
+	} catch ( err ) {
+		return fs.mkdirSync( `${getDirPath()}` );
+	}
+}
+
+function getOrCreateTodayLog() {
+	// Create log file for current day if it doesn't exist.
+	try {
+		return fs.readFileSync( `${getTodayLogPath()}`, 'utf8' );
+	} catch ( err ) {
+		// Fetch: template; latest log data.
+		var template = getLogTemplate();
+		var latestLog = readLatestLog();
+		var latestGoals = ( latestLog && latestLog.goals ) ? latestLog.goals : {};
+
+		// Remove any goals which are not 'incomplete'.
+		for ( let key in latestGoals ) {
+			let goal = latestGoals[ key ];
+
+			if ( goal.status !== 'incomplete' ) {
+				delete latestGoals[ key ];
+			}
+		}
+
+		// Update template with additional 'goals'.
+		template.goals = Object.assign( template.goals, latestGoals );
+
+		// Write data to file system.
+		return fs.writeFileSync( `${getTodayLogPath()}`, JSON.stringify( template ), 'utf8' );
+	}
+}
+
 // --------------------------------------------------
 // PUBLIC API
 // --------------------------------------------------
@@ -207,4 +258,8 @@ module.exports = {
 	getLogNames,
 	readLog,
 	writeLog,
+	getLogTemplate,
+	getOrCreateGoalistDir,
+	getOrCreateLogsDir,
+	getOrCreateTodayLog,
 };
