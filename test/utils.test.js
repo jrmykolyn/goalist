@@ -8,7 +8,7 @@ const os = require( 'os' );
 const test = require( 'ava' );
 
 // Project
-const utils = require( '../utils' );
+const utils = require( '../lib/utils' );
 
 // --------------------------------------------------
 // DECLARE TESTS
