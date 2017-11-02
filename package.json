@@ -21,7 +21,8 @@
   },
   "homepage": "https://github.com/jrmykolyn/goalist#readme",
   "devDependencies": {
-    "ava": "^0.22.0"
+    "ava": "^0.22.0",
+    "del": "^3.0.0"
   },
   "dependencies": {
     "bar-horizontal": "^0.3.0",
