@@ -2,13 +2,52 @@
 // IMPORT MODULES
 // --------------------------------------------------
 // Node
+const fs = require( 'fs' );
 const os = require( 'os' );
+const path = require( 'path' );
 
 // Vendor
 const test = require( 'ava' );
+const del = require( 'del' );
 
 // Project
-const utils = require( '../lib/utils' );
+const Utils = require( '../lib/utils' );
+
+// --------------------------------------------------
+// DECLARE VARS
+// --------------------------------------------------
+const setupOpts = {
+	goalistDir: `${__dirname}/temp`,
+	logsDirName: 'logs',
+	logIdentifier: '1989-12-29',
+	logName: 'goalist_1989-12-29.log',
+	logData: { hello: 'world!' },
+}
+
+const utils = new Utils( {
+	path: setupOpts.goalistDir,
+} );
+
+// --------------------------------------------------
+// DECLARE TESTS: SETUP AND TEARDOWN
+// --------------------------------------------------
+test.before( () => {
+	let {
+		goalistDir,
+		logsDirName,
+		logName,
+		logData,
+	} = setupOpts;
+
+	fs.mkdirSync( goalistDir );
+	fs.mkdirSync( `${goalistDir}/${logsDirName}` );
+
+	fs.writeFileSync( `${goalistDir}/${logsDirName}/${logName}`, JSON.stringify( logData ), 'utf8' );
+} );
+
+test.after.always( () => {
+	del.sync( setupOpts.goalistDir );
+} );
 
 // --------------------------------------------------
 // DECLARE TESTS
@@ -16,20 +55,19 @@ const utils = require( '../lib/utils' );
 test( 'Test `getGoalistDirName()`', ( t ) => {
 	let dirName = utils.getGoalistDirName();
 
-	t.is( dirName, '.goalist' );
+	t.is( dirName, path.parse( setupOpts.goalistDir ).name );
 } );
 
 test( 'Test `getGoalistDirPath()`', ( t ) => {
 	let dirPath = utils.getGoalistDirPath();
 
-	t.is( dirPath, `${os.homedir()}/.goalist` );
+	t.is( dirPath, setupOpts.goalistDir );
 } );
 
-/// TODO: Make more robust. Does this really tell us whether or not the method is working?
 test( 'Test `readGoalistDir()`', ( t ) => {
 	let dir = utils.readGoalistDir();
 
-	t.true( Array.isArray( dir ) );
+	t.is( JSON.stringify( dir ), JSON.stringify( [ 'logs' ] ) );
 } );
 
 test( 'Test `getDirPath()`', ( t ) => {
@@ -47,6 +85,7 @@ test( 'Test `getTodayHandle()`', ( t ) => {
 	let d = today.getDate();
 
 	if ( m < 10 ) { m = ( '0' + m ).slice( 0, 2 ); }
+	if ( d < 10 ) { d = ( '0' + d ).slice( 0, 2 ); }
 
 	t.is( todayHandle, `${y}-${m}-${d}`);
 } );
@@ -63,13 +102,29 @@ test( 'Test `getTodayLogPath()`', ( t ) => {
 	t.is( todayLogPath, `${utils.getDirPath()}/${utils.getTodayLogName()}` );
 } );
 
-test.todo( 'Test `readTodayLog()`' );
+test( 'Test `readTodayLog()`', ( t ) => {
+	let log = utils.readTodayLog();
 
-test.todo( 'Test `getLatestLogName()`' );
+	t.is( log, null );
+} );
 
-test.todo( 'Test `getLatestLogPath()`' );
+test( 'Test `getLatestLogName()`', ( t ) => {
+	let name = utils.getLatestLogName();
 
-test.todo( 'Test `readLatestLog()`' );
+	t.is( name, setupOpts.logName );
+} );
+
+test( 'Test `getLatestLogPath()`', ( t ) => {
+	let logPath = utils.getLatestLogPath();
+
+	t.is( logPath, `${setupOpts.goalistDir}/${setupOpts.logsDirName}/${setupOpts.logName}` );
+} );
+
+test( 'Test `readLatestLog()`', ( t ) => {
+	let logData = utils.readLatestLog();
+
+	t.is( JSON.stringify( logData ), JSON.stringify(setupOpts.logData ) );
+} );
 
 test( 'Test `getLogName()`', ( t ) => {
 	/// TODO: Refactor creation/testing of `getLogName()` invocations.
@@ -86,20 +141,56 @@ test( 'Test `getLogName()`', ( t ) => {
 	t.is( logName5, null );
 } );
 
-test.todo( 'Test `getLogPath()`' );
+test( 'Test `getLogPath()`', ( t ) => {
+	let logPath = utils.getLogPath( '2001-01-01' );
 
-test.todo( 'Test `getLog()`' );
+	t.is( logPath, `${setupOpts.goalistDir}/${setupOpts.logsDirName}/goalist_2001-01-01.log` );
+} );
 
-test.todo( 'Test `getLogNames()`' );
+test( 'Test `getLog()`', ( t ) => {
+	let logData = utils.getLog( setupOpts.logIdentifier );
 
-test.todo( 'Test `readLog()`' );
+	t.is( JSON.stringify( logData ), JSON.stringify( setupOpts.logData ) );
+} );
 
-test.todo( 'Test `writeLog()`' );
+test( 'Test `getLogNames()`', ( t ) => {
+	let logNames = utils.getLogNames();
 
-test.todo( 'Test `getLogTemplate()`' );
+	t.is( JSON.stringify( logNames ), JSON.stringify( [ setupOpts.logName ] ) );
+} );
 
-test.todo( 'Test `getOrCreateGoalistDir()`' );
+test( 'Test `readLog()`', ( t ) => {
+	let logData = utils.readLog( `${setupOpts.goalistDir}/${setupOpts.logsDirName}/${setupOpts.logName}` );
 
-test.todo( 'Test `getOrCreateLogsDir()`' );
+	t.is( JSON.stringify( logData ), JSON.stringify( setupOpts.logData ) );
+} );
 
-test.todo( 'Test `getOrCreateTodayLog()`' );
+test( 'Test `writeLog()`', ( t ) => {
+	let result = utils.writeLog( `${setupOpts.goalistDir}/${setupOpts.logsDirName}/goalist_2001-01-01.log` );
+
+	t.true( result );
+} );
+
+test( 'Test `getLogTemplate()`', ( t ) => {
+	let template = utils.getLogTemplate();
+
+	t.truthy( template );
+} );
+
+test( 'Test `getOrCreateGoalistDir()`',  ( t ) => {
+	let dir = utils.getOrCreateGoalistDir();
+
+	t.truthy( dir );
+} );
+
+test( 'Test `getOrCreateLogsDir()`', ( t ) => {
+	let dir = utils.getOrCreateLogsDir();
+
+	t.truthy( dir );
+} );
+
+test( 'Test `getOrCreateTodayLog()`', ( t ) => {
+	let result = utils.getOrCreateTodayLog();
+
+	t.is( result, undefined );
+} );
