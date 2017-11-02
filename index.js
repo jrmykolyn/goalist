@@ -11,7 +11,7 @@ const os = require( 'os' );
 const parseArgs = require( 'minimist' );
 
 // Project
-const goalist = require( './lib' );
+const Goalist = require( './lib' );
 
 
 // --------------------------------------------------
@@ -20,13 +20,17 @@ const goalist = require( './lib' );
 var COMMAND = process.argv.slice( 2, 3 );
 var ARGS = parseArgs( process.argv.slice( 2 ) );
 
+var goalist = new Goalist( [ COMMAND, ARGS ] );
+
 
 // --------------------------------------------------
 // INITIALIZATION
 // --------------------------------------------------
 goalist
-	.preflight( [ COMMAND, ARGS ] )
-	.then( goalist.run )
+	.preflight()
+	.then( () => {
+		return goalist.run();
+	} )
 	.then(
 		( data ) => {
 			/// TODO
