@@ -3,6 +3,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.6.0] - 2017-11-03
+### Added
+- Built out remaining tests for `Utils` module.
+- Completed first pass of `Debugger` module.
+
+### Changed
+- Converted 'utils' and 'goalist' methods into `Utils`/`Goalist` classes.
+- Moved setup logic into 'Goalist' module.
+- Updated 'command' scripts to receive `Utils` module instance at invocation time.
+- Completed misc. updates to program initialization logic (ie. `/index.js`).
+
 ## [0.5.0] - 2017-10-26
 ### Added
 - Added [ava](https://github.com/avajs/ava) testing framework to project. Test suite can be run by invoking `npm run test` or `npm run test:verbose`.
