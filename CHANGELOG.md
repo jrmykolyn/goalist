@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- ...
+
+### Changed
+- Bumped [Bar Horizontal](https://github.com/icyflame/bar-horizontal) module to [0.4.0](https://github.com/icyflame/bar-horizontal/releases/tag/v0.4.0).
+
 ## [0.6.0] - 2017-11-03
 ### Added
 - Built out remaining tests for `Utils` module.
