@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jrmykolyn/goalist.svg?branch=master)](https://travis-ci.org/jrmykolyn/goalist)
+
 # Goalist
 
 ## Table of Contents

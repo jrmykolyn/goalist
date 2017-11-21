@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
-- ...
+- Add [TravisCI](https://travis-ci.org/) integration and badge.
 
 ### Changed
 - Bumped [Bar Horizontal](https://github.com/icyflame/bar-horizontal) module to [0.4.0](https://github.com/icyflame/bar-horizontal/releases/tag/v0.4.0).
