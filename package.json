@@ -4,8 +4,9 @@
   "description": "Goalist is a command line tool for managing daily goals.",
   "main": "index.js",
   "scripts": {
-    "test": "node ./node_modules/.bin/ava",
-    "test:verbose": "node ./node_modules/.bin/ava --verbose"
+    "test": "nyc ava",
+    "test:verbose": "nyc ava --verbose",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "bin": {
     "gl": "./index.js"
@@ -22,7 +23,9 @@
   "homepage": "https://github.com/jrmykolyn/goalist#readme",
   "devDependencies": {
     "ava": "^0.22.0",
-    "del": "^3.0.0"
+    "coveralls": "^3.0.0",
+    "del": "^3.0.0",
+    "nyc": "^11.3.0"
   },
   "dependencies": {
     "bar-horizontal": "^0.4.0",
