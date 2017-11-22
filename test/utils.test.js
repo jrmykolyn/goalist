@@ -11,7 +11,7 @@ const test = require( 'ava' );
 const del = require( 'del' );
 
 // Project
-const Utils = require( '../lib/utils' );
+import Utils from '../lib/utils';
 
 // --------------------------------------------------
 // DECLARE VARS
