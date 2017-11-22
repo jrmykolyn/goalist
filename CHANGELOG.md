@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [0.7.0] - 2017-11-22
 ### Added
 - Adding the following dependencies: `merge`;
 - Added the following development dependencies: `gulp`; `gulp-typescript`; `typescript`; `@types/node`; `@types/object-assign`.
