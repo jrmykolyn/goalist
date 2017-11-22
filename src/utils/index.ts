@@ -2,45 +2,39 @@
 // IMPORT MODULES
 // --------------------------------------------------
 // Node
-const fs = require( 'fs' );
-const os = require( 'os' );
-const path = require( 'path' );
+import * as fs from 'fs';
+import * as os from 'os';
+import * as path from 'path';
 
 // Vendor
-const moment = require( 'moment' );
-const pkgDir = require( 'pkg-dir' );
+import * as moment from 'moment';
+import * as pkgDir from 'pkg-dir';
+import * as merge from 'merge';
 
 // Project
-const Debugger = require( '../debugger' );
+import Debugger from '../debugger';
+import { UtilsStore, UtilsInstance } from '../interfaces';
 
 // --------------------------------------------------
 // DECLARE VARS
 // --------------------------------------------------
 const root = pkgDir.sync( __dirname );
 
-// NOTE:
-// - `self` used as 'stand in' for static/class variables, which throw runtime errors.
-/// TODO:
-// - Update class definition to use class variables.
-const self = {};
-
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-class Utils {
-	constructor( opts ) {
+export default class Utils implements UtilsInstance {
+	goalistDirName: any;
+	goalistDirRoot: any;
+	goalistDirPath: any;
+
+	constructor( opts? ) {
 		opts = ( opts && typeof opts === 'object' ) ? opts : {};
 
-		if ( !self.ref ) {
-			/// TODO: Gross...
-			this.goalistDirName = ( opts.path && typeof opts.path === 'string' ) ? path.parse( opts.path ).name : '.goalist';
-			this.goalistDirRoot = ( opts.path && typeof opts.path === 'string' ) ? path.parse( opts.path ).dir : os.homedir();
-			this.goalistDirPath = ( opts.path && typeof opts.path === 'string' ) ? opts.path : `${this.goalistDirRoot}/${this.goalistDirName}`;
-
-			self.ref = this;
-		}
-
-		return self.ref;
+		/// TODO: Gross...
+		this.goalistDirName = ( opts.path && typeof opts.path === 'string' ) ? path.parse( opts.path ).name : '.goalist';
+		this.goalistDirRoot = ( opts.path && typeof opts.path === 'string' ) ? path.parse( opts.path ).dir : os.homedir();
+		this.goalistDirPath = ( opts.path && typeof opts.path === 'string' ) ? opts.path : `${this.goalistDirRoot}/${this.goalistDirName}`;
 	}
 
 	getGoalistDirName() {
@@ -65,9 +59,9 @@ class Utils {
 		// NOTE: Take into account UTC offset when calculating 'today'.
 		let today = new Date( d.getTime() - ( d.getTimezoneOffset() * 60 * 1000 ) );
 
-		let year = today.getFullYear();
-		let month = ( today.getUTCMonth() + 1 );
-		let day = today.getUTCDate();
+		let year: number|string = today.getFullYear();
+		let month: number|string = ( today.getUTCMonth() + 1 );
+		let day: number|string = today.getUTCDate();
 
 		// Ensure that `month`/`day` identifiers are always two characters (eg. '09'). Required for sorting purposes.
 		month = ( month >= 10 ) ? month : '0' + month;
@@ -151,7 +145,7 @@ class Utils {
 
 	getLogPath( identifier ) {
 		let logName = this.getLogName( identifier );
-		let dirPath = this.getDirPath( identifier ); /// TODO: Revisit.
+		let dirPath = this.getDirPath(); /// TODO: Revisit.
 
 		return ( logName && dirPath ) ? `${dirPath}/${logName}` : null;
 	}
@@ -174,7 +168,7 @@ class Utils {
 	 	}
 	}
 
-	readLog( path, options ) {
+	readLog( path, options? ) {
 		path = ( path && typeof path === 'string' ) ? path : null;
 		options = ( options && typeof options === 'object' ) ? options : {};
 
@@ -184,7 +178,7 @@ class Utils {
 		}
 
 		try {
-			return JSON.parse( fs.readFileSync( path ), 'utf8' );
+			return JSON.parse( fs.readFileSync( path, 'utf8' ) );
 		} catch ( err ) {
 			console.log( err.message );
 			return null;
@@ -203,7 +197,7 @@ class Utils {
 
 		switch ( target ) {
 			case 'today':
-				resolvedPath = is.getTodayLogPath();
+				resolvedPath = this.getTodayLogPath();
 				break;
 			default:
 				resolvedPath = target;
@@ -224,7 +218,7 @@ class Utils {
 	}
 
 	getLogTemplate() {
-		return JSON.parse( fs.readFileSync( `${root}/data/goalist.log` ) );
+		return JSON.parse( fs.readFileSync( `${root}/data/goalist.log`, 'utf8' ) );
 	}
 
 	getOrCreateGoalistDir() {
@@ -265,16 +259,10 @@ class Utils {
 			}
 
 			// Update template with additional 'goals'.
-			template.goals = Object.assign( template.goals, latestGoals );
+			template.goals = merge( template.goals, latestGoals );
 
 			// Write data to file system.
 			return fs.writeFileSync( `${this.getTodayLogPath()}`, JSON.stringify( template ), 'utf8' );
 		}
 	}
-
 }
-
-// --------------------------------------------------
-// PUBLIC API
-// --------------------------------------------------
-module.exports = Utils;

@@ -2,11 +2,10 @@
 // IMPORT MODULES
 // --------------------------------------------------
 // Node
-const fs = require( 'fs' );
-const readline = require( 'readline' );
+import * as fs from 'fs';
+import * as readline from 'readline';
 
 // Vendor
-const Promise = require( 'bluebird' );
 
 // Project
 
@@ -17,7 +16,7 @@ const Promise = require( 'bluebird' );
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-function remove( ARGS, utils ) {
+export default function remove( ARGS, utils ) {
 	return new Promise( ( resolve, reject ) => {
 		let identifier = ARGS._[ 1 ] || null;
 
@@ -69,8 +68,3 @@ function remove( ARGS, utils ) {
 		} );
 	} );
 }
-
-// --------------------------------------------------
-// PUBLIC API
-// --------------------------------------------------
-module.exports = remove;

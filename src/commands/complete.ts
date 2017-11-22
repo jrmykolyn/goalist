@@ -14,7 +14,7 @@
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-function complete( ARGS, utils ) {
+export default function complete( ARGS, utils ) {
 	return new Promise( ( resolve, reject ) => {
 		let identifier = ARGS._[ 1 ] || null;
 
@@ -53,8 +53,3 @@ function complete( ARGS, utils ) {
 		return;
 	} );
 }
-
-// --------------------------------------------------
-// PUBLIC API
-// --------------------------------------------------
-module.exports = complete;

@@ -4,12 +4,12 @@
 // Node
 
 // Vendor
-const pkgDir = require( 'pkg-dir' );
+import * as pkgDir from 'pkg-dir';
 
 // Project
-const commands = require( './commands' );
-const Utils = require( `./utils` );
-const Debugger = require( './debugger' );
+import * as commands from './commands';
+import Utils from './utils';
+import Debugger from './debugger';
 
 // --------------------------------------------------
 // DECLARE VARS
@@ -21,6 +21,9 @@ const utils = new Utils();
 // DECLARE FUNCTIONS
 // --------------------------------------------------
 class Goalist {
+	COMMAND: string;
+	ARGS: Array<any>;
+
 	constructor( arr ) {
 		this.COMMAND = arr[ 0 ];
 		this.ARGS = arr[ 1 ];

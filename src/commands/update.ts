@@ -2,10 +2,9 @@
 // IMPORT MODULES
 // --------------------------------------------------
 // Node
-const fs = require( 'fs' );
+import * as fs from 'fs';
 
 // Vendor
-const Promise = require( 'bluebird' );
 
 // Project
 
@@ -17,7 +16,7 @@ const keyBlacklist = [ '_' ];
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-function update( ARGS, utils ) {
+export default function update( ARGS, utils ) {
 	return new Promise( ( resolve, reject ) => {
 		let identifier = ARGS._[ 1 ] || null;
 
@@ -39,7 +38,7 @@ function update( ARGS, utils ) {
 
 		// Update selected `goal`.
 		for ( let key in ARGS ) {
-			if ( goal[ key ] !== 'undefined' && !keyBlacklist.includes( key ) ) {
+			if ( goal[ key ] !== 'undefined' && keyBlacklist.indexOf( key ) === -1 ) {
 				goal[ key ] = ARGS[ key ];
 			}
 		}
@@ -50,8 +49,3 @@ function update( ARGS, utils ) {
 		resolve( log );
 	} );
 }
-
-// --------------------------------------------------
-// PUBLIC API
-// --------------------------------------------------
-module.exports = update;

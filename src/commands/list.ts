@@ -4,7 +4,6 @@
 // Node
 
 // Vendor
-const Promise = require( 'bluebird' );
 
 // Project
 
@@ -15,7 +14,7 @@ const Promise = require( 'bluebird' );
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-function list( ARGS, utils ) {
+export default function list( ARGS, utils ) {
 	return new Promise( ( resolve, reject ) => {
 		let log = utils.readTodayLog();
 		let { goals } = log;
@@ -47,8 +46,3 @@ function list( ARGS, utils ) {
 		resolve( log );
 	} );
 }
-
-// --------------------------------------------------
-// PUBLIC API
-// --------------------------------------------------
-module.exports = list;

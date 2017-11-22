@@ -4,10 +4,10 @@
 // Node
 
 // Vendor
-const pkgDir = require( 'pkg-dir' );
+import * as pkgDir from 'pkg-dir';
 
 // Project
-const pkg = require( `${pkgDir.sync( __dirname )}/package.json` );
+const pkg = require( `${pkgDir.sync( __dirname )}/package.json` ); // NOTE: `package.json` must be imported via CommonJS `require()`.
 
 // --------------------------------------------------
 // DECLARE VARS
@@ -16,14 +16,9 @@ const pkg = require( `${pkgDir.sync( __dirname )}/package.json` );
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-function version( ARGS, utils ) {
+export default function version( ARGS, utils ) {
 	return new Promise( ( resolve, reject ) => {
 		console.log( pkg.version );
 		resolve( pkg.version );
 	} );
 }
-
-// --------------------------------------------------
-// PUBLIC API
-// --------------------------------------------------
-module.exports = version;

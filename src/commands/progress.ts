@@ -4,8 +4,7 @@
 // Node
 
 // Vendor
-const Promise = require( 'bluebird' );
-const barHorizontal = require( 'bar-horizontal' );
+import * as barHorizontal from 'bar-horizontal';
 
 // Project
 
@@ -16,7 +15,7 @@ const barHorizontal = require( 'bar-horizontal' );
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-function progress( ARGS, utils ) {
+export default function progress( ARGS, utils ) {
 	return new Promise( ( resolve, reject ) => {
 		let log = utils.readTodayLog();
 		let { goals } = log;
@@ -39,8 +38,3 @@ function progress( ARGS, utils ) {
 		resolve( log );
 	} );
 }
-
-// --------------------------------------------------
-// PUBLIC API
-// --------------------------------------------------
-module.exports = progress;

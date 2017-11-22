@@ -2,11 +2,12 @@
 // IMPORT MODULES
 // --------------------------------------------------
 // Node
-const fs = require( 'fs' );
+import * as fs from 'fs';
 
-// Vendor
+// Vendors
 
 // Project
+import { Goal } from '../interfaces';
 
 // --------------------------------------------------
 // DECLARE VARS
@@ -15,7 +16,7 @@ const fs = require( 'fs' );
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-function add( ARGS, utils ) {
+export default function add( ARGS, utils ) {
 	return new Promise( ( resolve, reject ) => {
 		let title = ARGS._[ 1 ] || null;
 
@@ -29,15 +30,15 @@ function add( ARGS, utils ) {
 		let { goals } = log;
 
 		// Create and update `goal`.
-		let goal = {};
-
-		goal.title = ARGS._[ 1 ];
-		goal.status = 'incomplete';
-		goal.description = ARGS.description || '';
+		let id = new Date().getTime();
+		let goal: Goal = {
+			id: id,
+			title: ARGS._[ 1 ],
+			status: 'incomplete',
+			description: ARGS.description || '',
+		};
 
 		// Add `goal`.
-		let id = new Date().getTime();
-
 		goals[ id ] = goal;
 
 		// Write new data back to file system.
@@ -48,8 +49,3 @@ function add( ARGS, utils ) {
 		resolve( log );
 	} );
 }
-
-// --------------------------------------------------
-// PUBLIC API
-// --------------------------------------------------
-module.exports = add;

@@ -2,13 +2,13 @@
 // IMPORT MODULES
 // --------------------------------------------------
 // Project
-const add = require( './add' );
-const complete = require( './complete' );
-const list = require( './list' );
-const progress = require( './progress' );
-const remove = require( './remove' );
-const update = require( './update' );
-const version = require( './version' );
+import add from './add';
+import complete from './complete';
+import list from './list';
+import progress from './progress';
+import remove from './remove';
+import update from './update';
+import version from './version';
 
 // --------------------------------------------------
 // PUBLIC API

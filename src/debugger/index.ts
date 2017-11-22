@@ -9,22 +9,22 @@
 // DECLARE VARS
 // --------------------------------------------------
 // NOTE:
-// - `self` used as 'stand in' for static/class variables, which throw runtime errors.
+// - `_self` used as 'stand in' for static/class variables, which throw runtime errors.
 /// TODO:
 // - Update class definition to use class variables.
-const self = {};
+const _self: any = {};
 
 // --------------------------------------------------
 // DEFINE CLASSES
 // --------------------------------------------------
-class Debugger {
+export default class Debugger {
 	/**
 	 * Set the internal `verboseMode` property to `state`.
 	 *
 	 * @param {boolean} state
 	 */
 	static verbose( state ) {
-		self.verboseMode = !!state;
+		_self.verboseMode = !!state;
 	}
 
 	/**
@@ -33,13 +33,8 @@ class Debugger {
 	 * @param {any} msg
 	 */
 	static log( msg ) {
-		if ( self.verboseMode ) {
+		if ( _self.verboseMode ) {
 			console.log( msg );
 		}
 	}
 }
-
-// --------------------------------------------------
-// PUBLIC API
-// --------------------------------------------------
-module.exports = Debugger;
