@@ -10,6 +10,7 @@ const ts = require( 'gulp-typescript' );
 // --------------------------------------------------
 // DECLARE VARS
 // --------------------------------------------------
+const tsProject = ts.createProject( 'tsconfig.json' );
 
 // --------------------------------------------------
 // DEFINE TASKS
@@ -25,8 +26,10 @@ gulp.task( 'default', [ 'typescript' ], function() {
  * Wrapper around any/all TypeScript-related tasks.
  */
 gulp.task( 'typescript', function() {
-	console.log( 'INSIDE TASK: `scripts`' );
-	gulp.src( './src/**/*.ts' )
-		.pipe( ts() )
-		.pipe( gulp.dest( `${__dirname}/lib` ) );
+	console.log( 'INSIDE TASK: `typescript`' );
+
+	let result = tsProject.src()
+		.pipe( tsProject() );
+
+	result.js.pipe( gulp.dest( './lib' ) );
 } );
