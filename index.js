@@ -11,7 +11,7 @@ const os = require( 'os' );
 const parseArgs = require( 'minimist' );
 
 // Project
-const Goalist = require( './lib' );
+const Goalist = require( './dist' );
 
 
 // --------------------------------------------------
