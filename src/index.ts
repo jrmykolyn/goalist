@@ -47,7 +47,7 @@ class Goalist {
 			/// TODO: Consider building out wrapper function around `getOrCreate*()` methods.
 			let goalistDirData = utils.getOrCreateGoalistDir();
 			let logsDirData = utils.getOrCreateLogsDir();
-			let todayLogData = utils.getOrCreateActiveLog();
+			let activeLogData = utils.getOrCreateActiveLog();
 
 			// Validate `COMMAND`, log error message otherwise.
 			if ( COMMAND in commands ) {
