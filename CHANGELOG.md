@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+-  Added `archive` subcommand.
+
+### Changed
+- Updated shape of 'goal' data: added `active` property.
+- Updated structure/contents of `logs/` directory: replaced 'daily' log files with 'active'/'archive' logs.
+- Updated `list` subcommand: added support for `--archvive` flag; removed feature where `Identifier` key/value is always logged out.
+- Updated `Utils` module: removed old/unused methods; refactored existing methods.
+- Updated `README.md`.
+- Removed old/unused tests.
+
 ## [0.7.1] - 2018-01-02
 ### Changed
 - Fixed incorrect output path in `gulpfile.js`: changed from `./lib` to `./dist`.
