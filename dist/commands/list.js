@@ -2,7 +2,8 @@
 exports.__esModule = true;
 function list(ARGS, utils) {
     return new Promise(function (resolve, reject) {
-        var log = utils.getLog('active');
+        var displayArchive = ARGS.archive;
+        var log = displayArchive ? utils.getLog('archive') : utils.getLog('active');
         var goals = log.goals;
         var outputKeys = null;
         Object.keys(goals).forEach(function (key) {
