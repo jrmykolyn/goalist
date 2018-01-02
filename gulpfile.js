@@ -31,5 +31,5 @@ gulp.task( 'typescript', function() {
 	let result = tsProject.src()
 		.pipe( tsProject() );
 
-	result.js.pipe( gulp.dest( './lib' ) );
+	result.js.pipe( gulp.dest( './dist' ) );
 } );
