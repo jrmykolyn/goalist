@@ -76,54 +76,23 @@ test( 'Test `getDirPath()`', ( t ) => {
 	t.is( dirPath, `${utils.getGoalistDirPath()}/logs` );
 } );
 
-test( 'Test `getTodayHandle()`', ( t ) => {
-	let todayHandle = utils.getTodayHandle();
 
-	let today = new Date();
-	let y = today.getFullYear();
-	let m = ( today.getMonth() + 1 );
-	let d = today.getDate();
+test( 'Test `getActiveLogName()`', ( t ) => {
+	let activeLogName = utils.getActiveLogName();
 
-	if ( m < 10 ) { m = ( '0' + m ).slice( 0, 2 ); }
-	if ( d < 10 ) { d = ( '0' + d ).slice( 0, 2 ); }
-
-	t.is( todayHandle, `${y}-${m}-${d}`);
+	t.is( activeLogName, 'goalist_active.log' );
 } );
 
-test( 'Test `getTodayLogName()`', ( t ) => {
-	let todayLogName = utils.getTodayLogName();
+test( 'Test `getActiveLogPath()`', ( t ) => {
+	let activeLogPath = utils.getActiveLogPath();
 
-	t.is( todayLogName, `goalist_${utils.getTodayHandle()}.log` );
+	t.is( activeLogPath, `${utils.getDirPath()}/${utils.getActiveLogName()}` );
 } );
 
-test( 'Test `getTodayLogPath()`', ( t ) => {
-	let todayLogPath = utils.getTodayLogPath();
-
-	t.is( todayLogPath, `${utils.getDirPath()}/${utils.getTodayLogName()}` );
-} );
-
-test( 'Test `readTodayLog()`', ( t ) => {
-	let log = utils.readTodayLog();
+test( 'Test `readActiveLog()`', ( t ) => {
+	let log = utils.readActiveLog();
 
 	t.is( log, null );
-} );
-
-test( 'Test `getLatestLogName()`', ( t ) => {
-	let name = utils.getLatestLogName();
-
-	t.is( name, setupOpts.logName );
-} );
-
-test( 'Test `getLatestLogPath()`', ( t ) => {
-	let logPath = utils.getLatestLogPath();
-
-	t.is( logPath, `${setupOpts.goalistDir}/${setupOpts.logsDirName}/${setupOpts.logName}` );
-} );
-
-test( 'Test `readLatestLog()`', ( t ) => {
-	let logData = utils.readLatestLog();
-
-	t.is( JSON.stringify( logData ), JSON.stringify(setupOpts.logData ) );
 } );
 
 test( 'Test `getLogName()`', ( t ) => {
@@ -189,8 +158,8 @@ test( 'Test `getOrCreateLogsDir()`', ( t ) => {
 	t.truthy( dir );
 } );
 
-test( 'Test `getOrCreateTodayLog()`', ( t ) => {
-	let result = utils.getOrCreateTodayLog();
+test( 'Test `getOrCreateActiveLog()`', ( t ) => {
+	let result = utils.getOrCreateActiveLog();
 
 	t.is( result, undefined );
 } );
