@@ -9,7 +9,6 @@ function list(ARGS, utils) {
         Object.keys(goals).forEach(function (key) {
             var goal = goals[key];
             outputKeys = (ARGS.only && typeof ARGS.only === 'string') ? ARGS.only.split(',') : Object.keys(goal);
-            console.log("Identifier: " + key);
             for (var prop in goal) {
                 if (outputKeys.includes(prop)) {
                     console.log(prop + ": " + goal[prop] + "\r");

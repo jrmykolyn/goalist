@@ -63,14 +63,13 @@ When invoked with the `--archive` flag, this command will display the contents o
 gl list --archive
 ```
 
-`list` may be invoked with the `--only` flag/argument. When provided with a series of comma delimited strings, `--only` limits the output of `list` to the the strings provided. Please note that the ID for each goal will always be displayed.
+`list` may be invoked with the `--only` flag/argument. When provided with a series of comma delimited strings, `--only` limits the output of `list` to the the properties which match the provided strings.
 
 ```
 gl list --only=title,status
 
-// Identifer: 1234567890
-// Title: My New Goal
-// Status: Incomplete
+// title: My New Goal
+// status: Incomplete
 ```
 
 ### `update` / `u`

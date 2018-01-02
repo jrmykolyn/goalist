@@ -30,13 +30,10 @@ export default function list( ARGS, utils ) {
 			/// NOTE: Since not all `goal` objects are exactly the same, `outputKeys` must be updated within each loop iteration.
 			outputKeys = ( ARGS.only && typeof ARGS.only === 'string' ) ? ARGS.only.split( ',' ) : Object.keys( goal );
 
-			// Always log out ID of current goal.
-			console.log( `Identifier: ${key}` );
-
 			// Conditionally log out additional goal info.
 			for ( let prop in goal ) {
 				if ( outputKeys.includes( prop ) ) {
-					console.log(  `${prop}: ${goal[ prop ]}\r`  );
+					console.log( `${prop}: ${goal[ prop ]}\r` );
 				}
 			}
 
