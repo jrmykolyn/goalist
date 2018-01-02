@@ -16,7 +16,7 @@
 // --------------------------------------------------
 export default function list( ARGS, utils ) {
 	return new Promise( ( resolve, reject ) => {
-		let log = utils.readActiveLog();
+		let log = utils.getLog( 'active' );
 		let { goals } = log;
 		let outputKeys = null;
 

@@ -26,7 +26,7 @@ export default function update( ARGS, utils ) {
 			return;
 		}
 
-		let log = utils.readActiveLog();
+		let log = utils.getLog( 'active' );
 		let { goals } = log;
 		let goal = goals[ identifier ] || null;
 

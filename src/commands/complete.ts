@@ -26,7 +26,7 @@ export default function complete( ARGS, utils ) {
 		}
 
 		/// TODO[@jrmykolyn]: Consolidate with identical logic in other subcommands.
-		let log = utils.readActiveLog();
+		let log = utils.getLog( 'active' );
 		let { goals } = log;
 		let goal = goals[ identifier ] || null;
 
@@ -40,10 +40,10 @@ export default function complete( ARGS, utils ) {
 		// If invoked with the `--false` flag, set matched goal status 'incomplete'.
 		// Otherwise, set status to complete.
 		if ( ARGS.false ) {
-			console.log( `Setting the following tast to 'incomplete': ${identifier}` );
+			console.log( `Setting the following task to 'incomplete': ${identifier}` );
 			goal.status = 'incomplete';
 		} else {
-			console.log( `Setting the following tast to 'complete': ${identifier}` );
+			console.log( `Setting the following task to 'complete': ${identifier}` );
 			goal.status = 'complete';
 		}
 

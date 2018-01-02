@@ -76,21 +76,9 @@ test( 'Test `getDirPath()`', ( t ) => {
 	t.is( dirPath, `${utils.getGoalistDirPath()}/logs` );
 } );
 
-
-test( 'Test `readActiveLog()`', ( t ) => {
-	let log = utils.readActiveLog();
-
-	t.is( log, null );
-} );
+test.todo( 'Test `getLog()`' );
 
 test.todo( 'Test `getLogPath()`' );
-
-
-test( 'Test `getLogNames()`', ( t ) => {
-	let logNames = utils.getLogNames();
-
-	t.is( JSON.stringify( logNames ), JSON.stringify( [ setupOpts.logName ] ) );
-} );
 
 test( 'Test `readLog()`', ( t ) => {
 	let logData = utils.readLog( `${setupOpts.goalistDir}/${setupOpts.logsDirName}/${setupOpts.logName}` );

@@ -68,37 +68,15 @@ export default class Utils implements UtilsInstance {
 		return output;
 	}
 
-	readActiveLog() {
+	getLog( identifier = 'active' ) {
 		try {
-			return this.readLog( this.getLogPath( 'active' ) );
+			return this.readLog( this.getLogPath( identifier ) );
 		} catch ( err ) {
-			console.log( 'Whoops, unable to get log file for current day!' ); /// TODO
+			console.log( `Whoops, unable to get the following log file: ${identifier}` );
 
 			/// TODO[@jrmykolyn]: Consider only logging error message if program is running in 'verbose' mode.
 			console.log( err.message );
 
-			return null;
-		}
-	}
-
-	readArchiveLog() {
-		try {
-			return this.readLog( this.getLogPath( 'archive' ) );
-		} catch ( err ) {
-			console.log( 'Whoops, unable to get log file for current day!' ); /// TODO
-
-			/// TODO[@jrmykolyn]: Consider only logging error message if program is running in 'verbose' mode.
-			console.log( err.message );
-
-			return null;
-		}
-	}
-
-	/// TODO: Update method name and references: `getLogNames()`.
-	getLogNames() {
-		try {
-			return fs.readdirSync( this.getDirPath(), 'utf8' );
-		} catch ( err ) {
 			return null;
 		}
 	}
@@ -121,26 +99,25 @@ export default class Utils implements UtilsInstance {
 	}
 
 	/// TODO:
-	// - Change `target` to something... better.
 	// - Revisit.
-	writeLog( target, data, options ) {
-		target = ( target && typeof target === 'string' ) ? target : null;
+	writeLog( identifier, data, options ) {
+		identifier = ( identifier && typeof identifier === 'string' ) ? identifier : null;
 		data = ( typeof data !== 'undefined' && data !== null ) ? data : null;
 		options = ( options && typeof options === 'object' ) ? options : {};
 
 		let resolvedPath;
 
-		switch ( target ) {
+		switch ( identifier ) {
 			case 'active':
 			case 'archive':
-				resolvedPath = this.getLogPath( target );
+				resolvedPath = this.getLogPath( identifier );
 				break;
 			default:
-				resolvedPath = target;
+				resolvedPath = identifier;
 		}
 
 		if ( !resolvedPath ) {
-			console.log( 'Whoops, a missing or invalid value was provided for the following argument: `target`' );
+			console.log( 'Whoops, a missing or invalid value was provided for the following argument: `identifier`' );
 			return;
 		}
 
@@ -176,7 +153,7 @@ export default class Utils implements UtilsInstance {
 	}
 
 	getOrCreateLog( identifier = 'active' ) {
-		/// TODO
+		// Create 'active' or 'archive' log file if it doesn't exist.
 		try {
 			return fs.readFileSync( `${this.getLogPath( identifier )}`, 'utf8' );
 		} catch ( err ) {

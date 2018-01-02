@@ -26,7 +26,7 @@ export default function add( ARGS, utils ) {
 			return;
 		}
 
-		let log = utils.readActiveLog();
+		let log = utils.getLog( 'active' );
 		let { goals } = log;
 
 		// Create and update `goal`.
