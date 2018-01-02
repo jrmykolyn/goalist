@@ -6,4 +6,5 @@ export interface Goal {
 	title: string,
 	status: string,
 	description?: string,
+	active: boolean,
 };
