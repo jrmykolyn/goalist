@@ -8,7 +8,7 @@ function archive(ARGS, utils) {
             reject(null);
             return;
         }
-        var isActive = !ARGS.activate;
+        var isActive = !ARGS.active;
         var sourceData = isActive ? utils.getLog('active') : utils.getLog('archive');
         var targetData = isActive ? utils.getLog('archive') : utils.getLog('active');
         var goals = sourceData.goals;

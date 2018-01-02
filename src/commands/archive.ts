@@ -25,10 +25,10 @@ export default function archive( ARGS, utils ) {
 			return;
 		}
 
-		// Read in 'source' and 'target' data based on presence of '--activate' flag.
+		// Read in 'source' and 'target' data based on presence of '--active' flag.
 		// - If flag is present, 'archived data' is being activated.
 		// - Otherwise, 'active data' is being archived.
-		let isActive = !ARGS.activate;
+		let isActive = !ARGS.active;
 		let sourceData = isActive ? utils.getLog( 'active' ) : utils.getLog( 'archive' );
 		let targetData = isActive ? utils.getLog( 'archive' ) : utils.getLog( 'active' );
 
