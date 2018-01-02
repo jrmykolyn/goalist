@@ -53,19 +53,26 @@ export default class Utils implements UtilsInstance {
 		return `${this.getGoalistDirPath()}/logs`;
 	}
 
-	getActiveLogName() {
-		return 'goalist_active.log';
-	}
+	getLogPath( identifier = 'active' ) {
+		let output;
+		let dirPath = this.getDirPath();
 
-	getActiveLogPath() {
-		return `${this.getDirPath()}/${this.getActiveLogName()}`;
+		switch ( identifier ) {
+			case 'archive':
+				output = `${dirPath}/goalist_archive.log`;
+				break;
+			default:
+				output = `${dirPath}/goalist_active.log`;
+		}
+
+		return output;
 	}
 
 	readActiveLog() {
 		try {
-			return this.readLog( this.getActiveLogPath() );
+			return this.readLog( this.getLogPath( 'active' ) );
 		} catch ( err ) {
-			console.log( 'Whoops, unable to get log file for current day!' );
+			console.log( 'Whoops, unable to get log file for current day!' ); /// TODO
 
 			/// TODO[@jrmykolyn]: Consider only logging error message if program is running in 'verbose' mode.
 			console.log( err.message );
@@ -74,30 +81,15 @@ export default class Utils implements UtilsInstance {
 		}
 	}
 
-
-	getLogName( identifier ) {
-		identifier = ( identifier && typeof identifier === 'string' ) ? identifier : null;
-
-		if ( !identifier ) {
-			Debugger.log( 'Received invalid argument for `identifier`' );
-			return null;
-		}
-
-		return `goalist_${identifier}.log`;
-	}
-
-	getLogPath( identifier ) {
-		let logName = this.getLogName( identifier );
-		let dirPath = this.getDirPath(); /// TODO: Revisit.
-
-		return ( logName && dirPath ) ? `${dirPath}/${logName}` : null;
-	}
-
-	/// TODO: Consolidate with `readLog()`.
-	getLog( identifier ) {
+	readArchiveLog() {
 		try {
-			return this.readLog( this.getLogPath( identifier ) );
+			return this.readLog( this.getLogPath( 'archive' ) );
 		} catch ( err ) {
+			console.log( 'Whoops, unable to get log file for current day!' ); /// TODO
+
+			/// TODO[@jrmykolyn]: Consider only logging error message if program is running in 'verbose' mode.
+			console.log( err.message );
+
 			return null;
 		}
 	}
@@ -140,7 +132,8 @@ export default class Utils implements UtilsInstance {
 
 		switch ( target ) {
 			case 'active':
-				resolvedPath = this.getActiveLogPath();
+			case 'archive':
+				resolvedPath = this.getLogPath( target );
 				break;
 			default:
 				resolvedPath = target;
@@ -182,16 +175,16 @@ export default class Utils implements UtilsInstance {
 		}
 	}
 
-	getOrCreateActiveLog() {
-		// Create log file for current day if it doesn't exist.
+	getOrCreateLog( identifier = 'active' ) {
+		/// TODO
 		try {
-			return fs.readFileSync( `${this.getActiveLogPath()}`, 'utf8' );
+			return fs.readFileSync( `${this.getLogPath( identifier )}`, 'utf8' );
 		} catch ( err ) {
 			// Fetch template.
 			let template = this.getLogTemplate();
 
 			// Write data to file system.
-			return fs.writeFileSync( `${this.getActiveLogPath()}`, JSON.stringify( template ), 'utf8' );
+			return fs.writeFileSync( `${this.getLogPath( identifier )}`, JSON.stringify( template ), 'utf8' );
 		}
 	}
 }

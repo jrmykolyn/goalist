@@ -77,50 +77,14 @@ test( 'Test `getDirPath()`', ( t ) => {
 } );
 
 
-test( 'Test `getActiveLogName()`', ( t ) => {
-	let activeLogName = utils.getActiveLogName();
-
-	t.is( activeLogName, 'goalist_active.log' );
-} );
-
-test( 'Test `getActiveLogPath()`', ( t ) => {
-	let activeLogPath = utils.getActiveLogPath();
-
-	t.is( activeLogPath, `${utils.getDirPath()}/${utils.getActiveLogName()}` );
-} );
-
 test( 'Test `readActiveLog()`', ( t ) => {
 	let log = utils.readActiveLog();
 
 	t.is( log, null );
 } );
 
-test( 'Test `getLogName()`', ( t ) => {
-	/// TODO: Refactor creation/testing of `getLogName()` invocations.
-	let logName1 = utils.getLogName( '2001-01-01' );
-	let logName2 = utils.getLogName( [] );
-	let logName3 = utils.getLogName( {} );
-	let logName4 = utils.getLogName( 1 );
-	let logName5 = utils.getLogName( false );
+test.todo( 'Test `getLogPath()`' );
 
-	t.is( logName1, 'goalist_2001-01-01.log' );
-	t.is( logName2, null );
-	t.is( logName3, null );
-	t.is( logName4, null );
-	t.is( logName5, null );
-} );
-
-test( 'Test `getLogPath()`', ( t ) => {
-	let logPath = utils.getLogPath( '2001-01-01' );
-
-	t.is( logPath, `${setupOpts.goalistDir}/${setupOpts.logsDirName}/goalist_2001-01-01.log` );
-} );
-
-test( 'Test `getLog()`', ( t ) => {
-	let logData = utils.getLog( setupOpts.logIdentifier );
-
-	t.is( JSON.stringify( logData ), JSON.stringify( setupOpts.logData ) );
-} );
 
 test( 'Test `getLogNames()`', ( t ) => {
 	let logNames = utils.getLogNames();
@@ -158,8 +122,8 @@ test( 'Test `getOrCreateLogsDir()`', ( t ) => {
 	t.truthy( dir );
 } );
 
-test( 'Test `getOrCreateActiveLog()`', ( t ) => {
-	let result = utils.getOrCreateActiveLog();
+test( 'Test `getOrCreateLog()`', ( t ) => {
+	let result = utils.getOrCreateLog();
 
 	t.is( result, undefined );
 } );

@@ -3,6 +3,7 @@
 // --------------------------------------------------
 // Project
 import add from './add';
+import archive from './archive';
 import complete from './complete';
 import list from './list';
 import progress from './progress';
@@ -19,6 +20,8 @@ import version from './version';
 module.exports = {
 	add,
 	a: add,
+	archive,
+	ar: archive,
 	complete,
 	c: complete,
 	list,
