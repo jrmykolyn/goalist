@@ -26,7 +26,7 @@ export default function remove( ARGS, utils ) {
 			return;
 		}
 
-		let log = utils.readTodayLog();
+		let log = utils.readActiveLog();
 		let { goals } = log;
 		let goal = goals[ identifier ] || null;
 		let userConf = null;
@@ -54,7 +54,7 @@ export default function remove( ARGS, utils ) {
 				}
 
 				// Write new data back to file system.
-				utils.writeLog( 'today', JSON.stringify( log ) );
+				utils.writeLog( 'active', JSON.stringify( log ) );
 
 				resolve( log );
 			} else {

@@ -26,7 +26,7 @@ export default function add( ARGS, utils ) {
 			return;
 		}
 
-		let log = utils.readTodayLog();
+		let log = utils.readActiveLog();
 		let { goals } = log;
 
 		// Create and update `goal`.
@@ -36,13 +36,14 @@ export default function add( ARGS, utils ) {
 			title: ARGS._[ 1 ],
 			status: 'incomplete',
 			description: ARGS.description || '',
+			active: true,
 		};
 
 		// Add `goal`.
 		goals[ id ] = goal;
 
 		// Write new data back to file system.
-		utils.writeLog( 'today', JSON.stringify( log ) );
+		utils.writeLog( 'active', JSON.stringify( log ) );
 
 		console.log( `Successfully created goal: ${id}` );
 

@@ -26,7 +26,7 @@ export default function update( ARGS, utils ) {
 			return;
 		}
 
-		let log = utils.readTodayLog();
+		let log = utils.readActiveLog();
 		let { goals } = log;
 		let goal = goals[ identifier ] || null;
 
@@ -44,7 +44,7 @@ export default function update( ARGS, utils ) {
 		}
 
 		// Write new data back to file system.
-		utils.writeLog( 'today', JSON.stringify( log ) );
+		utils.writeLog( 'active', JSON.stringify( log ) );
 
 		resolve( log );
 	} );

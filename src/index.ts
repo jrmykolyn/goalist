@@ -31,7 +31,7 @@ class Goalist {
 
 	preflight( arr ) {
 		let COMMAND = this.COMMAND || arr[ 0 ];
-		let  ARGS = this.ARGS || arr[ 1 ];
+		let ARGS = this.ARGS || arr[ 1 ];
 
 		return new Promise( ( resolve, reject ) => {
 			// Ensure that `gl` is invoked with at least 1x arg.
@@ -47,7 +47,7 @@ class Goalist {
 			/// TODO: Consider building out wrapper function around `getOrCreate*()` methods.
 			let goalistDirData = utils.getOrCreateGoalistDir();
 			let logsDirData = utils.getOrCreateLogsDir();
-			let todayLogData = utils.getOrCreateTodayLog();
+			let todayLogData = utils.getOrCreateActiveLog();
 
 			// Validate `COMMAND`, log error message otherwise.
 			if ( COMMAND in commands ) {
@@ -63,7 +63,7 @@ class Goalist {
 
 	run( arr ) {
 		let COMMAND = this.COMMAND || arr[ 0 ];
-		let  ARGS = this.ARGS || arr[ 1 ];
+		let ARGS = this.ARGS || arr[ 1 ];
 
 		return new Promise( ( resolve, reject ) => {
 			if ( COMMAND in commands ) {

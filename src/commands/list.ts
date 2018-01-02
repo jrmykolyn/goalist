@@ -16,7 +16,7 @@
 // --------------------------------------------------
 export default function list( ARGS, utils ) {
 	return new Promise( ( resolve, reject ) => {
-		let log = utils.readTodayLog();
+		let log = utils.readActiveLog();
 		let { goals } = log;
 		let outputKeys = null;
 
@@ -24,16 +24,15 @@ export default function list( ARGS, utils ) {
 		Object.keys( goals ).forEach( function( key ) {
 			let goal = goals[ key ];
 
-			// Update `outputKeys` if not already set.
+			// Update `outputKeys` for current `goal`.
 			/// TODO[@jrmykolyn]: Move this outside of loop.
-			if ( !outputKeys ) {
-				outputKeys = ( ARGS.only && typeof ARGS.only === 'string' ) ? ARGS.only.split( ',' ) : Object.keys( goal );
-			}
+			/// NOTE: Since not all `goal` objects are exactly the same, `outputKeys` must be updated within each loop iteration.
+			outputKeys = ( ARGS.only && typeof ARGS.only === 'string' ) ? ARGS.only.split( ',' ) : Object.keys( goal );
 
 			// Always log out ID of current goal.
 			console.log( `Identifier: ${key}` );
 
-			// Conditional log out additional goal info.
+			// Conditionally log out additional goal info.
 			for ( let prop in goal ) {
 				if ( outputKeys.includes( prop ) ) {
 					console.log(  `${prop}: ${goal[ prop ]}\r`  );

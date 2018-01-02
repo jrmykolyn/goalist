@@ -53,36 +53,17 @@ export default class Utils implements UtilsInstance {
 		return `${this.getGoalistDirPath()}/logs`;
 	}
 
-	getTodayHandle() {
-		let d = new Date();
-
-		// NOTE: Take into account UTC offset when calculating 'today'.
-		let today = new Date( d.getTime() - ( d.getTimezoneOffset() * 60 * 1000 ) );
-
-		let year: number|string = today.getFullYear();
-		let month: number|string = ( today.getUTCMonth() + 1 );
-		let day: number|string = today.getUTCDate();
-
-		// Ensure that `month`/`day` identifiers are always two characters (eg. '09'). Required for sorting purposes.
-		month = ( month >= 10 ) ? month : '0' + month;
-		day = ( day >= 10 ) ? day : '0' + day;
-
-		let todayDirName = `${year}-${month}-${day}`;
-
-		return todayDirName;
+	getActiveLogName() {
+		return 'goalist_active.log';
 	}
 
-	getTodayLogName() {
-		return `goalist_${this.getTodayHandle()}.log`;
+	getActiveLogPath() {
+		return `${this.getDirPath()}/${this.getActiveLogName()}`;
 	}
 
-	getTodayLogPath() {
-		return `${this.getDirPath()}/${this.getTodayLogName()}`;
-	}
-
-	readTodayLog() {
+	readActiveLog() {
 		try {
-			return this.readLog( this.getTodayLogPath() );
+			return this.readLog( this.getActiveLogPath() );
 		} catch ( err ) {
 			console.log( 'Whoops, unable to get log file for current day!' );
 
@@ -93,44 +74,6 @@ export default class Utils implements UtilsInstance {
 		}
 	}
 
-	getLatestLogName() {
-		try {
-			let logs = this.getLogNames();
-
-			if ( !logs || !Array.isArray( logs ) || !logs.length ) {
-				throw new Error( 'Failed to fetch log files.' );
-			}
-
-			let latestLog = logs.filter( ( log ) => {
-				return log.substring( 0, 1 ) !== '.'; /// TODO[@jrmykolyn]: Filter by regex/pattern match.
-			} )
-			.sort()
-			.reverse()[ 0 ];
-
-			if ( !latestLog ) {
-				throw new Error( 'Failed to extract latest log file from collection' );
-			}
-
-			return latestLog;
-		} catch ( err ) {
-			return null;
-		}
-	}
-
-	getLatestLogPath() {
-		let dirPath = this.getDirPath();
-		let latestLog = this.getLatestLogName();
-
-		return ( dirPath && latestLog ) ? `${dirPath}/${latestLog}` : null;
-	}
-
-	readLatestLog() {
-		try {
-			return this.readLog( this.getLatestLogPath() );
-		} catch ( err ) {
-			return null;
-		}
-	}
 
 	getLogName( identifier ) {
 		identifier = ( identifier && typeof identifier === 'string' ) ? identifier : null;
@@ -161,11 +104,11 @@ export default class Utils implements UtilsInstance {
 
 	/// TODO: Update method name and references: `getLogNames()`.
 	getLogNames() {
-	 	try {
+		try {
 			return fs.readdirSync( this.getDirPath(), 'utf8' );
-	 	} catch ( err ) {
+		} catch ( err ) {
 			return null;
-	 	}
+		}
 	}
 
 	readLog( path, options? ) {
@@ -196,8 +139,8 @@ export default class Utils implements UtilsInstance {
 		let resolvedPath;
 
 		switch ( target ) {
-			case 'today':
-				resolvedPath = this.getTodayLogPath();
+			case 'active':
+				resolvedPath = this.getActiveLogPath();
 				break;
 			default:
 				resolvedPath = target;
@@ -239,30 +182,16 @@ export default class Utils implements UtilsInstance {
 		}
 	}
 
-	getOrCreateTodayLog() {
+	getOrCreateActiveLog() {
 		// Create log file for current day if it doesn't exist.
 		try {
-			return fs.readFileSync( `${this.getTodayLogPath()}`, 'utf8' );
+			return fs.readFileSync( `${this.getActiveLogPath()}`, 'utf8' );
 		} catch ( err ) {
-			// Fetch: template; latest log data.
+			// Fetch template.
 			let template = this.getLogTemplate();
-			let latestLog = this.readLatestLog();
-			let latestGoals = ( latestLog && latestLog.goals ) ? latestLog.goals : {};
-
-			// Remove any goals which are not 'incomplete'.
-			for ( let key in latestGoals ) {
-				let goal = latestGoals[ key ];
-
-				if ( goal.status !== 'incomplete' ) {
-					delete latestGoals[ key ];
-				}
-			}
-
-			// Update template with additional 'goals'.
-			template.goals = merge( template.goals, latestGoals );
 
 			// Write data to file system.
-			return fs.writeFileSync( `${this.getTodayLogPath()}`, JSON.stringify( template ), 'utf8' );
+			return fs.writeFileSync( `${this.getActiveLogPath()}`, JSON.stringify( template ), 'utf8' );
 		}
 	}
 }

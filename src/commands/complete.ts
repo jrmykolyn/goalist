@@ -26,7 +26,7 @@ export default function complete( ARGS, utils ) {
 		}
 
 		/// TODO[@jrmykolyn]: Consolidate with identical logic in other subcommands.
-		let log = utils.readTodayLog();
+		let log = utils.readActiveLog();
 		let { goals } = log;
 		let goal = goals[ identifier ] || null;
 
@@ -47,7 +47,7 @@ export default function complete( ARGS, utils ) {
 			goal.status = 'complete';
 		}
 
-		utils.writeLog( 'today', JSON.stringify( log ) );
+		utils.writeLog( 'active', JSON.stringify( log ) );
 
 		resolve( log );
 		return;

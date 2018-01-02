@@ -17,7 +17,7 @@ import * as barHorizontal from 'bar-horizontal';
 // --------------------------------------------------
 export default function progress( ARGS, utils ) {
 	return new Promise( ( resolve, reject ) => {
-		let log = utils.readTodayLog();
+		let log = utils.readActiveLog();
 		let { goals } = log;
 
 		/// TODO[@jrmykolyn]: Consider pulling 'get incomplete'/'get complete' logic into dedicated `utils` methods.
