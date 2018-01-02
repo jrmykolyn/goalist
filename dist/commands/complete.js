@@ -8,7 +8,7 @@ function complete(ARGS, utils) {
             reject(null);
             return;
         }
-        var log = utils.readActiveLog();
+        var log = utils.getLog('active');
         var goals = log.goals;
         var goal = goals[identifier] || null;
         if (!goal) {
@@ -17,11 +17,11 @@ function complete(ARGS, utils) {
             return;
         }
         if (ARGS["false"]) {
-            console.log("Setting the following tast to 'incomplete': " + identifier);
+            console.log("Setting the following task to 'incomplete': " + identifier);
             goal.status = 'incomplete';
         }
         else {
-            console.log("Setting the following tast to 'complete': " + identifier);
+            console.log("Setting the following task to 'complete': " + identifier);
             goal.status = 'complete';
         }
         utils.writeLog('active', JSON.stringify(log));

@@ -3,7 +3,7 @@ exports.__esModule = true;
 var barHorizontal = require("bar-horizontal");
 function progress(ARGS, utils) {
     return new Promise(function (resolve, reject) {
-        var log = utils.readActiveLog();
+        var log = utils.getLog('active');
         var goals = log.goals;
         var totalGoals = Object.keys(goals).length;
         var numComplete = Object.keys(goals).filter(function (id) { return goals[id].status !== 'incomplete'; }).length;

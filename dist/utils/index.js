@@ -4,7 +4,6 @@ var fs = require("fs");
 var os = require("os");
 var path = require("path");
 var pkgDir = require("pkg-dir");
-var debugger_1 = require("../debugger");
 var root = pkgDir.sync(__dirname);
 var Utils = (function () {
     function Utils(opts) {
@@ -25,48 +24,27 @@ var Utils = (function () {
     Utils.prototype.getDirPath = function () {
         return this.getGoalistDirPath() + "/logs";
     };
-    Utils.prototype.getActiveLogName = function () {
-        return 'goalist_active.log';
-    };
-    Utils.prototype.getActiveLogPath = function () {
-        return this.getDirPath() + "/" + this.getActiveLogName();
-    };
-    Utils.prototype.readActiveLog = function () {
-        try {
-            return this.readLog(this.getActiveLogPath());
-        }
-        catch (err) {
-            console.log('Whoops, unable to get log file for current day!');
-            console.log(err.message);
-            return null;
-        }
-    };
-    Utils.prototype.getLogName = function (identifier) {
-        identifier = (identifier && typeof identifier === 'string') ? identifier : null;
-        if (!identifier) {
-            debugger_1["default"].log('Received invalid argument for `identifier`');
-            return null;
-        }
-        return "goalist_" + identifier + ".log";
-    };
     Utils.prototype.getLogPath = function (identifier) {
-        var logName = this.getLogName(identifier);
+        if (identifier === void 0) { identifier = 'active'; }
+        var output;
         var dirPath = this.getDirPath();
-        return (logName && dirPath) ? dirPath + "/" + logName : null;
+        switch (identifier) {
+            case 'archive':
+                output = dirPath + "/goalist_archive.log";
+                break;
+            default:
+                output = dirPath + "/goalist_active.log";
+        }
+        return output;
     };
     Utils.prototype.getLog = function (identifier) {
+        if (identifier === void 0) { identifier = 'active'; }
         try {
             return this.readLog(this.getLogPath(identifier));
         }
         catch (err) {
-            return null;
-        }
-    };
-    Utils.prototype.getLogNames = function () {
-        try {
-            return fs.readdirSync(this.getDirPath(), 'utf8');
-        }
-        catch (err) {
+            console.log("Whoops, unable to get the following log file: " + identifier);
+            console.log(err.message);
             return null;
         }
     };
@@ -85,20 +63,21 @@ var Utils = (function () {
             return null;
         }
     };
-    Utils.prototype.writeLog = function (target, data, options) {
-        target = (target && typeof target === 'string') ? target : null;
+    Utils.prototype.writeLog = function (identifier, data, options) {
+        identifier = (identifier && typeof identifier === 'string') ? identifier : null;
         data = (typeof data !== 'undefined' && data !== null) ? data : null;
         options = (options && typeof options === 'object') ? options : {};
         var resolvedPath;
-        switch (target) {
+        switch (identifier) {
             case 'active':
-                resolvedPath = this.getActiveLogPath();
+            case 'archive':
+                resolvedPath = this.getLogPath(identifier);
                 break;
             default:
-                resolvedPath = target;
+                resolvedPath = identifier;
         }
         if (!resolvedPath) {
-            console.log('Whoops, a missing or invalid value was provided for the following argument: `target`');
+            console.log('Whoops, a missing or invalid value was provided for the following argument: `identifier`');
             return;
         }
         try {
@@ -128,13 +107,14 @@ var Utils = (function () {
             return fs.mkdirSync("" + this.getDirPath());
         }
     };
-    Utils.prototype.getOrCreateActiveLog = function () {
+    Utils.prototype.getOrCreateLog = function (identifier) {
+        if (identifier === void 0) { identifier = 'active'; }
         try {
-            return fs.readFileSync("" + this.getActiveLogPath(), 'utf8');
+            return fs.readFileSync("" + this.getLogPath(identifier), 'utf8');
         }
         catch (err) {
             var template = this.getLogTemplate();
-            return fs.writeFileSync("" + this.getActiveLogPath(), JSON.stringify(template), 'utf8');
+            return fs.writeFileSync("" + this.getLogPath(identifier), JSON.stringify(template), 'utf8');
         }
     };
     return Utils;

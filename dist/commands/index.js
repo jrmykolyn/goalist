@@ -1,6 +1,7 @@
 "use strict";
 exports.__esModule = true;
 var add_1 = require("./add");
+var archive_1 = require("./archive");
 var complete_1 = require("./complete");
 var list_1 = require("./list");
 var progress_1 = require("./progress");
@@ -10,6 +11,8 @@ var version_1 = require("./version");
 module.exports = {
     add: add_1["default"],
     a: add_1["default"],
+    archive: archive_1["default"],
+    ar: archive_1["default"],
     complete: complete_1["default"],
     c: complete_1["default"],
     list: list_1["default"],

@@ -9,7 +9,7 @@ function remove(ARGS, utils) {
             reject(null);
             return;
         }
-        var log = utils.readActiveLog();
+        var log = utils.getLog('active');
         var goals = log.goals;
         var goal = goals[identifier] || null;
         var userConf = null;

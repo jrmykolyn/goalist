@@ -8,7 +8,7 @@ function add(ARGS, utils) {
             reject(null);
             return;
         }
-        var log = utils.readActiveLog();
+        var log = utils.getLog('active');
         var goals = log.goals;
         var id = new Date().getTime();
         var goal = {
