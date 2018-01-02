@@ -8,17 +8,18 @@ function add(ARGS, utils) {
             reject(null);
             return;
         }
-        var log = utils.readTodayLog();
+        var log = utils.readActiveLog();
         var goals = log.goals;
         var id = new Date().getTime();
         var goal = {
             id: id,
             title: ARGS._[1],
             status: 'incomplete',
-            description: ARGS.description || ''
+            description: ARGS.description || '',
+            active: true
         };
         goals[id] = goal;
-        utils.writeLog('today', JSON.stringify(log));
+        utils.writeLog('active', JSON.stringify(log));
         console.log("Successfully created goal: " + id);
         resolve(log);
     });

@@ -8,7 +8,7 @@ function complete(ARGS, utils) {
             reject(null);
             return;
         }
-        var log = utils.readTodayLog();
+        var log = utils.readActiveLog();
         var goals = log.goals;
         var goal = goals[identifier] || null;
         if (!goal) {
@@ -24,7 +24,7 @@ function complete(ARGS, utils) {
             console.log("Setting the following tast to 'complete': " + identifier);
             goal.status = 'complete';
         }
-        utils.writeLog('today', JSON.stringify(log));
+        utils.writeLog('active', JSON.stringify(log));
         resolve(log);
         return;
     });

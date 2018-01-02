@@ -9,7 +9,7 @@ function remove(ARGS, utils) {
             reject(null);
             return;
         }
-        var log = utils.readTodayLog();
+        var log = utils.readActiveLog();
         var goals = log.goals;
         var goal = goals[identifier] || null;
         var userConf = null;
@@ -30,7 +30,7 @@ function remove(ARGS, utils) {
                         delete goals[key];
                     }
                 }
-                utils.writeLog('today', JSON.stringify(log));
+                utils.writeLog('active', JSON.stringify(log));
                 resolve(log);
             }
             else {

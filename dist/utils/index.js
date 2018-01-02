@@ -4,7 +4,6 @@ var fs = require("fs");
 var os = require("os");
 var path = require("path");
 var pkgDir = require("pkg-dir");
-var merge = require("merge");
 var debugger_1 = require("../debugger");
 var root = pkgDir.sync(__dirname);
 var Utils = (function () {
@@ -26,63 +25,19 @@ var Utils = (function () {
     Utils.prototype.getDirPath = function () {
         return this.getGoalistDirPath() + "/logs";
     };
-    Utils.prototype.getTodayHandle = function () {
-        var d = new Date();
-        var today = new Date(d.getTime() - (d.getTimezoneOffset() * 60 * 1000));
-        var year = today.getFullYear();
-        var month = (today.getUTCMonth() + 1);
-        var day = today.getUTCDate();
-        month = (month >= 10) ? month : '0' + month;
-        day = (day >= 10) ? day : '0' + day;
-        var todayDirName = year + "-" + month + "-" + day;
-        return todayDirName;
+    Utils.prototype.getActiveLogName = function () {
+        return 'goalist_active.log';
     };
-    Utils.prototype.getTodayLogName = function () {
-        return "goalist_" + this.getTodayHandle() + ".log";
+    Utils.prototype.getActiveLogPath = function () {
+        return this.getDirPath() + "/" + this.getActiveLogName();
     };
-    Utils.prototype.getTodayLogPath = function () {
-        return this.getDirPath() + "/" + this.getTodayLogName();
-    };
-    Utils.prototype.readTodayLog = function () {
+    Utils.prototype.readActiveLog = function () {
         try {
-            return this.readLog(this.getTodayLogPath());
+            return this.readLog(this.getActiveLogPath());
         }
         catch (err) {
             console.log('Whoops, unable to get log file for current day!');
             console.log(err.message);
-            return null;
-        }
-    };
-    Utils.prototype.getLatestLogName = function () {
-        try {
-            var logs = this.getLogNames();
-            if (!logs || !Array.isArray(logs) || !logs.length) {
-                throw new Error('Failed to fetch log files.');
-            }
-            var latestLog = logs.filter(function (log) {
-                return log.substring(0, 1) !== '.';
-            })
-                .sort()
-                .reverse()[0];
-            if (!latestLog) {
-                throw new Error('Failed to extract latest log file from collection');
-            }
-            return latestLog;
-        }
-        catch (err) {
-            return null;
-        }
-    };
-    Utils.prototype.getLatestLogPath = function () {
-        var dirPath = this.getDirPath();
-        var latestLog = this.getLatestLogName();
-        return (dirPath && latestLog) ? dirPath + "/" + latestLog : null;
-    };
-    Utils.prototype.readLatestLog = function () {
-        try {
-            return this.readLog(this.getLatestLogPath());
-        }
-        catch (err) {
             return null;
         }
     };
@@ -136,8 +91,8 @@ var Utils = (function () {
         options = (options && typeof options === 'object') ? options : {};
         var resolvedPath;
         switch (target) {
-            case 'today':
-                resolvedPath = this.getTodayLogPath();
+            case 'active':
+                resolvedPath = this.getActiveLogPath();
                 break;
             default:
                 resolvedPath = target;
@@ -173,22 +128,13 @@ var Utils = (function () {
             return fs.mkdirSync("" + this.getDirPath());
         }
     };
-    Utils.prototype.getOrCreateTodayLog = function () {
+    Utils.prototype.getOrCreateActiveLog = function () {
         try {
-            return fs.readFileSync("" + this.getTodayLogPath(), 'utf8');
+            return fs.readFileSync("" + this.getActiveLogPath(), 'utf8');
         }
         catch (err) {
             var template = this.getLogTemplate();
-            var latestLog = this.readLatestLog();
-            var latestGoals = (latestLog && latestLog.goals) ? latestLog.goals : {};
-            for (var key in latestGoals) {
-                var goal = latestGoals[key];
-                if (goal.status !== 'incomplete') {
-                    delete latestGoals[key];
-                }
-            }
-            template.goals = merge(template.goals, latestGoals);
-            return fs.writeFileSync("" + this.getTodayLogPath(), JSON.stringify(template), 'utf8');
+            return fs.writeFileSync("" + this.getActiveLogPath(), JSON.stringify(template), 'utf8');
         }
     };
     return Utils;
