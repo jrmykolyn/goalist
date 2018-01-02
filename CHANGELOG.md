@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.7.1] - 2018-01-02
+### Changed
+- Fixed incorrect output path in `gulpfile.js`: changed from `./lib` to `./dist`.
+- Updated `TODO.md`.
+
 ## [0.7.0] - 2017-11-22
 ### Added
 - Adding the following dependencies: `merge`;
