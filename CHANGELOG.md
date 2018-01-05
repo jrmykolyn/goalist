@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- Updated shape of 'goal' data: changed 'status' to 'complete'.
+- Updated `Utils` module: added new helper methods; built out tests.
+- Updated `README.md`.
+
 ## [0.8.0] - 2018-01-02
 ### Added
 -  Added `archive` subcommand.
