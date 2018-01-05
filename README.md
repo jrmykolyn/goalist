@@ -66,10 +66,10 @@ gl list --archive
 `list` may be invoked with the `--only` flag/argument. When provided with a series of comma delimited strings, `--only` limits the output of `list` to the the properties which match the provided strings.
 
 ```
-gl list --only=title,status
+gl list --only=title,complete
 
 // title: My New Goal
-// status: Incomplete
+// complete: true
 ```
 
 ### `update` / `u`
@@ -85,7 +85,7 @@ This command is used to set the status of a specific goal to 'complete'.
 ```
 gl complete {{ ID }}
 
-// Please note: this is equivalent to invoking: gl update {{ ID }} --status="complete"
+// Please note: this is equivalent to invoking: gl update {{ ID }} --complete=true
 ```
 
 This command can also be used to set the status of a goal to 'incomplete'.
@@ -93,7 +93,7 @@ This command can also be used to set the status of a goal to 'incomplete'.
 ```
 gl complete {{ ID }} --false
 
-// Please note: this is equivalent to invoking: gl update {{ ID }} --status="incomplete"
+// Please note: this is equivalent to invoking: gl update {{ ID }} --complete=false
 ```
 
 ### `remove` / `r`
