@@ -6,7 +6,7 @@ function progress(ARGS, utils) {
         var log = utils.getLog('active');
         var goals = log.goals;
         var totalGoals = Object.keys(goals).length;
-        var numComplete = Object.keys(goals).filter(function (id) { return goals[id].status !== 'incomplete'; }).length;
+        var numComplete = utils.getComplete(goals).length;
         var numIncomplete = totalGoals - numComplete;
         console.log("OVERVIEW");
         console.log("Total: " + totalGoals + "\r");

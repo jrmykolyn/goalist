@@ -117,6 +117,21 @@ var Utils = (function () {
             return fs.writeFileSync("" + this.getLogPath(identifier), JSON.stringify(template), 'utf8');
         }
     };
+    Utils.prototype.getComplete = function (goals) {
+        var _this = this;
+        if (!goals || typeof goals !== 'object') {
+            return null;
+        }
+        return Object.keys(goals)
+            .filter(function (id) { return _this.checkComplete(goals[id]); })
+            .map(function (id) { return goals[id]; });
+    };
+    Utils.prototype.checkComplete = function (goal) {
+        if (!goal || typeof goal !== 'object') {
+            return null;
+        }
+        return !!goal.complete;
+    };
     return Utils;
 }());
 exports["default"] = Utils;

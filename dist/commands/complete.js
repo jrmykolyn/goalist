@@ -17,12 +17,12 @@ function complete(ARGS, utils) {
             return;
         }
         if (ARGS["false"]) {
-            console.log("Setting the following task to 'incomplete': " + identifier);
-            goal.status = 'incomplete';
+            console.log("Setting the following task to incomplete: " + identifier);
+            goal.complete = false;
         }
         else {
-            console.log("Setting the following task to 'complete': " + identifier);
-            goal.status = 'complete';
+            console.log("Setting the following task to complete: " + identifier);
+            goal.complete = true;
         }
         utils.writeLog('active', JSON.stringify(log));
         resolve(log);

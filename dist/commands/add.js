@@ -14,8 +14,8 @@ function add(ARGS, utils) {
         var goal = {
             id: id,
             title: ARGS._[1],
-            status: 'incomplete',
             description: ARGS.description || '',
+            complete: false,
             active: true
         };
         goals[id] = goal;
