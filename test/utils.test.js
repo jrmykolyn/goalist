@@ -115,3 +115,38 @@ test( 'Test `getOrCreateLog()`', ( t ) => {
 
 	t.is( result, undefined );
 } );
+
+test( 'Test `getComplete()`', ( t ) => {
+	let goals = {};
+	let num = 3;
+
+	for ( let i = 0, x = num; i < x; i++ ) {
+		let id = new Date().getTime() + i; // Add `i` to id/timestamp to prevent possible overwriting of keys.
+		let isComplete = i % 2 === 0;
+
+		goals[ id ] = {
+			id: id,
+			name: `My ${isComplete ? 'complete' : 'incomplete'} goal.`,
+			description: '',
+			complete: isComplete,
+			active: true,
+		};
+	}
+
+	let completeGoals = utils.getComplete( goals );
+
+	t.is( completeGoals.length, Math.ceil( num / 2 ) );
+} );
+
+test( 'Test `checkComplete()`', ( t ) => {
+	let goal = {
+		id: new Date().getTime(),
+		name: 'My complete goal',
+		complete: true,
+		active: true,
+	};
+
+	let isComplete = utils.checkComplete( goal );
+
+	t.true( isComplete );
+} );
