@@ -37,14 +37,14 @@ export default function complete( ARGS, utils ) {
 			return;
 		}
 
-		// If invoked with the `--false` flag, set matched goal status 'incomplete'.
-		// Otherwise, set status to complete.
+		// If invoked with the `--false` flag, set matched goal to incomplete.
+		// Otherwise, set to complete.
 		if ( ARGS.false ) {
-			console.log( `Setting the following task to 'incomplete': ${identifier}` );
-			goal.status = 'incomplete';
+			console.log( `Setting the following task to incomplete: ${identifier}` );
+			goal.complete = false;
 		} else {
-			console.log( `Setting the following task to 'complete': ${identifier}` );
-			goal.status = 'complete';
+			console.log( `Setting the following task to complete: ${identifier}` );
+			goal.complete = true;
 		}
 
 		utils.writeLog( 'active', JSON.stringify( log ) );

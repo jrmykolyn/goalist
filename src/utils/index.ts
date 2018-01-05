@@ -164,4 +164,22 @@ export default class Utils implements UtilsInstance {
 			return fs.writeFileSync( `${this.getLogPath( identifier )}`, JSON.stringify( template ), 'utf8' );
 		}
 	}
+
+	getComplete( goals ) {
+		if ( !goals || typeof goals !== 'object' ) {
+			return null;
+		}
+
+		return Object.keys( goals )
+			.filter( ( id ) => { return this.checkComplete( goals[ id ] ); } )
+			.map( ( id ) => { return goals[ id ]; } );
+	}
+
+	checkComplete( goal ) {
+		if ( !goal || typeof goal !== 'object' ) {
+			return null;
+		}
+
+		return !!goal.complete;
+	}
 }

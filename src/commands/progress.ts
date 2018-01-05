@@ -20,9 +20,8 @@ export default function progress( ARGS, utils ) {
 		let log = utils.getLog( 'active' );
 		let { goals } = log;
 
-		/// TODO[@jrmykolyn]: Consider pulling 'get incomplete'/'get complete' logic into dedicated `utils` methods.
 		let totalGoals = Object.keys( goals ).length;
-		let numComplete = Object.keys( goals ).filter( id => goals[ id ].status !== 'incomplete' ).length;
+		let numComplete = utils.getComplete( goals ).length;
 		let numIncomplete = totalGoals - numComplete;
 
 		console.log( `OVERVIEW`);

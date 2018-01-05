@@ -34,8 +34,8 @@ export default function add( ARGS, utils ) {
 		let goal: Goal = {
 			id: id,
 			title: ARGS._[ 1 ],
-			status: 'incomplete',
 			description: ARGS.description || '',
+			complete: false,
 			active: true,
 		};
 
