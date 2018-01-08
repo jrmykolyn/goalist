@@ -23,6 +23,7 @@ function update(ARGS, utils) {
             }
         }
         utils.writeLog('active', JSON.stringify(log));
+        console.log("Successfully updated the follow properties: " + Object.keys(ARGS).filter(function (key) { return key !== '_'; }).join('; '));
         resolve(log);
     });
 }

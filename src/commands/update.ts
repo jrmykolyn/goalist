@@ -46,6 +46,9 @@ export default function update( ARGS, utils ) {
 		// Write new data back to file system.
 		utils.writeLog( 'active', JSON.stringify( log ) );
 
+		// Log out updated properties.
+		console.log( `Successfully updated the follow properties: ${ Object.keys( ARGS ).filter( key => key !== '_' ).join( '; ' ) }` );
+
 		resolve( log );
 	} );
 }
