@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Added support for 'help' menu (access via `--help`).
+- Added [`meow`](http://npmjs.com/package/meow) to development dependencies.
+
 ### Changed
 - Updated 'update' command to display output when 1+ properties are successfully updated.
 
