@@ -9,6 +9,7 @@ const os = require( 'os' );
 
 // Vendor
 const parseArgs = require( 'minimist' );
+const meow = require( 'meow' );
 
 // Project
 const Goalist = require( './dist' );
@@ -21,6 +22,23 @@ var COMMAND = process.argv.slice( 2, 3 );
 var ARGS = parseArgs( process.argv.slice( 2 ) );
 
 var goalist = new Goalist( [ COMMAND, ARGS ] );
+
+var cli = meow( `
+	USAGE:
+
+		$ gl {{ COMMAND }} {{ ARGS }}
+
+	COMMANDS:
+
+		add / a - Add a new goal.
+		archive / ar - Archive a goal.
+		complete / c - Set a goal's status to complete.
+		list / l - List goals.
+		progress / p - Display complete/incomplete goals as a bar chart.
+		remove / r - Remove a goal.
+		update / u - Update the properties of a goal.
+		version / v - Display that Goalist version.
+` );
 
 
 // --------------------------------------------------
@@ -36,6 +54,6 @@ goalist
 			/// TODO
 		},
 		( err ) => {
-			/// TODO
+			cli.showHelp();
 		}
 	);
