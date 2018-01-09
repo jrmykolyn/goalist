@@ -22,6 +22,8 @@ Goalist does not require any additional configuration.
 ## Usage
 `goalist` exposes the `gl` command, which can be run from the command line. `goalist` also ships with a selection of subcommands. Each subcommand can be invoked using its full name (eg. `add`), or via a single character alias (eg. `a`). See below for the full list commands.
 
+A help menu can be access by invoking `goalist` with the `--help` flag (eg. `goalist --help`).
+
 ### `add` / `a`
 This command is used to add a new goal to the log file for the current.
 
