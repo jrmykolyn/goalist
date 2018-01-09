@@ -47,7 +47,7 @@ export default function update( ARGS, utils ) {
 		utils.writeLog( 'active', JSON.stringify( log ) );
 
 		// Log out updated properties.
-		console.log( `Successfully updated the follow properties: ${ Object.keys( ARGS ).filter( key => key !== '_' ).join( '; ' ) }` );
+		console.log( `Successfully updated the following properties: ${ Object.keys( ARGS ).filter( key => key !== '_' ).join( '; ' ) }` );
 
 		resolve( log );
 	} );
