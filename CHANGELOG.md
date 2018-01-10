@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- Added tests for 'Goalist'.
+
+### Changed
+- Fixed issue where 'main' field in `package.json` file pointed to CLI script.
+
 ## [0.10.1] - 2018-01-09
 ### Changed
 - Transpiled TypeScript.
