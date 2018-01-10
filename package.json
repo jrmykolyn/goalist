@@ -2,7 +2,7 @@
   "name": "goalist",
   "version": "0.10.1",
   "description": "Goalist is a command line tool for managing daily goals.",
-  "main": "index.js",
+  "main": "./dist",
   "scripts": {
     "test": "nyc ava",
     "test:verbose": "nyc ava --verbose",
