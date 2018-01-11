@@ -9,7 +9,6 @@ import list from './list';
 import progress from './progress';
 import remove from './remove';
 import update from './update';
-import version from './version';
 
 // --------------------------------------------------
 // PUBLIC API
@@ -32,6 +31,4 @@ module.exports = {
 	r: remove,
 	update,
 	u: update,
-	version,
-	v: version
 };
