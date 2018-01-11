@@ -31,7 +31,6 @@ var cli = meow( `
 		progress / p - Display complete/incomplete goals as a bar chart.
 		remove / r - Remove a goal.
 		update / u - Update the properties of a goal.
-		version / v - Display that Goalist version.
 ` );
 
 var COMMAND = cli.input.slice( 0, 1 );
