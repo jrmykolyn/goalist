@@ -21,6 +21,17 @@
     "url": "https://github.com/jrmykolyn/goalist/issues"
   },
   "homepage": "https://github.com/jrmykolyn/goalist#readme",
+  "keywords": [
+      "goal",
+      "goals",
+      "goalist",
+      "helper",
+      "cli",
+      "manage",
+      "daily",
+      "tool",
+      "todo"
+  ],
   "devDependencies": {
     "@types/node": "^8.0.53",
     "@types/object-assign": "^4.0.30",
