@@ -16,9 +16,9 @@ const keyBlacklist = [ '_' ];
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function update( ARGS, utils ) {
+export default function update( INPUT, ARGS, utils ) {
 	return new Promise( ( resolve, reject ) => {
-		let identifier = ARGS._[ 1 ] || null;
+		let identifier = INPUT[ 0 ] || null;
 
 		if ( !identifier ) {
 			console.log( 'Whoops, `update` must be invoked with a valid `identifier` argument.' );

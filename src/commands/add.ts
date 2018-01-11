@@ -16,9 +16,9 @@ import { Goal } from '../interfaces';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function add( ARGS, utils ) {
+export default function add( INPUT, ARGS, utils ) {
 	return new Promise( ( resolve, reject ) => {
-		let title = ARGS._[ 1 ] || null;
+		let title = INPUT[ 0 ] || null;
 
 		if ( !title ) {
 			console.log( 'Whoops, `add` must be invoked with a valid `title` argument.' );
@@ -33,7 +33,7 @@ export default function add( ARGS, utils ) {
 		let id = new Date().getTime();
 		let goal: Goal = {
 			id: id,
-			title: ARGS._[ 1 ],
+			title: title,
 			description: ARGS.description || '',
 			complete: false,
 			active: true,

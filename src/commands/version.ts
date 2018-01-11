@@ -16,7 +16,7 @@ const pkg = require( `${pkgDir.sync( __dirname )}/package.json` ); // NOTE: `pac
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function version( ARGS, utils ) {
+export default function version( INPUT, ARGS, utils ) {
 	return new Promise( ( resolve, reject ) => {
 		console.log( pkg.version );
 		resolve( pkg.version );

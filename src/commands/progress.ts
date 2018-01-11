@@ -15,7 +15,7 @@ import * as barHorizontal from 'bar-horizontal';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function progress( ARGS, utils ) {
+export default function progress( INPUT, ARGS, utils ) {
 	return new Promise( ( resolve, reject ) => {
 		let log = utils.getLog( 'active' );
 		let { goals } = log;

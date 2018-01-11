@@ -14,9 +14,9 @@
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function complete( ARGS, utils ) {
+export default function complete( INPUT, ARGS, utils ) {
 	return new Promise( ( resolve, reject ) => {
-		let identifier = ARGS._[ 1 ] || null;
+		let identifier = INPUT[ 0 ] || null;
 
 		/// TODO[@jrmykolyn]: Consolidate with *almost* identical logic in other subcommands.
 		if ( !identifier ) {

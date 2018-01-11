@@ -14,7 +14,7 @@
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function list( ARGS, utils ) {
+export default function list( INPUT, ARGS, utils ) {
 	return new Promise( ( resolve, reject ) => {
 		let displayArchive = ARGS.archive;
 		let log = displayArchive ? utils.getLog( 'archive' ) : utils.getLog( 'active' );

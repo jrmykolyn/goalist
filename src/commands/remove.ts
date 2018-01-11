@@ -16,9 +16,9 @@ import * as readline from 'readline';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function remove( ARGS, utils ) {
+export default function remove( INPUT, ARGS, utils ) {
 	return new Promise( ( resolve, reject ) => {
-		let identifier = ARGS._[ 1 ] || null;
+		let identifier = INPUT[ 0 ] || null;
 
 		if ( !identifier ) {
 			console.log( 'Whoops, `remove` must be invoked with a valid `identifier` argument.' );

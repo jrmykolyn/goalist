@@ -8,7 +8,6 @@ const fs = require( 'fs' );
 const os = require( 'os' );
 
 // Vendor
-const parseArgs = require( 'minimist' );
 const meow = require( 'meow' );
 
 // Project
@@ -18,11 +17,6 @@ const Goalist = require( './dist' );
 // --------------------------------------------------
 // DECLARE VARS
 // --------------------------------------------------
-var COMMAND = process.argv.slice( 2, 3 );
-var ARGS = parseArgs( process.argv.slice( 2 ) );
-
-var goalist = new Goalist( [ COMMAND, ARGS ] );
-
 var cli = meow( `
 	USAGE:
 
@@ -40,6 +34,11 @@ var cli = meow( `
 		version / v - Display that Goalist version.
 ` );
 
+var COMMAND = cli.input.slice( 0, 1 );
+var INPUT = cli.input.slice( 1 );
+var ARGS = cli.flags;
+
+var goalist = new Goalist( [ COMMAND, INPUT, ARGS ] );
 
 // --------------------------------------------------
 // INITIALIZATION
