@@ -1,6 +1,6 @@
 {
   "name": "goalist",
-  "version": "0.11.1",
+  "version": "0.11.2",
   "description": "Goalist is a command line tool for managing daily goals.",
   "main": "./dist",
   "scripts": {
@@ -22,15 +22,15 @@
   },
   "homepage": "https://github.com/jrmykolyn/goalist#readme",
   "keywords": [
-      "goal",
-      "goals",
-      "goalist",
-      "helper",
-      "cli",
-      "manage",
-      "daily",
-      "tool",
-      "todo"
+    "goal",
+    "goals",
+    "goalist",
+    "helper",
+    "cli",
+    "manage",
+    "daily",
+    "tool",
+    "todo"
   ],
   "devDependencies": {
     "@types/node": "^8.0.53",
