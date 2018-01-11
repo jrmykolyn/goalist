@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- Updated input signature of `Goalist` constructor: from `( [ COMMAND, ARGS ] )`; to `( [ COMMAND, INPUT, ARGS ] )`.
+- Updated input signature of command functions: from `( ARGS, utils )`; to `( INPUT, ARGS, utils )`.
+- Replaced `minimist` with `meow`.
+- Removed `minimist` from deps.
+
 ## [0.10.2] - 2018-01-10
 ### Added
 - Added tests for 'Goalist'.
