@@ -1,9 +1,9 @@
 "use strict";
 exports.__esModule = true;
 var readline = require("readline");
-function remove(ARGS, utils) {
+function remove(INPUT, ARGS, utils) {
     return new Promise(function (resolve, reject) {
-        var identifier = ARGS._[1] || null;
+        var identifier = INPUT[0] || null;
         if (!identifier) {
             console.log('Whoops, `remove` must be invoked with a valid `identifier` argument.');
             reject(null);

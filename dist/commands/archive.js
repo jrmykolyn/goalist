@@ -1,8 +1,8 @@
 "use strict";
 exports.__esModule = true;
-function archive(ARGS, utils) {
+function archive(INPUT, ARGS, utils) {
     return new Promise(function (resolve, reject) {
-        var identifier = ARGS._[1] || null;
+        var identifier = INPUT[0] || null;
         if (!identifier) {
             console.log('Whoops, subcommand must be invoked with a valid `identifier` argument.');
             reject(null);

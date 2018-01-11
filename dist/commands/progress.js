@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
 var barHorizontal = require("bar-horizontal");
-function progress(ARGS, utils) {
+function progress(INPUT, ARGS, utils) {
     return new Promise(function (resolve, reject) {
         var log = utils.getLog('active');
         var goals = log.goals;

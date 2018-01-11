@@ -1,8 +1,8 @@
 "use strict";
 exports.__esModule = true;
-function add(ARGS, utils) {
+function add(INPUT, ARGS, utils) {
     return new Promise(function (resolve, reject) {
-        var title = ARGS._[1] || null;
+        var title = INPUT[0] || null;
         if (!title) {
             console.log('Whoops, `add` must be invoked with a valid `title` argument.');
             reject(null);
@@ -13,7 +13,7 @@ function add(ARGS, utils) {
         var id = new Date().getTime();
         var goal = {
             id: id,
-            title: ARGS._[1],
+            title: title,
             description: ARGS.description || '',
             complete: false,
             active: true

@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-function list(ARGS, utils) {
+function list(INPUT, ARGS, utils) {
     return new Promise(function (resolve, reject) {
         var displayArchive = ARGS.archive;
         var log = displayArchive ? utils.getLog('archive') : utils.getLog('active');

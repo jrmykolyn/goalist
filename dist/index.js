@@ -7,13 +7,15 @@ var utils = new utils_1["default"]();
 var Goalist = (function () {
     function Goalist(arr) {
         this.COMMAND = arr[0];
-        this.ARGS = arr[1];
+        this.INPUT = arr[1];
+        this.ARGS = arr[2];
     }
     Goalist.prototype.preflight = function (arr) {
         var COMMAND = this.COMMAND || arr[0];
-        var ARGS = this.ARGS || arr[1];
+        var INPUT = this.INPUT || arr[1];
+        var ARGS = this.ARGS || arr[2];
         return new Promise(function (resolve, reject) {
-            if (!ARGS._[0]) {
+            if (!COMMAND) {
                 console.log('Whoops, `goalist` must be executed with a valid command.');
                 reject(null);
                 return;
@@ -24,7 +26,7 @@ var Goalist = (function () {
             var activeLogData = utils.getOrCreateLog('active');
             var archiveLogData = utils.getOrCreateLog('archive');
             if (COMMAND in commands) {
-                resolve([COMMAND, ARGS]);
+                resolve([COMMAND, INPUT, ARGS]);
                 return;
             }
             else {
@@ -36,10 +38,11 @@ var Goalist = (function () {
     };
     Goalist.prototype.run = function (arr) {
         var COMMAND = this.COMMAND || arr[0];
-        var ARGS = this.ARGS || arr[1];
+        var INPUT = this.INPUT || arr[1];
+        var ARGS = this.ARGS || arr[2];
         return new Promise(function (resolve, reject) {
             if (COMMAND in commands) {
-                commands[COMMAND](ARGS, utils).then(resolve, reject);
+                commands[COMMAND](INPUT, ARGS, utils).then(resolve, reject);
             }
             else {
                 reject(null);

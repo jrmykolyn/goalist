@@ -1,9 +1,9 @@
 "use strict";
 exports.__esModule = true;
 var keyBlacklist = ['_'];
-function update(ARGS, utils) {
+function update(INPUT, ARGS, utils) {
     return new Promise(function (resolve, reject) {
-        var identifier = ARGS._[1] || null;
+        var identifier = INPUT[0] || null;
         if (!identifier) {
             console.log('Whoops, `update` must be invoked with a valid `identifier` argument.');
             reject(null);
