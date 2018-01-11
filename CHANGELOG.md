@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- Updated `README.md`.
+- Removed `version` command.
+
 ## [0.11.0] - 2018-01-11
 ### Changed
 - Updated input signature of `Goalist` constructor: from `( [ COMMAND, ARGS ] )`; to `( [ COMMAND, INPUT, ARGS ] )`.
