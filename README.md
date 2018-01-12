@@ -67,7 +67,7 @@ When invoked with the `--archive` flag, this command will display the contents o
 gl list --archive
 ```
 
-To display **all** of the data for a given goal, invoke the `list` command may be invoked with the `--all` flag/argument.
+To display **all** of the data for a given goal, invoke the `list` command with the `--all` flag/argument.
 
 ```
 gl list --all
