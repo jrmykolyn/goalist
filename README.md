@@ -55,7 +55,7 @@ Executing the command above will result in the following:
 - Target goal will have its `active` key/property set to `true`.
 
 ### `list` / `l`
-This command is used to list all goals present in the 'active' log file. This command is especially useful for goal IDs, which are required by the `update` subcommand.
+This command is used to list all goals present in the 'active' log file. This command is especially useful for goal IDs, which are required by the `update` subcommand. By default, only the ID and title for each goal will be displayed.
 
 ```
 gl list
@@ -67,10 +67,17 @@ When invoked with the `--archive` flag, this command will display the contents o
 gl list --archive
 ```
 
-`list` may be invoked with the `--only` flag/argument. When provided with a series of comma delimited strings, `--only` limits the output of `list` to the the properties which match the provided strings.
+To display **all** of the data for a given goal, invoke the `list` command may be invoked with the `--all` flag/argument.
 
 ```
-gl list --only=title,complete
+gl list --all
+gl list --archive --all
+```
+
+To display specific properties , the `list` command may be invoked with the `--show` flag. When provided with a series of comma delimited strings, `--show` flag displays the corresponding properties (in addition to the ID and title).
+
+```
+gl list --show=title,complete
 
 // title: My New Goal
 // complete: true
