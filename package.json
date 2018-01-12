@@ -46,6 +46,7 @@
   "dependencies": {
     "bar-horizontal": "^0.4.0",
     "bluebird": "^3.5.0",
+    "chalk": "^2.3.0",
     "meow": "^4.0.0",
     "merge": "^1.2.0",
     "moment": "^2.18.1",
