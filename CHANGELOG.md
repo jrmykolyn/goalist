@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- Added [`chalk`](https://www.npmjs.com/package/chalk) to deps.
+- Added support for `list --all` (display all goal properties).
+- Added support for `list --show` (replaces `list --only`).
+
+### Changed
+- Updated `list` command documentation.
+- Removed support for `list --only`.
+
 ## [0.11.2] - 2018-01-11
 ### Added
 - Added 'keywords' field to `package.json`.
