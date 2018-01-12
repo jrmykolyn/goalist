@@ -4,6 +4,7 @@
 // Node
 
 // Vendor
+const chalk = require( 'chalk' );
 
 // Project
 
@@ -35,7 +36,7 @@ export default function list( INPUT, ARGS, utils ) {
 
 			whitelistProps.concat( supplementaryProps ).forEach( ( prop ) => {
 				if ( goal.hasOwnProperty( prop ) ) {
-					console.log( `${prop}: ${goal[ prop ]}` );
+					console.log( `${chalk.gray( prop + ':' )} ${goal[ prop ]}` );
 				}
 			} );
 

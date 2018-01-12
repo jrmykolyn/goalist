@@ -1,5 +1,6 @@
 "use strict";
 exports.__esModule = true;
+var chalk = require('chalk');
 function list(INPUT, ARGS, utils) {
     return new Promise(function (resolve, reject) {
         var log = ARGS.archive ? utils.getLog('archive') : utils.getLog('active');
@@ -13,7 +14,7 @@ function list(INPUT, ARGS, utils) {
             }
             whitelistProps.concat(supplementaryProps).forEach(function (prop) {
                 if (goal.hasOwnProperty(prop)) {
-                    console.log(prop + ": " + goal[prop]);
+                    console.log(chalk.gray(prop + ':') + " " + goal[prop]);
                 }
             });
             console.log('\n');
