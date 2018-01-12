@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- Fixed typo in `README.md`.
+
 ## [0.12.0] - 2018-01-12
 ### Added
 - Added [`chalk`](https://www.npmjs.com/package/chalk) to deps.
