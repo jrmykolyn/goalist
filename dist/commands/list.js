@@ -2,18 +2,20 @@
 exports.__esModule = true;
 function list(INPUT, ARGS, utils) {
     return new Promise(function (resolve, reject) {
-        var displayArchive = ARGS.archive;
-        var log = displayArchive ? utils.getLog('archive') : utils.getLog('active');
+        var log = ARGS.archive ? utils.getLog('archive') : utils.getLog('active');
         var goals = log.goals;
-        var outputKeys = null;
+        var whitelistProps = ['id', 'title'];
+        var supplementaryProps = !ARGS.all && ARGS.show ? ARGS.show.split(',').filter(function (prop) { return whitelistProps.indexOf(prop) === -1; }) : [];
         Object.keys(goals).forEach(function (key) {
             var goal = goals[key];
-            outputKeys = (ARGS.only && typeof ARGS.only === 'string') ? ARGS.only.split(',') : Object.keys(goal);
-            for (var prop in goal) {
-                if (outputKeys.includes(prop)) {
-                    console.log(prop + ": " + goal[prop] + "\r");
-                }
+            if (ARGS.all) {
+                supplementaryProps = Object.keys(goal).filter(function (prop) { return whitelistProps.indexOf(prop) === -1; });
             }
+            whitelistProps.concat(supplementaryProps).forEach(function (prop) {
+                if (goal.hasOwnProperty(prop)) {
+                    console.log(prop + ": " + goal[prop]);
+                }
+            });
             console.log('\n');
         });
         resolve(log);
