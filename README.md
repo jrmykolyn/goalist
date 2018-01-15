@@ -108,10 +108,16 @@ gl complete {{ ID }} --false
 ```
 
 ### `remove` / `r`
-This command is use to remove a specific goal within the 'active' log file.
+This command is used to remove a specific goal within the 'active' log file.
 
 ```
 gl remove {{ ID }}
+```
+
+If invoked with the `--archive` flag, this command will attempt to remove the target goal from the 'archive' log file.
+
+```
+gl remove {{ ID }} --archive
 ```
 
 ### `progress` / `p`
@@ -120,7 +126,6 @@ This command is used to display progress information relating to the 'active' lo
 ```
 gl progress
 ```
-
 
 ## Documentation
 Currently, Goalist does not include any external documentation.
