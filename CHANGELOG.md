@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Added support for `remove {{ ID }} --archive` (remove goal directly from 'archive' log file).
+
 ### Changed
 - Fixed typo in `README.md`.
 
