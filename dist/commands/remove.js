@@ -9,7 +9,7 @@ function remove(INPUT, ARGS, utils) {
             reject(null);
             return;
         }
-        var log = utils.getLog('active');
+        var log = ARGS.archive ? utils.getLog('archive') : utils.getLog('active');
         var goals = log.goals;
         var goal = goals[identifier] || null;
         var userConf = null;
@@ -22,7 +22,7 @@ function remove(INPUT, ARGS, utils) {
             input: process.stdin,
             output: process.stdout
         });
-        rl.question('Please note, this is a destructive action! Do you wish to continue? (y/n)\r', function (response) {
+        rl.question('Please note, this is a destructive action! Do you wish to continue? (y/n)\n', function (response) {
             if (response.toString().toLowerCase() === 'y') {
                 console.log("Removing task: " + identifier);
                 for (var key in goals) {
@@ -30,7 +30,7 @@ function remove(INPUT, ARGS, utils) {
                         delete goals[key];
                     }
                 }
-                utils.writeLog('active', JSON.stringify(log));
+                utils.writeLog(ARGS.archive ? 'archive' : 'active', JSON.stringify(log));
                 resolve(log);
             }
             else {

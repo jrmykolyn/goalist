@@ -26,7 +26,7 @@ export default function remove( INPUT, ARGS, utils ) {
 			return;
 		}
 
-		let log = utils.getLog( 'active' );
+		let log = ARGS.archive ? utils.getLog( 'archive' ) : utils.getLog( 'active' );
 		let { goals } = log;
 		let goal = goals[ identifier ] || null;
 		let userConf = null;
@@ -43,7 +43,7 @@ export default function remove( INPUT, ARGS, utils ) {
 		} );
 
 		/// TODO[@jrmykolyn]: Convert nested callback to Promise chain if possible.
-		rl.question( 'Please note, this is a destructive action! Do you wish to continue? (y/n)\r', ( response ) => {
+		rl.question( 'Please note, this is a destructive action! Do you wish to continue? (y/n)\n', ( response ) => {
 			if ( response.toString().toLowerCase() === 'y' ) {
 				console.log( `Removing task: ${identifier}` );
 
@@ -54,7 +54,7 @@ export default function remove( INPUT, ARGS, utils ) {
 				}
 
 				// Write new data back to file system.
-				utils.writeLog( 'active', JSON.stringify( log ) );
+				utils.writeLog( ARGS.archive ? 'archive' : 'active', JSON.stringify( log ) );
 
 				resolve( log );
 			} else {
