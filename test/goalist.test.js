@@ -22,7 +22,7 @@ let importPath = `${process.cwd()}/${pkg.main}`;
 // --------------------------------------------------
 // DECLARE TESTS
 // --------------------------------------------------
-test( 'Is importable', ( t ) => {
+test( 'Is importable.', ( t ) => {
 	try {
 		const Goalist = require( importPath );
 
@@ -32,8 +32,24 @@ test( 'Is importable', ( t ) => {
 	}
 } );
 
-test( 'Is a function', ( t ) => {
+test( 'Is a function.', ( t ) => {
 	const Goalist = require( importPath );
 
 	t.is( typeof Goalist, 'function' );
+} );
+
+test( 'Can be instantiated.', ( t ) => {
+	const Goalist = require( importPath );
+
+	let goalist = new Goalist();
+
+	t.is( goalist instanceof Goalist, true );
+} );
+
+test( 'Exposes the `run()` instance method.', ( t ) => {
+	const Goalist = require( importPath );
+
+	let goalist = new Goalist();
+
+	t.is( typeof goalist.run, 'function' );
 } );
