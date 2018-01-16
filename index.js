@@ -37,21 +37,15 @@ var COMMAND = cli.input.slice( 0, 1 );
 var INPUT = cli.input.slice( 1 );
 var ARGS = cli.flags;
 
-var goalist = new Goalist( [ COMMAND, INPUT, ARGS ] );
+var goalist = new Goalist();
 
 // --------------------------------------------------
 // INITIALIZATION
 // --------------------------------------------------
-goalist
-	.preflight()
-	.then( () => {
-		return goalist.run();
+goalist.run( COMMAND, INPUT, ARGS )
+	.then( ( data ) => {
+		/// TODO
 	} )
-	.then(
-		( data ) => {
-			/// TODO
-		},
-		( err ) => {
-			cli.showHelp();
-		}
-	);
+	.catch( ( err ) => {
+		cli.showHelp();
+	} );
