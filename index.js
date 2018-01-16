@@ -26,6 +26,7 @@ var cli = meow( `
 
 		add / a - Add a new goal.
 		archive / ar - Archive a goal.
+		backup / b - Create a timestamped backup of the logs file(s).
 		complete / c - Set a goal's status to complete.
 		list / l - List goals.
 		progress / p - Display complete/incomplete goals as a bar chart.

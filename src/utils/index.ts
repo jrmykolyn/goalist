@@ -49,6 +49,10 @@ export default class Utils implements UtilsInstance {
 		return fs.readdirSync( this.getGoalistDirPath(), 'utf8' );
 	}
 
+	getBakPath() {
+		return `${this.getGoalistDirPath()}/bak`;
+	}
+
 	getDirPath() {
 		return `${this.getGoalistDirPath()}/logs`;
 	}
@@ -149,6 +153,15 @@ export default class Utils implements UtilsInstance {
 			return fs.readdirSync( `${this.getDirPath()}` );
 		} catch ( err ) {
 			return fs.mkdirSync( `${this.getDirPath()}` );
+		}
+	}
+
+	getOrCreateBakDir() {
+		// Create `bak` directory if it doesn't exist.
+		try {
+			return fs.readdirSync( `${this.getGoalistDirPath()}/bak` );
+		} catch ( err ) {
+			return fs.mkdirSync( `${this.getGoalistDirPath()}/bak` );
 		}
 	}
 

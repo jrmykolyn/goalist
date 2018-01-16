@@ -36,6 +36,7 @@ class Goalist {
 			/// TODO: Consider building out wrapper function around `getOrCreate*()` methods.
 			let goalistDirData = utils.getOrCreateGoalistDir();
 			let logsDirData = utils.getOrCreateLogsDir();
+			let bakDirData = utils.getOrCreateBakDir();
 			let activeLogData = utils.getOrCreateLog( 'active' );
 			let archiveLogData = utils.getOrCreateLog( 'archive' );
 

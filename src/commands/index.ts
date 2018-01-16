@@ -4,6 +4,7 @@
 // Project
 import add from './add';
 import archive from './archive';
+import backup from './backup';
 import complete from './complete';
 import list from './list';
 import progress from './progress';
@@ -21,6 +22,8 @@ module.exports = {
 	a: add,
 	archive,
 	ar: archive,
+	backup,
+	b: backup,
 	complete,
 	c: complete,
 	list,
