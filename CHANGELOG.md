@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Added support for `remove {{ ID }} --archive` (remove goal directly from 'archive' log file).
 
 ### Changed
+- Updated `Goalist` class definition: removed `COMMAND`, `INPUT`, and `ARGS` properties; remove constructor call signature.
+- Updated CLI entryoint logic: remove call to `#preflight()` method; simplify Promise chain.
+- Updated `#run()` instance method: ensure that files/folders exist at invocation time.
+- Removed `#preflight()` instance method.
 - Fixed typo in `README.md`.
 
 ## [0.12.0] - 2018-01-12
