@@ -54,6 +54,19 @@ Executing the command above will result in the following:
 - Target goal is moved from the 'archive' log file to the 'active' file.
 - Target goal will have its `active` key/property set to `true`.
 
+### `backup` / `b`
+This command is used to created a backup of the 'active' log file.
+
+```
+gl backup
+```
+
+When invoked with the `--archive` file, an 'archive' log file backup is created instead.
+
+```
+gl backup --archive
+```
+
 ### `list` / `l`
 This command is used to list all goals present in the 'active' log file. This command is especially useful for goal IDs, which are required by the `update` subcommand. By default, only the ID and title for each goal will be displayed.
 
