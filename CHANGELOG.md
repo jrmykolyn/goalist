@@ -7,11 +7,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - Added `backup` subcommand.
 - Added support for `remove {{ ID }} --archive` (remove goal directly from 'archive' log file).
+- Added `tslint.json`.
+- Added the follow development dependencies: `tslint`; `gulp-tslint`; `tslint-eslint-rules`.
 
 ### Changed
 - Updated `Goalist` class definition: removed `COMMAND`, `INPUT`, and `ARGS` properties; remove constructor call signature.
 - Updated CLI entryoint logic: remove call to `#preflight()` method; simplify Promise chain.
 - Updated `#run()` instance method: ensure that files/folders exist at invocation time.
+- Updated Gulp file: added typescript linting-related tasks.
 - Removed `#preflight()` instance method.
 - Fixed typo in `README.md`.
 
