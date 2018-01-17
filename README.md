@@ -6,25 +6,62 @@
 ## Table of Contents
 - [About](#about)
 - [Installation](#installation)
+	- Overview
+	- CLI
+	- Import
 - [Setup](#setup)
 - [Usage](#usage)
+	- Overview
+	- CLI
+	- Import
 - [Documentation](#documentation)
 
 ## About
-Goalist is a command line tool for managing daily goals.
+Goalist is a tool for managing daily goals. Goalist can be run directly from the command line, or imported by a dependent script.
 
 ## Installation
-`npm install -g goalist`
+
+### Overview
+
+Goalist can be installed in multiple ways depending on the use case. To interact with Goalist's CLI, follow the 'CLI' installation instructions. To use the Goalist module within a dependent script, follow the 'Import' installation instructions.
+
+### CLI
+
+To install Goalist globally, run the command below:
+
+```
+npm install -g goalist
+```
+
+### Import
+
+To install Goalist as a dependency within a node/npm project, run the command below:
+
+```
+npm install --save goalist
+```
 
 ## Setup
 Goalist does not require any additional configuration.
 
 ## Usage
-`goalist` exposes the `gl` command, which can be run from the command line. `goalist` also ships with a selection of subcommands. Each subcommand can be invoked using its full name (eg. `add`), or via a single character alias (eg. `a`). See below for the full list commands.
 
-A help menu can be accessed by invoking `goalist` with the `--help` flag (eg. `goalist --help`).
+### Overview
 
-The current version can be accessed by invoking `goalist` with the `--help` flag (eg. `goalist --version`).
+The `goalist` module may used/accessed in either of the following ways:
+
+- via import by/within a dependent script;
+- via CLI.
+
+Documentation for both modes is provided below.
+
+### CLI
+
+When installed globally, Goalist exposes the `gl` command. Running `gl` from the command line will display the help menu. In order to interact with the core functionality of the `goalist` package, a selection of subcommands are exposed. Each subcommand can be invoked using its full name (eg. `add`), or via a single character alias (eg. `a`). See below for the full list commands.
+
+Please note:
+- The help menu can *also* be accessed by invoking `goalist` with the `--help` flag (eg. `goalist --help`).
+- The current version can be accessed by invoking `goalist` with the `--version` flag (eg. `goalist --version`).
 
 ### `add` / `a`
 This command is used to add a new goal to the log file for the current.
@@ -139,6 +176,10 @@ This command is used to display progress information relating to the 'active' lo
 ```
 gl progress
 ```
+
+### Import
+
+/// TODO
 
 ## Documentation
 Currently, Goalist does not include any external documentation.
