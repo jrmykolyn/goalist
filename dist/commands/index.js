@@ -2,6 +2,7 @@
 exports.__esModule = true;
 var add_1 = require("./add");
 var archive_1 = require("./archive");
+var backup_1 = require("./backup");
 var complete_1 = require("./complete");
 var list_1 = require("./list");
 var progress_1 = require("./progress");
@@ -12,6 +13,8 @@ module.exports = {
     a: add_1["default"],
     archive: archive_1["default"],
     ar: archive_1["default"],
+    backup: backup_1["default"],
+    b: backup_1["default"],
     complete: complete_1["default"],
     c: complete_1["default"],
     list: list_1["default"],

@@ -17,6 +17,7 @@ var Goalist = (function () {
             debugger_1["default"].verbose(!!ARGS.verbose);
             var goalistDirData = utils.getOrCreateGoalistDir();
             var logsDirData = utils.getOrCreateLogsDir();
+            var bakDirData = utils.getOrCreateBakDir();
             var activeLogData = utils.getOrCreateLog('active');
             var archiveLogData = utils.getOrCreateLog('archive');
             if (COMMAND in commands) {

@@ -21,6 +21,9 @@ var Utils = (function () {
     Utils.prototype.readGoalistDir = function () {
         return fs.readdirSync(this.getGoalistDirPath(), 'utf8');
     };
+    Utils.prototype.getBakPath = function () {
+        return this.getGoalistDirPath() + "/bak";
+    };
     Utils.prototype.getDirPath = function () {
         return this.getGoalistDirPath() + "/logs";
     };
@@ -105,6 +108,14 @@ var Utils = (function () {
         }
         catch (err) {
             return fs.mkdirSync("" + this.getDirPath());
+        }
+    };
+    Utils.prototype.getOrCreateBakDir = function () {
+        try {
+            return fs.readdirSync(this.getGoalistDirPath() + "/bak");
+        }
+        catch (err) {
+            return fs.mkdirSync(this.getGoalistDirPath() + "/bak");
         }
     };
     Utils.prototype.getOrCreateLog = function (identifier) {
