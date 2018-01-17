@@ -1,0 +1,8 @@
+{
+  "extends": [
+    "tslint-eslint-rules"
+  ],
+  "rules": {
+      "indent": [ true, "tabs" ]
+  }
+}
