@@ -38,8 +38,8 @@ export default function remove( INPUT, ARGS, utils ) {
 		}
 
 		const rl = readline.createInterface( {
-		  input: process.stdin,
-		  output: process.stdout
+			input: process.stdin,
+			output: process.stdout,
 		} );
 
 		/// TODO[@jrmykolyn]: Convert nested callback to Promise chain if possible.
