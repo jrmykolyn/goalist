@@ -179,7 +179,41 @@ gl update {{ ID }} --title="This is the new title of the goal."
 
 ### Import
 
-/// TODO
+When installed locally, Goalist can be imported into a dependent script.
+
+```
+const Goalist = require( 'goalist' );
+```
+
+After Goalist has been imported, create a new instance as follows:
+
+```
+let goalist = new Goalist();
+```
+
+Goalist exposes the `#run()` instance method, which is used to execute individual subcommands.
+
+```
+goalist.run( 'list' ); // Execute the 'list' subcommand.
+```
+
+Some of the Goalist subcommands require additional information in order to function properly. These can be provided by invoking the `#run()` command with a second argument.
+
+```
+goalist.run( 'complete', [ '1516126195749' ] ); // Mark the goal with id '1516126195749' as complete.
+```
+
+Additional options can be provided by invoking `#run()` with a third argument.
+
+```
+goalist.run( 'update', [ '1516126195749' ], { title: 'My cool new title.' } ); // Update the title property of the goal with id '1516126195749'.
+```
+
+For cases where the options object is required but the array of supplementary information is not, provide an empty array as the second argument.
+
+```
+goalost.run( 'list', [], { archive: true } ); // List all of the 'archived' goals.
+```
 
 ## Documentation
 Currently, Goalist does not include any external documentation.
