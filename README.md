@@ -104,6 +104,23 @@ When invoked with the `--archive` file, an 'archive' log file backup is created 
 gl backup --archive
 ```
 
+### `complete` / `c`
+This command is used to set the status of a specific goal to 'complete'.
+
+```
+gl complete {{ ID }}
+
+// Please note: this is equivalent to invoking: gl update {{ ID }} --complete=true
+```
+
+This command can also be used to set the status of a goal to 'incomplete'.
+
+```
+gl complete {{ ID }} --false
+
+// Please note: this is equivalent to invoking: gl update {{ ID }} --complete=false
+```
+
 ### `list` / `l`
 This command is used to list all goals present in the 'active' log file. This command is especially useful for goal IDs, which are required by the `update` subcommand. By default, only the ID and title for each goal will be displayed.
 
@@ -133,28 +150,11 @@ gl list --show=title,complete
 // complete: true
 ```
 
-### `update` / `u`
-This command is used to update a specific goal within the 'active' log file.
+### `progress` / `p`
+This command is used to display progress information relating to the 'active' log file (eg. total number of goals, number of completed goals, etc.).
 
 ```
-gl update {{ ID }} --title="This is the new title of the goal."
-```
-
-### `complete` / `c`
-This command is used to set the status of a specific goal to 'complete'.
-
-```
-gl complete {{ ID }}
-
-// Please note: this is equivalent to invoking: gl update {{ ID }} --complete=true
-```
-
-This command can also be used to set the status of a goal to 'incomplete'.
-
-```
-gl complete {{ ID }} --false
-
-// Please note: this is equivalent to invoking: gl update {{ ID }} --complete=false
+gl progress
 ```
 
 ### `remove` / `r`
@@ -170,11 +170,11 @@ If invoked with the `--archive` flag, this command will attempt to remove the ta
 gl remove {{ ID }} --archive
 ```
 
-### `progress` / `p`
-This command is used to display progress information relating to the 'active' log file (eg. total number of goals, number of completed goals, etc.).
+### `update` / `u`
+This command is used to update a specific goal within the 'active' log file.
 
 ```
-gl progress
+gl update {{ ID }} --title="This is the new title of the goal."
 ```
 
 ### Import
