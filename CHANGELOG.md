@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
+- Added `backup` subcommand.
 - Added support for `remove {{ ID }} --archive` (remove goal directly from 'archive' log file).
 
 ### Changed
