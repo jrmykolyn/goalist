@@ -3,11 +3,14 @@ exports.__esModule = true;
 var commands = require("./commands");
 var utils_1 = require("./utils");
 var debugger_1 = require("./debugger");
-var utils = new utils_1["default"]();
 var Goalist = (function () {
     function Goalist() {
     }
     Goalist.prototype.run = function (COMMAND, INPUT, ARGS) {
+        if (COMMAND === void 0) { COMMAND = ''; }
+        if (INPUT === void 0) { INPUT = []; }
+        if (ARGS === void 0) { ARGS = {}; }
+        var utils = new utils_1["default"](ARGS.utilsOpts);
         return new Promise(function (resolve, reject) {
             if (!COMMAND) {
                 console.log('Whoops, `goalist` must be executed with a valid command.');
