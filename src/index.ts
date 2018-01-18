@@ -10,18 +10,20 @@ import * as pkgDir from 'pkg-dir';
 import * as commands from './commands';
 import Utils from './utils';
 import Debugger from './debugger';
+import { GoalistInput, GoalistArgs } from './interfaces';
 
 // --------------------------------------------------
 // DECLARE VARS
 // --------------------------------------------------
-const utils = new Utils();
-
 
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
 class Goalist {
-	run( COMMAND, INPUT, ARGS ) {
+	run( COMMAND: string = '', INPUT: GoalistInput = [], ARGS: GoalistArgs = {} ) {
+		// Allow dependent script to configure `Utils` at instantion.
+		let utils = new Utils( ARGS.utilsOpts );
+
 		return new Promise( ( resolve, reject ) => {
 			// Ensure that `gl` is invoked with a command.
 			if ( !COMMAND ) {
@@ -50,7 +52,6 @@ class Goalist {
 		} );
 	}
 }
-
 
 // --------------------------------------------------
 // PUBLIC API
