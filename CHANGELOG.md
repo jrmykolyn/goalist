@@ -15,8 +15,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Updated CLI entryoint logic: remove call to `#preflight()` method; simplify Promise chain.
 - Updated `#run()` instance method: ensure that files/folders exist at invocation time.
 - Updated Gulp file: added typescript linting-related tasks.
+- Updated `README.md` file: added documentation for non-CLI usage.
 - Removed `#preflight()` instance method.
-- Fixed typo in `README.md`.
+- Fixed typos in `README.md`.
 
 ## [0.12.0] - 2018-01-12
 ### Added
