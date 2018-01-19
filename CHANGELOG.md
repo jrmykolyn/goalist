@@ -11,11 +11,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Added the follow development dependencies: `tslint`; `gulp-tslint`; `tslint-eslint-rules`.
 
 ### Changed
-- Updated `Goalist` class definition: removed `COMMAND`, `INPUT`, and `ARGS` properties; remove constructor call signature.
-- Updated CLI entryoint logic: remove call to `#preflight()` method; simplify Promise chain.
+- Updated `Goalist` class definition: remove `COMMAND`, `INPUT`, and `ARGS` parameters; accept `options` object;
+- Updated CLI entryoint logic: remove call to `#preflight()` method; simplify Promise chain; ensure that `COMMAND` is capture/provided as a string.
 - Updated `#run()` instance method: validate arguments; set default values.
 - Updated `#run()` instance method: ensure that files/folders exist at invocation time.
-- Updated `#run()` instance method: accept configuration options for `Utils`.
 - Updated `Goalist` tests.
 - Updated Gulp file: added typescript linting-related tasks.
 - Updated `README.md` file: added documentation for non-CLI usage.
