@@ -34,7 +34,7 @@ var cli = meow( `
 		update / u - Update the properties of a goal.
 ` );
 
-var COMMAND = cli.input.slice( 0, 1 );
+var COMMAND = cli.input.slice( 0, 1 )[ 0 ];
 var INPUT = cli.input.slice( 1 );
 var ARGS = cli.flags;
 
