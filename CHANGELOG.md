@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Changed
 - Updated `Goalist` class definition: removed `COMMAND`, `INPUT`, and `ARGS` properties; remove constructor call signature.
 - Updated CLI entryoint logic: remove call to `#preflight()` method; simplify Promise chain.
+- Updated `#run()` instance method: validate arguments; set default values.
 - Updated `#run()` instance method: ensure that files/folders exist at invocation time.
 - Updated `#run()` instance method: accept configuration options for `Utils`.
 - Updated `Goalist` tests.
