@@ -127,6 +127,12 @@ test( '`#run()` accepts a string of input data.', ( t ) => {
 		} );
 } );
 
+test.todo( '`#run()` coerces invalid input into the correct format.' );
+
+test.todo( '`#run()` applies valid arguments.' );
+
+test.todo( '`#run()` ignores invalid arguments.' );
+
 test( 'Allows `Utils` to be configured at instantiation.', ( t ) => {
 	let goalist = new Goalist();
 
