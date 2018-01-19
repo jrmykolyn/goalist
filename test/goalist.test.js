@@ -102,9 +102,9 @@ test( 'Resolves if `#run()` is invoked with a valid command.', ( t ) => {
 } );
 
 test( '`#run()` accepts an array of input data.', ( t ) => {
-	let goalist = new Goalist();
+	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
 
-	return goalist.run( 'add', [ 'My new goal.' ], { utilsOpts: { path: setupOpts.goalistDir } } )
+	return goalist.run( 'add', [ 'My new goal.' ] )
 		.then( ( data ) => {
 			/// TODO: Ensure that new goal was added correctly.
 			t.pass();
@@ -115,9 +115,9 @@ test( '`#run()` accepts an array of input data.', ( t ) => {
 } );
 
 test( '`#run()` accepts a string of input data.', ( t ) => {
-	let goalist = new Goalist();
+	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
 
-	return goalist.run( 'add', 'My other new goal.', { utilsOpts: { path: setupOpts.goalistDir } } )
+	return goalist.run( 'add', 'My other new goal.' )
 		.then( ( data ) => {
 			/// TODO: Ensure that new goal was added correctly.
 			t.pass();
@@ -134,9 +134,9 @@ test.todo( '`#run()` applies valid arguments.' );
 test.todo( '`#run()` ignores invalid arguments.' );
 
 test( 'Allows `Utils` to be configured at instantiation.', ( t ) => {
-	let goalist = new Goalist();
+	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
 
-	return goalist.run( 'list', [], { utilsOpts: { path: setupOpts.goalistDir } } )
+	return goalist.run( 'list', [] )
 		.then( ( data ) => {
 			t.pass();
 		} )
