@@ -209,10 +209,12 @@ Additional options can be provided by invoking `#run()` with a third argument.
 goalist.run( 'update', [ '1516126195749' ], { title: 'My cool new title.' } ); // Update the title property of the goal with id '1516126195749'.
 ```
 
-For cases where the options object is required but the array of supplementary information is not, provide an empty array as the second argument.
+For cases where the options object is required but the array of supplementary information is not, provide an empty array or null value as the second argument.
 
 ```
-goalost.run( 'list', [], { archive: true } ); // List all of the 'archived' goals.
+goalist.run( 'list', [], { archive: true } ); // List all of the 'archived' goals.
+
+goalist.run( 'backup', null, { archive: true } ); // Create a backup of the 'archived' goals file.
 ```
 
 ## Documentation
