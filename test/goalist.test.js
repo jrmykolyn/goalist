@@ -9,6 +9,7 @@ const test = require( 'ava' );
 const del = require( 'del' );
 
 // Project
+const Goalist = require( '../dist' );
 const pkg = require( '../package' );
 
 // --------------------------------------------------
@@ -57,84 +58,50 @@ test.after.always( () => {
 // DECLARE TESTS
 // --------------------------------------------------
 test( 'Is importable.', ( t ) => {
-	try {
-		const Goalist = require( importPath );
-
-		t.pass();
-	} catch ( err ) {
-		t.fail();
-	}
+	t.true( !!Goalist );
 } );
 
 test( 'Is a function.', ( t ) => {
-	const Goalist = require( importPath );
-
-	t.is( typeof Goalist, 'function' );
+	t.true( typeof Goalist === 'function' );
 } );
 
 test( 'Can be instantiated.', ( t ) => {
-	const Goalist = require( importPath );
-
-	let goalist = new Goalist();
-
-	t.is( goalist instanceof Goalist, true );
+	t.true( new Goalist() instanceof Goalist );
 } );
 
 test( 'Exposes the `run()` instance method.', ( t ) => {
-	const Goalist = require( importPath );
-
 	let goalist = new Goalist();
 
 	t.is( typeof goalist.run, 'function' );
 } );
 
 test( 'Rejects if `#run()` is invoked with 0 arguments.', ( t ) => {
-	const Goalist = require( importPath );
-
 	let goalist = new Goalist();
 
 	return goalist.run()
-		.then( () => {
-			t.fail();
-		} )
-		.catch( () => {
-			t.pass();
-		} );
+		.then( () => { t.fail(); } )
+		.catch( () => { t.pass(); } );
 } );
 
 test( 'Rejects if `#run()` is invoked with an invalid command.', ( t ) => {
-	const Goalist = require( importPath );
-
 	let goalist = new Goalist();
 
 	return goalist.run( 'INVALID_COMMAND' )
-		.then( () => {
-			t.fail();
-		} )
-		.catch( () => {
-			t.pass();
-		} );
+		.then( () => { t.fail(); } )
+		.catch( () => { t.pass(); } );
 } );
 
 
 test( 'Resolves if `#run()` is invoked with a valid command.', ( t ) => {
-	const Goalist = require( importPath );
-
 	let goalist = new Goalist();
 
 	/// TODO: Ensure that this test does not require an `.goalist/` folder within the user's home directory to pass.
 	return goalist.run( 'list' )
-		.then( () => {
-			t.pass();
-		} )
-		.catch( () => {
-			t.fail();
-		} );
+		.then( () => { t.pass(); } )
+		.catch( () => { t.fail(); } );
 } );
 
 test( '`#run()` accepts an array of input data.', ( t ) => {
-	const Goalist = require( importPath );
-
 	let goalist = new Goalist();
 
 	return goalist.run( 'add', [ 'My new goal.' ], { utilsOpts: { path: setupOpts.goalistDir } } )
@@ -148,8 +115,6 @@ test( '`#run()` accepts an array of input data.', ( t ) => {
 } );
 
 test( '`#run()` accepts a string of input data.', ( t ) => {
-	const Goalist = require( importPath );
-
 	let goalist = new Goalist();
 
 	return goalist.run( 'add', 'My other new goal.', { utilsOpts: { path: setupOpts.goalistDir } } )
@@ -163,8 +128,6 @@ test( '`#run()` accepts a string of input data.', ( t ) => {
 } );
 
 test( 'Allows `Utils` to be configured at instantiation.', ( t ) => {
-	const Goalist = require( importPath );
-
 	let goalist = new Goalist();
 
 	return goalist.run( 'list', [], { utilsOpts: { path: setupOpts.goalistDir } } )
