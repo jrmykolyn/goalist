@@ -4,13 +4,16 @@ var commands = require("./commands");
 var utils_1 = require("./utils");
 var debugger_1 = require("./debugger");
 var Goalist = (function () {
-    function Goalist() {
+    function Goalist(options) {
+        if (options === void 0) { options = {}; }
+        options = (options && typeof options === 'object') ? options : {};
+        this.utilsRef = new utils_1["default"](options.utilsOpts);
     }
     Goalist.prototype.run = function (COMMAND, INPUT, ARGS) {
+        var _this = this;
         if (COMMAND === void 0) { COMMAND = ''; }
         if (INPUT === void 0) { INPUT = []; }
         if (ARGS === void 0) { ARGS = {}; }
-        var utils = new utils_1["default"](ARGS.utilsOpts);
         return new Promise(function (resolve, reject) {
             if (!COMMAND || typeof COMMAND !== 'string') {
                 console.log('Whoops, `goalist` must be executed with a valid command.');
@@ -20,13 +23,13 @@ var Goalist = (function () {
             INPUT = (Array.isArray(INPUT) && INPUT.length) ? INPUT : typeof INPUT === 'string' ? [INPUT] : [];
             ARGS = (ARGS && typeof ARGS === 'object') ? ARGS : {};
             debugger_1["default"].verbose(!!ARGS.verbose);
-            var goalistDirData = utils.getOrCreateGoalistDir();
-            var logsDirData = utils.getOrCreateLogsDir();
-            var bakDirData = utils.getOrCreateBakDir();
-            var activeLogData = utils.getOrCreateLog('active');
-            var archiveLogData = utils.getOrCreateLog('archive');
+            var goalistDirData = _this.utilsRef.getOrCreateGoalistDir();
+            var logsDirData = _this.utilsRef.getOrCreateLogsDir();
+            var bakDirData = _this.utilsRef.getOrCreateBakDir();
+            var activeLogData = _this.utilsRef.getOrCreateLog('active');
+            var archiveLogData = _this.utilsRef.getOrCreateLog('archive');
             if (COMMAND in commands) {
-                commands[COMMAND](INPUT, ARGS, utils).then(resolve, reject);
+                commands[COMMAND](INPUT, ARGS, _this.utilsRef).then(resolve, reject);
             }
             else {
                 console.log('Whoops, `goalist` was invoked with an invalid command.');

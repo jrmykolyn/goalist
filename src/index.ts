@@ -10,7 +10,13 @@ import * as pkgDir from 'pkg-dir';
 import * as commands from './commands';
 import Utils from './utils';
 import Debugger from './debugger';
-import { GoalistInput, GoalistArgs } from './interfaces';
+import {
+	GoalistArgs,
+	GoalistInput,
+	GoalistInstance,
+	GoalistOptions,
+	UtilsInstance
+} from './interfaces';
 
 // --------------------------------------------------
 // DECLARE VARS
@@ -20,10 +26,16 @@ import { GoalistInput, GoalistArgs } from './interfaces';
 // DECLARE FUNCTIONS
 // --------------------------------------------------
 class Goalist {
-	run( COMMAND: string = '', INPUT: GoalistInput = [], ARGS: GoalistArgs = {} ) {
-		// Allow dependent script to configure `Utils` at instantion.
-		let utils = new Utils( ARGS.utilsOpts );
+	utilsRef: UtilsInstance;
 
+	constructor( options: GoalistOptions = {} ) {
+		options = ( options && typeof options === 'object' ) ? options : {};
+
+		// Allow dependent script to configure `Utils` at instantiation.
+		this.utilsRef = new Utils( options.utilsOpts );
+	}
+
+	run( COMMAND: string = '', INPUT: GoalistInput = [], ARGS: GoalistArgs = {} ) {
 		return new Promise( ( resolve, reject ) => {
 			// Ensure that `gl` is invoked with a command.
 			if ( !COMMAND || typeof COMMAND !== 'string' ) {
@@ -42,14 +54,14 @@ class Goalist {
 			Debugger.verbose( !!ARGS.verbose );
 
 			/// TODO: Consider building out wrapper function around `getOrCreate*()` methods.
-			let goalistDirData = utils.getOrCreateGoalistDir();
-			let logsDirData = utils.getOrCreateLogsDir();
-			let bakDirData = utils.getOrCreateBakDir();
-			let activeLogData = utils.getOrCreateLog( 'active' );
-			let archiveLogData = utils.getOrCreateLog( 'archive' );
+			let goalistDirData = this.utilsRef.getOrCreateGoalistDir();
+			let logsDirData = this.utilsRef.getOrCreateLogsDir();
+			let bakDirData = this.utilsRef.getOrCreateBakDir();
+			let activeLogData = this.utilsRef.getOrCreateLog( 'active' );
+			let archiveLogData = this.utilsRef.getOrCreateLog( 'archive' );
 
 			if ( COMMAND in commands ) {
-				commands[ COMMAND ]( INPUT, ARGS, utils ).then( resolve, reject );
+				commands[ COMMAND ]( INPUT, ARGS, this.utilsRef ).then( resolve, reject );
 			} else {
 				console.log( 'Whoops, `goalist` was invoked with an invalid command.' );
 				reject( null );
