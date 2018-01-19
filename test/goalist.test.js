@@ -26,7 +26,7 @@ const setupOpts = {
 		goals: {
 			'1234567890': {
 				id: '1234567890',
-				title: 'My Cool Goal.'
+				title: 'My cool goal.'
 			},
 		},
 	},
@@ -88,6 +88,80 @@ test( 'Exposes the `run()` instance method.', ( t ) => {
 	t.is( typeof goalist.run, 'function' );
 } );
 
+test( 'Rejects if `#run()` is invoked with 0 arguments.', ( t ) => {
+	const Goalist = require( importPath );
+
+	let goalist = new Goalist();
+
+	return goalist.run()
+		.then( () => {
+			t.fail();
+		} )
+		.catch( () => {
+			t.pass();
+		} );
+} );
+
+test( 'Rejects if `#run()` is invoked with an invalid command.', ( t ) => {
+	const Goalist = require( importPath );
+
+	let goalist = new Goalist();
+
+	return goalist.run( 'INVALID_COMMAND' )
+		.then( () => {
+			t.fail();
+		} )
+		.catch( () => {
+			t.pass();
+		} );
+} );
+
+
+test( 'Resolves if `#run()` is invoked with a valid command.', ( t ) => {
+	const Goalist = require( importPath );
+
+	let goalist = new Goalist();
+
+	/// TODO: Ensure that this test does not require an `.goalist/` folder within the user's home directory to pass.
+	return goalist.run( 'list' )
+		.then( () => {
+			t.pass();
+		} )
+		.catch( () => {
+			t.fail();
+		} );
+} );
+
+test( '`#run()` accepts an array of input data.', ( t ) => {
+	const Goalist = require( importPath );
+
+	let goalist = new Goalist();
+
+	return goalist.run( 'add', [ 'My new goal.' ], { utilsOpts: { path: setupOpts.goalistDir } } )
+		.then( ( data ) => {
+			/// TODO: Ensure that new goal was added correctly.
+			t.pass();
+		} )
+		.catch( () => {
+			t.fail();
+		} );
+} );
+
+test( '`#run()` accepts a string of input data.', ( t ) => {
+	const Goalist = require( importPath );
+
+	let goalist = new Goalist();
+
+	return goalist.run( 'add', 'My other new goal.', { utilsOpts: { path: setupOpts.goalistDir } } )
+		.then( ( data ) => {
+			/// TODO: Ensure that new goal was added correctly.
+			t.pass();
+		} )
+		.catch( () => {
+			t.fail();
+		} );
+} );
+
 test( 'Allows `Utils` to be configured at instantiation.', ( t ) => {
 	const Goalist = require( importPath );
 
@@ -100,4 +174,4 @@ test( 'Allows `Utils` to be configured at instantiation.', ( t ) => {
 		.catch( ( err ) => {
 			t.fail();
 		} );
-} )
+} );
