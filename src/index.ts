@@ -26,11 +26,17 @@ class Goalist {
 
 		return new Promise( ( resolve, reject ) => {
 			// Ensure that `gl` is invoked with a command.
-			if ( !COMMAND ) {
+			if ( !COMMAND || typeof COMMAND !== 'string' ) {
 				console.log( 'Whoops, `goalist` must be executed with a valid command.' );
 				reject( null );
 				return;
 			}
+
+			// Ensure format/type of input.
+			INPUT = ( Array.isArray( INPUT ) && INPUT.length ) ? INPUT : typeof INPUT === 'string' ? [ INPUT ] : [];
+
+			// Ensure format/type of args.
+			ARGS = ( ARGS && typeof ARGS === 'object' ) ? ARGS : {};
 
 			// Set Debugger mode based on args.
 			Debugger.verbose( !!ARGS.verbose );

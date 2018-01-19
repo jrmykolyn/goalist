@@ -12,11 +12,13 @@ var Goalist = (function () {
         if (ARGS === void 0) { ARGS = {}; }
         var utils = new utils_1["default"](ARGS.utilsOpts);
         return new Promise(function (resolve, reject) {
-            if (!COMMAND) {
+            if (!COMMAND || typeof COMMAND !== 'string') {
                 console.log('Whoops, `goalist` must be executed with a valid command.');
                 reject(null);
                 return;
             }
+            INPUT = (Array.isArray(INPUT) && INPUT.length) ? INPUT : typeof INPUT === 'string' ? [INPUT] : [];
+            ARGS = (ARGS && typeof ARGS === 'object') ? ARGS : {};
             debugger_1["default"].verbose(!!ARGS.verbose);
             var goalistDirData = utils.getOrCreateGoalistDir();
             var logsDirData = utils.getOrCreateLogsDir();
