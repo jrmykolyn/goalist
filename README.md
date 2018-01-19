@@ -191,6 +191,16 @@ After Goalist has been imported, create a new instance as follows:
 let goalist = new Goalist();
 ```
 
+By default, Goalist will write to/read from a hidden `.goalist` folder within the the current user's home directory. This behavior can be overridden by providing an `options` object to the Goalist constructor at instantiation time.
+
+```
+let goalist = new Goalist( {
+	utilsOpts: {
+		path: '/path/to/custom/goalist/dir',
+	},
+} );
+```
+
 Goalist exposes the `#run()` instance method, which is used to execute individual subcommands.
 
 ```
