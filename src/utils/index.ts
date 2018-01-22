@@ -12,7 +12,6 @@ import * as pkgDir from 'pkg-dir';
 import * as merge from 'merge';
 
 // Project
-import Debugger from '../debugger';
 import { UtilsStore, UtilsInstance } from '../interfaces';
 
 // --------------------------------------------------
