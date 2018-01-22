@@ -144,3 +144,80 @@ test( 'Allows `Utils` to be configured at instantiation.', ( t ) => {
 			t.fail();
 		} );
 } );
+
+test( '"add" correctly adds new goal data to "active" goals.', async ( t ) => {
+	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
+
+	let newGoalTitle = 'This goal was added via a test.';
+
+	let goal = await goalist.run( 'add', [ newGoalTitle ] );
+
+	t.is( goal.title, newGoalTitle );
+} );
+
+test( '"archive" correctly archives/activates goal data.', async  ( t ) => {
+	t.plan( 4 );
+
+	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
+
+	// Create new goal.
+	let newGoalTitle = 'This goal will be archived.';
+	let goal = await goalist.run( 'add', [ newGoalTitle ] );
+
+	// Archive new goal.
+	// Get 'active' and 'archived' goal data.
+	let archivedGoals = await goalist.run( 'archive', [ goal.id ] );
+	let activeGoals = await goalist.run( 'list' );
+
+	// Assert that new goal:
+	// - is present in 'archived' goal data.
+	// - is not present in 'active' goal data.
+	// NOTE: Goal data keys must be coerced from strings to integers.
+	t.true( Object.keys( archivedGoals.goals ).map( ( k ) => { return +k; } ).includes( goal.id ) );
+	t.true( !Object.keys( activeGoals.goals ).map( ( k ) => { return +k; } ).includes( goal.id ) );
+
+	// 'Activate' new goal.
+	// Refresh references to 'active' and 'archived' goal data.
+	activeGoals = await goalist.run( 'archive', [ goal.id ], { active: true } );
+	archivedGoals = await goalist.run( 'list', [], { archive: true } );
+
+	/// Following 'activation', sssert that new goal:
+	// - is present in 'active' goal data.
+	// - is not present in 'archived' goal data.
+	t.true( Object.keys( activeGoals.goals ).map( ( k ) => { return +k; } ).includes( goal.id ) );
+	t.true( !Object.keys( archivedGoals.goals ).map( ( k ) => { return +k; } ).includes( goal.id ) );
+} );
+
+test( '"backup" correctly creates backups of "active" goal data.', async ( t ) => {
+	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
+
+	// Create backup of 'active' goals.
+	let result = await goalist.run( 'backup' );
+
+	// Read contents of 'bak/', get name of backup file.
+	let files = fs.readdirSync( `${setupOpts.goalistDir}/bak`, 'utf8' );
+	let file = files.filter( ( file ) => { return file.includes( 'active' ) && file.includes( '.bak' ) } )[ 0 ];
+
+	// Read in/parse backup file.
+	let bakData = JSON.parse( fs.readFileSync( `${setupOpts.goalistDir}/bak/${file}`, 'utf8' ) );
+
+	// Test.
+	// NOTE: ID corresponds to goal created during setup.
+	t.true( !!bakData.goals[ '1234567890' ] );
+} );
+
+test( '"complete" correctly sets a given goal to "complete".', async ( t ) => {
+	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
+
+	// Create a new goal.
+	let goal = await goalist.run( 'add', [ 'This goal is initially incomplete.' ] );
+
+	// Ensure new goal is not complete by default.
+	t.false( goal.complete );
+
+	// Set new goal to complete.
+	let updatedGoal = await goalist.run( 'complete', [ goal.id ] );
+
+	// Assert new goal is complete.
+	t.true( updatedGoal.complete );
+} );
