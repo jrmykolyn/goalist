@@ -48,7 +48,7 @@ Goalist does not require any additional configuration.
 
 ### Overview
 
-The `goalist` module may used/accessed in either of the following ways:
+The Goalist module may used/accessed in either of the following ways:
 
 - via import by/within a dependent script;
 - via CLI.
@@ -57,13 +57,13 @@ Documentation for both modes is provided below.
 
 ### CLI
 
-When installed globally, Goalist exposes the `gl` command. Running `gl` from the command line will display the help menu. In order to interact with the core functionality of the `goalist` package, a selection of subcommands are exposed. Each subcommand can be invoked using its full name (eg. `add`), or via a single character alias (eg. `a`). See below for the full list commands.
+When installed globally, Goalist exposes the `gl` command. Running `gl` from the command line will display the help menu. In order to interact with the core functionality of the Goalist package, a selection of subcommands are exposed. Each subcommand can be invoked using its full name (eg. `add`), or via a single character alias (eg. `a`). See below for the full list commands.
 
 Please note:
-- The help menu can *also* be accessed by invoking `goalist` with the `--help` flag (eg. `goalist --help`).
-- The current version can be accessed by invoking `goalist` with the `--version` flag (eg. `goalist --version`).
-- Goalist can be run in 'silent' mode by invoking `goalist` with the `--silent` flag (eg. `goalist --silent`). This suppresses all output.
-- Goalist can be run in 'verbose' mode by invoking `goalist` with the `--verbose` flag (eg. `goalist --verbose`). This displays additional information about the internals of a given command, and may be useful for debugging purposes.
+- The help menu can *also* be accessed by invoking `gl` with the `--help` flag (eg. `gl --help`).
+- The current version can be accessed by invoking `gl` with the `--version` flag (eg. `gl --version`).
+- Goalist can be run in 'silent' mode by invoking `gl {{ COMMAND }}` with the `--silent` flag (eg. `gl add "My new goal." --silent`). This suppresses all output.
+- Goalist can be run in 'verbose' mode by invoking `gl {{ COMMAND }}` with the `--verbose` flag (eg. `gl list --verbose`). This displays additional information about the internals of a given command, and may be useful for debugging purposes.
 
 ### `add` / `a`
 This command is used to add a new goal to the log file for the current.
