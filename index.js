@@ -38,7 +38,11 @@ var COMMAND = cli.input.slice( 0, 1 )[ 0 ];
 var INPUT = cli.input.slice( 1 );
 var ARGS = cli.flags;
 
-var goalist = new Goalist();
+var goalist = new Goalist( {
+	debuggerOpts: {
+		mode: ( ARGS.silent ? 'silent' : ARGS.verbose ? 'verbose' : 'normal' ),
+	},
+} );
 
 // --------------------------------------------------
 // INITIALIZATION
