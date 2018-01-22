@@ -47,6 +47,6 @@ export default function add( INPUT, ARGS, utils, d ) {
 
 		d.log( `Successfully created goal: ${id}` );
 
-		resolve( log );
+		resolve( goal );
 	} );
 }

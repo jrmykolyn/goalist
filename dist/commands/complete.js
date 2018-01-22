@@ -25,7 +25,7 @@ function complete(INPUT, ARGS, utils, d) {
             goal.complete = true;
         }
         utils.writeLog('active', JSON.stringify(log));
-        resolve(log);
+        resolve(goal);
         return;
     });
 }

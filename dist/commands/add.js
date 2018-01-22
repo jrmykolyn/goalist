@@ -21,7 +21,7 @@ function add(INPUT, ARGS, utils, d) {
         goals[id] = goal;
         utils.writeLog('active', JSON.stringify(log));
         d.log("Successfully created goal: " + id);
-        resolve(log);
+        resolve(goal);
     });
 }
 exports["default"] = add;

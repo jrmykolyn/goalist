@@ -49,7 +49,7 @@ export default function complete( INPUT, ARGS, utils, d ) {
 
 		utils.writeLog( 'active', JSON.stringify( log ) );
 
-		resolve( log );
+		resolve( goal );
 		return;
 	} );
 }
