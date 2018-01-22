@@ -7,11 +7,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - Added `backup` subcommand.
 - Added support for `remove {{ ID }} --archive` (remove goal directly from 'archive' log file).
+- Added support for 'silent' and 'verbose' modes.
+- Added support for `Utils` configuration via `Goalist` constructor.
 - Added `tslint.json`.
 - Added the follow development dependencies: `tslint`; `gulp-tslint`; `tslint-eslint-rules`.
 
 ### Changed
 - Updated `Goalist` class definition: remove `COMMAND`, `INPUT`, and `ARGS` parameters; accept `options` object;
+- Updated 'import' usage: prevent Goalist from logging to stdout by default.
 - Updated CLI entryoint logic: remove call to `#preflight()` method; simplify Promise chain; ensure that `COMMAND` is capture/provided as a string.
 - Updated `#run()` instance method: validate arguments; set default values.
 - Updated `#run()` instance method: ensure that files/folders exist at invocation time.
@@ -19,7 +22,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Updated Gulp file: added typescript linting-related tasks.
 - Updated `README.md` file: added documentation for non-CLI usage.
 - Removed `#preflight()` instance method.
-- Fixed typos in `README.md`.
+
+### Fixed
+- Fixed typos and incorrect documentation in `README.md`
 
 ## [0.12.0] - 2018-01-12
 ### Added
