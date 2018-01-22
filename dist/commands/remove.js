@@ -1,11 +1,11 @@
 "use strict";
 exports.__esModule = true;
 var readline = require("readline");
-function remove(INPUT, ARGS, utils) {
+function remove(INPUT, ARGS, utils, d) {
     return new Promise(function (resolve, reject) {
         var identifier = INPUT[0] || null;
         if (!identifier) {
-            console.log('Whoops, `remove` must be invoked with a valid `identifier` argument.');
+            d.log('Whoops, `remove` must be invoked with a valid `identifier` argument.');
             reject(null);
             return;
         }
@@ -14,7 +14,7 @@ function remove(INPUT, ARGS, utils) {
         var goal = goals[identifier] || null;
         var userConf = null;
         if (!goal) {
-            console.log('Whoops, failed to find a goal which matches the following identifier:', identifier);
+            d.log('Whoops, failed to find a goal which matches the following identifier:', identifier);
             reject(null);
             return;
         }
@@ -24,7 +24,7 @@ function remove(INPUT, ARGS, utils) {
         });
         rl.question('Please note, this is a destructive action! Do you wish to continue? (y/n)\n', function (response) {
             if (response.toString().toLowerCase() === 'y') {
-                console.log("Removing task: " + identifier);
+                d.log("Removing task: " + identifier);
                 for (var key in goals) {
                     if (goals[key] === goal) {
                         delete goals[key];
@@ -34,7 +34,7 @@ function remove(INPUT, ARGS, utils) {
                 resolve(log);
             }
             else {
-                console.log("Aborting.");
+                d.log("Aborting.");
                 reject(log);
             }
             rl.close();

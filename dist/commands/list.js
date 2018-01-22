@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
 var chalk = require('chalk');
-function list(INPUT, ARGS, utils) {
+function list(INPUT, ARGS, utils, d) {
     return new Promise(function (resolve, reject) {
         var log = ARGS.archive ? utils.getLog('archive') : utils.getLog('active');
         var goals = log.goals;
@@ -14,10 +14,10 @@ function list(INPUT, ARGS, utils) {
             }
             whitelistProps.concat(supplementaryProps).forEach(function (prop) {
                 if (goal.hasOwnProperty(prop)) {
-                    console.log(chalk.gray(prop + ':') + " " + goal[prop]);
+                    d.log(chalk.gray(prop + ':') + " " + goal[prop]);
                 }
             });
-            console.log('\n');
+            d.log('\n');
         });
         resolve(log);
     });

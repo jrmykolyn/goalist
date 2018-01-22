@@ -1,11 +1,11 @@
 "use strict";
 exports.__esModule = true;
 var keyBlacklist = ['_'];
-function update(INPUT, ARGS, utils) {
+function update(INPUT, ARGS, utils, d) {
     return new Promise(function (resolve, reject) {
         var identifier = INPUT[0] || null;
         if (!identifier) {
-            console.log('Whoops, `update` must be invoked with a valid `identifier` argument.');
+            d.log('Whoops, `update` must be invoked with a valid `identifier` argument.');
             reject(null);
             return;
         }
@@ -13,7 +13,7 @@ function update(INPUT, ARGS, utils) {
         var goals = log.goals;
         var goal = goals[identifier] || null;
         if (!goal) {
-            console.log('Whoops, failed to find a goal which matches the following identifier:', identifier);
+            d.log('Whoops, failed to find a goal which matches the following identifier:', identifier);
             reject(null);
             return;
         }
@@ -23,7 +23,7 @@ function update(INPUT, ARGS, utils) {
             }
         }
         utils.writeLog('active', JSON.stringify(log));
-        console.log("Successfully updated the following properties: " + Object.keys(ARGS).filter(function (key) { return key !== '_'; }).join('; '));
+        d.log("Successfully updated the following properties: " + Object.keys(ARGS).filter(function (key) { return key !== '_'; }).join('; '));
         resolve(log);
     });
 }

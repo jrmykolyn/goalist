@@ -1,10 +1,10 @@
 "use strict";
 exports.__esModule = true;
-function archive(INPUT, ARGS, utils) {
+function archive(INPUT, ARGS, utils, d) {
     return new Promise(function (resolve, reject) {
         var identifier = INPUT[0] || null;
         if (!identifier) {
-            console.log('Whoops, subcommand must be invoked with a valid `identifier` argument.');
+            d.log('Whoops, subcommand must be invoked with a valid `identifier` argument.');
             reject(null);
             return;
         }
@@ -14,16 +14,16 @@ function archive(INPUT, ARGS, utils) {
         var goals = sourceData.goals;
         var goal = goals[identifier] || null;
         if (!goal) {
-            console.log('Whoops, failed to find a goal which matches the following identifier:', identifier);
+            d.log('Whoops, failed to find a goal which matches the following identifier:', identifier);
             reject(null);
             return;
         }
         if (isActive) {
-            console.log("Deactivating the following task: " + identifier);
+            d.log("Deactivating the following task: " + identifier);
             goal.active = false;
         }
         else {
-            console.log("Activating the following task: " + identifier);
+            d.log("Activating the following task: " + identifier);
             goal.active = true;
         }
         delete goals[identifier];

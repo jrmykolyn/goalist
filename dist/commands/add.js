@@ -1,10 +1,10 @@
 "use strict";
 exports.__esModule = true;
-function add(INPUT, ARGS, utils) {
+function add(INPUT, ARGS, utils, d) {
     return new Promise(function (resolve, reject) {
         var title = INPUT[0] || null;
         if (!title) {
-            console.log('Whoops, `add` must be invoked with a valid `title` argument.');
+            d.log('Whoops, `add` must be invoked with a valid `title` argument.');
             reject(null);
             return;
         }
@@ -20,7 +20,7 @@ function add(INPUT, ARGS, utils) {
         };
         goals[id] = goal;
         utils.writeLog('active', JSON.stringify(log));
-        console.log("Successfully created goal: " + id);
+        d.log("Successfully created goal: " + id);
         resolve(log);
     });
 }
