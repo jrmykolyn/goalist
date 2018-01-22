@@ -62,6 +62,8 @@ When installed globally, Goalist exposes the `gl` command. Running `gl` from the
 Please note:
 - The help menu can *also* be accessed by invoking `goalist` with the `--help` flag (eg. `goalist --help`).
 - The current version can be accessed by invoking `goalist` with the `--version` flag (eg. `goalist --version`).
+- Goalist can be run in 'silent' mode by invoking `goalist` with the `--silent` flag (eg. `goalist --silent`). This suppresses all output.
+- Goalist can be run in 'verbose' mode by invoking `goalist` with the `--verbose` flag (eg. `goalist --verbose`). This displays additional information about the internals of a given command, and may be useful for debugging purposes.
 
 ### `add` / `a`
 This command is used to add a new goal to the log file for the current.
@@ -191,12 +193,22 @@ After Goalist has been imported, create a new instance as follows:
 let goalist = new Goalist();
 ```
 
-By default, Goalist will write to/read from a hidden `.goalist` folder within the the current user's home directory. This behavior can be overridden by providing an `options` object to the Goalist constructor at instantiation time.
+By default, Goalist will write to/read from a hidden `.goalist` folder within the the current user's home directory. This behavior can be overridden by providing an object with a key of `utilsOpts` at instantiation time.
 
 ```
 let goalist = new Goalist( {
 	utilsOpts: {
 		path: '/path/to/custom/goalist/dir',
+	},
+} );
+```
+
+By default, Goalist does not log any information to stdout. However, this behavior can be enabled by providing an object with a key of `debuggerOpts` at instantiation time.
+
+```
+let goalist = new Goalist( {
+	debuggerOpts: {
+		mode: 'verbose', // Valid values are: 'verbose'; 'normal'; 'silent'.
 	},
 } );
 ```
