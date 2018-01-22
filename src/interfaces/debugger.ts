@@ -1,7 +1,10 @@
 // --------------------------------------------------
 // PUBLIC API
 // --------------------------------------------------
-export * from './debugger';
-export * from './goal';
-export * from './goalist';
-export * from './utils';
+export interface DebuggerInstance {
+	// Propertyies
+	mode: string;
+	// Methods
+	log: any,
+	setMode: any,
+};

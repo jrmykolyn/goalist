@@ -2,38 +2,54 @@
 // IMPORT MODULES
 // --------------------------------------------------
 // Node
+
 // Vendor
+
 // Project
+import { DebuggerInstance } from '../interfaces';
 
 // --------------------------------------------------
 // DECLARE VARS
 // --------------------------------------------------
-// NOTE:
-// - `_self` used as 'stand in' for static/class variables, which throw runtime errors.
-/// TODO:
-// - Update class definition to use class variables.
-const _self: any = {};
 
 // --------------------------------------------------
 // DEFINE CLASSES
 // --------------------------------------------------
-export default class Debugger {
-	/**
-	 * Set the internal `verboseMode` property to `state`.
-	 *
-	 * @param {boolean} state
-	 */
-	static verbose( state ) {
-		_self.verboseMode = !!state;
+export default class Debugger implements DebuggerInstance {
+	mode: string;
+
+	constructor( opts: any = {} ) {
+		opts = opts && typeof opts === 'object' ? opts : {};
+
+		this.mode = [ 'silent', 'normal', 'verbose' ].includes( opts.mode ) ? opts.mode : 'silent';
 	}
 
 	/**
-	 * Log a message to stdout if the debugger is running in `verboseMode`.
+	 * Set the internal `mode` property.
 	 *
-	 * @param {any} msg
+	 * @param {string} mode
 	 */
-	static log( msg ) {
-		if ( _self.verboseMode ) {
+	setMode( mode: string ): string {
+		this.mode = mode;
+
+		return this.mode;
+	}
+
+	/**
+	 * Conditionally log a message to stdout.
+	 *
+	 * @param {string} msg
+	 * @param {Object} opts
+	 */
+	log( msg: string, opts: any = {} ) {
+		opts = opts && typeof opts === 'object' ? opts : {};
+
+		// Log the `msg` if:
+		// - We're running in 'verbose' mode...
+		// - ...or the current mode is not 'silent *and* `log()` was not invoked with `opts.mode`.
+		if ( this.mode === 'verbose' ) {
+			console.log( msg );
+		} else if ( this.mode !== 'silent' && !opts.mode ) {
 			console.log( msg );
 		}
 	}

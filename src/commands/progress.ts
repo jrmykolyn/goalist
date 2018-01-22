@@ -15,7 +15,7 @@ import * as barHorizontal from 'bar-horizontal';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function progress( INPUT, ARGS, utils ) {
+export default function progress( INPUT, ARGS, utils, d ) {
 	return new Promise( ( resolve, reject ) => {
 		let log = utils.getLog( 'active' );
 		let { goals } = log;
@@ -24,10 +24,10 @@ export default function progress( INPUT, ARGS, utils ) {
 		let numComplete = utils.getComplete( goals ).length;
 		let numIncomplete = totalGoals - numComplete;
 
-		console.log( `OVERVIEW`);
-		console.log( `Total: ${totalGoals}\r` );
-		console.log( `Complete: ${numComplete}\r` );
-		console.log( `Incomplete: ${numIncomplete}\n` );
+		d.log( 'OVERVIEW' );
+		d.log( `Total: ${totalGoals}\r` );
+		d.log( `Complete: ${numComplete}\r` );
+		d.log( `Incomplete: ${numIncomplete}\n` );
 
 		barHorizontal( {
 			'Complete': numComplete,

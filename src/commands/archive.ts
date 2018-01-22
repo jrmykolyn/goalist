@@ -14,13 +14,13 @@
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function archive( INPUT, ARGS, utils ) {
+export default function archive( INPUT, ARGS, utils, d ) {
 	return new Promise( ( resolve, reject ) => {
 		let identifier = INPUT[ 0 ] || null;
 
 		/// TODO[@jrmykolyn]: Consolidate with *almost* identical logic in other subcommands.
 		if ( !identifier ) {
-			console.log( 'Whoops, subcommand must be invoked with a valid `identifier` argument.' );
+			d.log( 'Whoops, subcommand must be invoked with a valid `identifier` argument.' );
 			reject( null );
 			return;
 		}
@@ -39,17 +39,17 @@ export default function archive( INPUT, ARGS, utils ) {
 
 		/// TODO[@jrmykolyn]: Consolidate with identical logic in other subcommands.
 		if ( !goal ) {
-			console.log( 'Whoops, failed to find a goal which matches the following identifier:', identifier );
+			d.log( 'Whoops, failed to find a goal which matches the following identifier:', identifier );
 			reject( null );
 			return;
 		}
 
 		// Update `active` key.
 		if ( isActive ) {
-			console.log( `Deactivating the following task: ${identifier}` );
+			d.log( `Deactivating the following task: ${identifier}` );
 			goal.active = false;
 		} else {
-			console.log( `Activating the following task: ${identifier}` );
+			d.log( `Activating the following task: ${identifier}` );
 			goal.active = true;
 		}
 

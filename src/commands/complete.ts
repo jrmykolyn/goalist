@@ -14,13 +14,13 @@
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function complete( INPUT, ARGS, utils ) {
+export default function complete( INPUT, ARGS, utils, d ) {
 	return new Promise( ( resolve, reject ) => {
 		let identifier = INPUT[ 0 ] || null;
 
 		/// TODO[@jrmykolyn]: Consolidate with *almost* identical logic in other subcommands.
 		if ( !identifier ) {
-			console.log( 'Whoops, subcommand must be invoked with a valid `identifier` argument.' );
+			d.log( 'Whoops, subcommand must be invoked with a valid `identifier` argument.' );
 			reject( null );
 			return;
 		}
@@ -32,7 +32,7 @@ export default function complete( INPUT, ARGS, utils ) {
 
 		/// TODO[@jrmykolyn]: Consolidate with identical logic in other subcommands.
 		if ( !goal ) {
-			console.log( 'Whoops, failed to find a goal which matches the following identifier:', identifier );
+			d.log( 'Whoops, failed to find a goal which matches the following identifier:', identifier );
 			reject( null );
 			return;
 		}
@@ -40,10 +40,10 @@ export default function complete( INPUT, ARGS, utils ) {
 		// If invoked with the `--false` flag, set matched goal to incomplete.
 		// Otherwise, set to complete.
 		if ( ARGS.false ) {
-			console.log( `Setting the following task to incomplete: ${identifier}` );
+			d.log( `Setting the following task to incomplete: ${identifier}` );
 			goal.complete = false;
 		} else {
-			console.log( `Setting the following task to complete: ${identifier}` );
+			d.log( `Setting the following task to complete: ${identifier}` );
 			goal.complete = true;
 		}
 

@@ -16,12 +16,12 @@ import { Goal } from '../interfaces';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function add( INPUT, ARGS, utils ) {
+export default function add( INPUT, ARGS, utils, d ) {
 	return new Promise( ( resolve, reject ) => {
 		let title = INPUT[ 0 ] || null;
 
 		if ( !title ) {
-			console.log( 'Whoops, `add` must be invoked with a valid `title` argument.' );
+			d.log( 'Whoops, `add` must be invoked with a valid `title` argument.' );
 			reject( null );
 			return;
 		}
@@ -45,7 +45,7 @@ export default function add( INPUT, ARGS, utils ) {
 		// Write new data back to file system.
 		utils.writeLog( 'active', JSON.stringify( log ) );
 
-		console.log( `Successfully created goal: ${id}` );
+		d.log( `Successfully created goal: ${id}` );
 
 		resolve( log );
 	} );

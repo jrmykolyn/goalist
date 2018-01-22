@@ -16,12 +16,12 @@ import * as readline from 'readline';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function remove( INPUT, ARGS, utils ) {
+export default function remove( INPUT, ARGS, utils, d ) {
 	return new Promise( ( resolve, reject ) => {
 		let identifier = INPUT[ 0 ] || null;
 
 		if ( !identifier ) {
-			console.log( 'Whoops, `remove` must be invoked with a valid `identifier` argument.' );
+			d.log( 'Whoops, `remove` must be invoked with a valid `identifier` argument.' );
 			reject( null );
 			return;
 		}
@@ -32,7 +32,7 @@ export default function remove( INPUT, ARGS, utils ) {
 		let userConf = null;
 
 		if ( !goal ) {
-			console.log( 'Whoops, failed to find a goal which matches the following identifier:', identifier );
+			d.log( 'Whoops, failed to find a goal which matches the following identifier:', identifier );
 			reject( null );
 			return;
 		}
@@ -45,7 +45,7 @@ export default function remove( INPUT, ARGS, utils ) {
 		/// TODO[@jrmykolyn]: Convert nested callback to Promise chain if possible.
 		rl.question( 'Please note, this is a destructive action! Do you wish to continue? (y/n)\n', ( response ) => {
 			if ( response.toString().toLowerCase() === 'y' ) {
-				console.log( `Removing task: ${identifier}` );
+				d.log( `Removing task: ${identifier}` );
 
 				for ( let key in goals ) {
 					if ( goals[ key ] === goal ) {
@@ -58,7 +58,7 @@ export default function remove( INPUT, ARGS, utils ) {
 
 				resolve( log );
 			} else {
-				console.log( `Aborting.` );
+				d.log( `Aborting.` );
 
 				reject( log );
 			}

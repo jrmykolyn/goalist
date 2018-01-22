@@ -16,17 +16,17 @@ import { Goal } from '../interfaces';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function backup( INPUT, ARGS, utils ) {
+export default function backup( INPUT, ARGS, utils, d ) {
 	return new Promise( ( resolve, reject ) => {
 		let log = ARGS.archive ? utils.getLog( 'archive' ) : utils.getLog( 'active' );
 
 		try {
 			fs.writeFileSync( `${utils.getBakPath()}/goalist_${ARGS.archive ? 'archive' : 'active'}_${new Date().getTime()}.bak`, JSON.stringify( log ), 'utf8' );
-			console.log( `Successfully backed up log: ${ARGS.archive ? 'archive' : 'active'}` );
+			d.log( `Successfully backed up log: ${ARGS.archive ? 'archive' : 'active'}` );
 			resolve( log );
 			return;
 		} catch ( err ) {
-			console.log( `Failed to back up log: ${ARGS.archive ? 'archive' : 'active'}` );
+			d.log( `Failed to back up log: ${ARGS.archive ? 'archive' : 'active'}` );
 			reject( err );
 			return;
 		}

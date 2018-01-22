@@ -11,6 +11,7 @@ import * as commands from './commands';
 import Utils from './utils';
 import Debugger from './debugger';
 import {
+	DebuggerInstance,
 	GoalistArgs,
 	GoalistInput,
 	GoalistInstance,
@@ -26,10 +27,14 @@ import {
 // DECLARE FUNCTIONS
 // --------------------------------------------------
 class Goalist {
+	debuggerRef: DebuggerInstance;
 	utilsRef: UtilsInstance;
 
 	constructor( options: GoalistOptions = {} ) {
 		options = ( options && typeof options === 'object' ) ? options : {};
+
+		// Allow dependent script (eg. CLI) to specify Debugger mode at instantiation.
+		this.debuggerRef = new Debugger( options.debuggerOpts );
 
 		// Allow dependent script to configure `Utils` at instantiation.
 		this.utilsRef = new Utils( options.utilsOpts );
@@ -39,7 +44,7 @@ class Goalist {
 		return new Promise( ( resolve, reject ) => {
 			// Ensure that `gl` is invoked with a command.
 			if ( !COMMAND || typeof COMMAND !== 'string' ) {
-				console.log( 'Whoops, `goalist` must be executed with a valid command.' );
+				this.debuggerRef.log( 'Whoops, `goalist` must be executed with a valid command.' );
 				reject( null );
 				return;
 			}
@@ -50,9 +55,6 @@ class Goalist {
 			// Ensure format/type of args.
 			ARGS = ( ARGS && typeof ARGS === 'object' ) ? ARGS : {};
 
-			// Set Debugger mode based on args.
-			Debugger.verbose( !!ARGS.verbose );
-
 			/// TODO: Consider building out wrapper function around `getOrCreate*()` methods.
 			let goalistDirData = this.utilsRef.getOrCreateGoalistDir();
 			let logsDirData = this.utilsRef.getOrCreateLogsDir();
@@ -61,9 +63,9 @@ class Goalist {
 			let archiveLogData = this.utilsRef.getOrCreateLog( 'archive' );
 
 			if ( COMMAND in commands ) {
-				commands[ COMMAND ]( INPUT, ARGS, this.utilsRef ).then( resolve, reject );
+				commands[ COMMAND ]( INPUT, ARGS, this.utilsRef, this.debuggerRef ).then( resolve, reject );
 			} else {
-				console.log( 'Whoops, `goalist` was invoked with an invalid command.' );
+				this.debuggerRef.log( 'Whoops, `goalist` was invoked with an invalid command.' );
 				reject( null );
 				return;
 			}

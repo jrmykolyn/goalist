@@ -11,6 +11,7 @@ export interface GoalistInstance {
 };
 
 export interface GoalistOptions {
+	debuggerOpts?: any,
 	utilsOpts?: any,
 };
 

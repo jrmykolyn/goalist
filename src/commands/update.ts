@@ -16,12 +16,12 @@ const keyBlacklist = [ '_' ];
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function update( INPUT, ARGS, utils ) {
+export default function update( INPUT, ARGS, utils, d ) {
 	return new Promise( ( resolve, reject ) => {
 		let identifier = INPUT[ 0 ] || null;
 
 		if ( !identifier ) {
-			console.log( 'Whoops, `update` must be invoked with a valid `identifier` argument.' );
+			d.log( 'Whoops, `update` must be invoked with a valid `identifier` argument.' );
 			reject( null );
 			return;
 		}
@@ -31,7 +31,7 @@ export default function update( INPUT, ARGS, utils ) {
 		let goal = goals[ identifier ] || null;
 
 		if ( !goal ) {
-			console.log( 'Whoops, failed to find a goal which matches the following identifier:', identifier );
+			d.log( 'Whoops, failed to find a goal which matches the following identifier:', identifier );
 			reject( null );
 			return;
 		}
@@ -47,7 +47,7 @@ export default function update( INPUT, ARGS, utils ) {
 		utils.writeLog( 'active', JSON.stringify( log ) );
 
 		// Log out updated properties.
-		console.log( `Successfully updated the following properties: ${ Object.keys( ARGS ).filter( key => key !== '_' ).join( '; ' ) }` );
+		d.log( `Successfully updated the following properties: ${ Object.keys( ARGS ).filter( key => key !== '_' ).join( '; ' ) }` );
 
 		resolve( log );
 	} );
