@@ -21,7 +21,7 @@ export default function complete( INPUT, ARGS, config ) {
 		/// TODO[@jrmykolyn]: Consolidate with *almost* identical logic in other subcommands.
 		if ( !identifier ) {
 			config.debugger.log( 'Whoops, subcommand must be invoked with a valid `identifier` argument.' );
-			reject( null );
+			reject( new Error( 'Whoops, subcommand must be invoked with a valid `identifier` argument.' ) );
 			return;
 		}
 
@@ -32,8 +32,8 @@ export default function complete( INPUT, ARGS, config ) {
 
 		/// TODO[@jrmykolyn]: Consolidate with identical logic in other subcommands.
 		if ( !goal ) {
-			config.debugger.log( 'Whoops, failed to find a goal which matches the following identifier:', identifier );
-			reject( null );
+			config.debugger.log( `Whoops, failed to find a goal which matches the following identifier: ${identifier}` );
+			reject( new Error( `Whoops, failed to find a goal which matches the following identifier: ${identifier}` ) );
 			return;
 		}
 
