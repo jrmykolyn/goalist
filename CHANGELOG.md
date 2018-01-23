@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Added support for `remove {{ ID }} --archive` (eg. remove goal directly from 'archive' log file).
 - Added support for 'silent' and 'verbose' modes (eg. `Debugger` configuration).
 - Added support for `Utils` configuration via `Goalist` constructor.
+- Added `Subcommands` section to `README.md`.
 - Added `tslint.json`.
 - Added the follow development dependencies: `tslint`; `gulp-tslint`; `tslint-eslint-rules`.
 
