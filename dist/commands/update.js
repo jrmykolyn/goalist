@@ -1,20 +1,20 @@
 "use strict";
 exports.__esModule = true;
 var keyBlacklist = ['_'];
-function update(INPUT, ARGS, utils, d) {
+function update(INPUT, ARGS, config) {
     return new Promise(function (resolve, reject) {
         var identifier = INPUT[0] || null;
         if (!identifier) {
-            d.log('Whoops, `update` must be invoked with a valid `identifier` argument.');
-            reject(null);
+            config["debugger"].log('Whoops, `update` must be invoked with a valid `identifier` argument.');
+            reject(new Error('Whoops, `update` must be invoked with a valid `identifier` argument.'));
             return;
         }
-        var log = utils.getLog('active');
+        var log = config.utils.getLog('active');
         var goals = log.goals;
         var goal = goals[identifier] || null;
         if (!goal) {
-            d.log('Whoops, failed to find a goal which matches the following identifier:', identifier);
-            reject(null);
+            config["debugger"].log("Whoops, failed to find a goal which matches the following identifier: " + identifier);
+            reject(new Error("Whoops, failed to find a goal which matches the following identifier: " + identifier));
             return;
         }
         for (var key in ARGS) {
@@ -22,9 +22,9 @@ function update(INPUT, ARGS, utils, d) {
                 goal[key] = ARGS[key];
             }
         }
-        utils.writeLog('active', JSON.stringify(log));
-        d.log("Successfully updated the following properties: " + Object.keys(ARGS).filter(function (key) { return key !== '_'; }).join('; '));
-        resolve(log);
+        config.utils.writeLog('active', JSON.stringify(log));
+        config["debugger"].log("Successfully updated the following properties: " + Object.keys(ARGS).filter(function (key) { return key !== '_'; }).join('; '));
+        resolve(goal);
     });
 }
 exports["default"] = update;

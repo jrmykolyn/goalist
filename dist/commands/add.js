@@ -1,14 +1,14 @@
 "use strict";
 exports.__esModule = true;
-function add(INPUT, ARGS, utils, d) {
+function add(INPUT, ARGS, config) {
     return new Promise(function (resolve, reject) {
         var title = INPUT[0] || null;
         if (!title) {
-            d.log('Whoops, `add` must be invoked with a valid `title` argument.');
+            config["debugger"].log('Whoops, `add` must be invoked with a valid `title` argument.');
             reject(null);
             return;
         }
-        var log = utils.getLog('active');
+        var log = config.utils.getLog('active');
         var goals = log.goals;
         var id = new Date().getTime();
         var goal = {
@@ -19,8 +19,8 @@ function add(INPUT, ARGS, utils, d) {
             active: true
         };
         goals[id] = goal;
-        utils.writeLog('active', JSON.stringify(log));
-        d.log("Successfully created goal: " + id);
+        config.utils.writeLog('active', JSON.stringify(log));
+        config["debugger"].log("Successfully created goal: " + id);
         resolve(goal);
     });
 }

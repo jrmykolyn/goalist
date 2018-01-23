@@ -10,6 +10,9 @@ var Debugger = (function () {
         this.mode = mode;
         return this.mode;
     };
+    Debugger.prototype.getMode = function () {
+        return this.mode;
+    };
     Debugger.prototype.log = function (msg, opts) {
         if (opts === void 0) { opts = {}; }
         opts = opts && typeof opts === 'object' ? opts : {};
