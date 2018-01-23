@@ -1,6 +1,5 @@
 "use strict";
 exports.__esModule = true;
-var readline = require("readline");
 function remove(INPUT, ARGS, config) {
     return new Promise(function (resolve, reject) {
         var identifier = INPUT[0] || null;
@@ -18,31 +17,7 @@ function remove(INPUT, ARGS, config) {
             reject(null);
             return;
         }
-        var rl = readline.createInterface({
-            input: process.stdin,
-            output: process.stdout
-        });
-        if (config.cli) {
-            rl.question('Please note, this is a destructive action! Do you wish to continue? (y/n)\n', function (response) {
-                if (response.toString().toLowerCase() === 'y') {
-                    config["debugger"].log("Removing task: " + identifier);
-                    for (var key in goals) {
-                        if (goals[key] === goal) {
-                            delete goals[key];
-                        }
-                    }
-                    config.utils.writeLog(ARGS.archive ? 'archive' : 'active', JSON.stringify(log));
-                    resolve(log);
-                }
-                else {
-                    config["debugger"].log('Aborting.');
-                    reject(log);
-                }
-                rl.close();
-                return;
-            });
-        }
-        else {
+        if (!config.cli || ARGS.force) {
             config["debugger"].log("Removing task: " + identifier);
             for (var key in goals) {
                 if (goals[key] === goal) {
@@ -51,6 +26,12 @@ function remove(INPUT, ARGS, config) {
             }
             config.utils.writeLog(ARGS.archive ? 'archive' : 'active', JSON.stringify(log));
             resolve(log);
+            return;
+        }
+        else {
+            config["debugger"].log('This is a destructive action and can only be executed if the `--force` flag is provided. Aborting.');
+            reject(log);
+            return;
         }
     });
 }

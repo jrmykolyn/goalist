@@ -3,7 +3,6 @@
 // --------------------------------------------------
 // Node
 import * as fs from 'fs';
-import * as readline from 'readline';
 
 // Vendor
 
@@ -37,36 +36,10 @@ export default function remove( INPUT, ARGS, config ) {
 			return;
 		}
 
-		const rl = readline.createInterface( {
-			input: process.stdin,
-			output: process.stdout,
-		} );
-
-		/// TODO[@jrmykolyn]: Convert nested callback to Promise chain if possible.
-		if ( config.cli ) {
-			rl.question( 'Please note, this is a destructive action! Do you wish to continue? (y/n)\n', ( response ) => {
-				if ( response.toString().toLowerCase() === 'y' ) {
-					config.debugger.log( `Removing task: ${identifier}` );
-
-					for ( let key in goals ) {
-						if ( goals[ key ] === goal ) {
-							delete goals[ key ];
-						}
-					}
-
-					// Write new data back to file system.
-					config.utils.writeLog( ARGS.archive ? 'archive' : 'active', JSON.stringify( log ) );
-
-					resolve( log );
-				} else {
-					config.debugger.log( 'Aborting.' );
-					reject( log );
-				}
-
-				rl.close();
-				return;
-			} );
-		} else {
+		// Proceed if:
+		// - we're not running in CLU mode;
+		// - or the `--force` flag was provided.
+		if ( !config.cli || ARGS.force ) {
 			config.debugger.log( `Removing task: ${identifier}` );
 
 			for ( let key in goals ) {
@@ -79,6 +52,11 @@ export default function remove( INPUT, ARGS, config ) {
 			config.utils.writeLog( ARGS.archive ? 'archive' : 'active', JSON.stringify( log ) );
 
 			resolve( log );
+			return;
+		} else {
+			config.debugger.log( 'This is a destructive action and can only be executed if the `--force` flag is provided. Aborting.' );
+			reject( log );
+			return;
 		}
 	} );
 }
