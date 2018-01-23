@@ -219,7 +219,19 @@ Goalist exposes the `#run()` instance method, which is used to execute individua
 goalist.run( 'list' ); // Execute the 'list' subcommand.
 ```
 
-Some of the Goalist subcommands require additional information in order to function properly. These can be provided by invoking the `#run()` command with a second argument.
+`#run()` returns a Promise, which will resolve or reject depending on whether the operation was successful. To access the data returned by the `#run()` method, invoke the `.then( ... )` on the value returned by `#run()`.
+
+```
+goalist.run( 'list' )
+	.then( ( data ) => {
+		// Do something with the data returned by 'list' here.
+	} )
+	.catch( ( err ) => {
+		// Handle potential errors here.
+	} );
+```
+
+Some of the Goalist subcommands require additional information in order to function properly (this is generally the case if the subcommand operates on a specific goal). These can be provided by invoking the `#run()` command with a second argument.
 
 ```
 goalist.run( 'complete', [ '1516126195749' ] ); // Mark the goal with id '1516126195749' as complete.
