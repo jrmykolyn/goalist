@@ -22,7 +22,7 @@ export default function add( INPUT, ARGS, config ) {
 
 		if ( !title ) {
 			config.debugger.log( 'Whoops, `add` must be invoked with a valid `title` argument.' );
-			reject( null );
+			reject( new Error( 'Whoops, `add` must be invoked with a valid `title` argument.' ) );
 			return;
 		}
 

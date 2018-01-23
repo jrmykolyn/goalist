@@ -5,7 +5,7 @@ function add(INPUT, ARGS, config) {
         var title = INPUT[0] || null;
         if (!title) {
             config["debugger"].log('Whoops, `add` must be invoked with a valid `title` argument.');
-            reject(null);
+            reject(new Error('Whoops, `add` must be invoked with a valid `title` argument.'));
             return;
         }
         var log = config.utils.getLog('active');
