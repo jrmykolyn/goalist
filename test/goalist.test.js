@@ -27,7 +27,15 @@ const setupOpts = {
 		goals: {
 			'1234567890': {
 				id: '1234567890',
-				title: 'My cool goal.'
+				title: 'My cool goal.',
+				active: true,
+				complete: false,
+			},
+			'0987654321': {
+				id: '0987654321',
+				title: 'My complete goal.',
+				active: true,
+				complete: true,
 			},
 		},
 	},
@@ -220,4 +228,84 @@ test( '"complete" correctly sets a given goal to "complete".', async ( t ) => {
 
 	// Assert new goal is complete.
 	t.true( updatedGoal.complete );
+} );
+
+test( '"list" correctly lists "active" goal data.', async ( t ) => {
+	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
+
+	// Get 'active' goal data.
+	let activeGoals = await goalist.run( 'list' );
+
+	// Exract initial goal (added via `setupOpts`) from 'active' goal data.
+	let goal = Object.keys( activeGoals.goals )
+		.map( ( k ) => {
+			return activeGoals.goals[ k ];
+		} )
+		.filter( ( goal ) => {
+			return goal.id === '1234567890';
+		} )[ 0 ];
+
+	// Test.
+	t.truthy( goal );
+} );
+
+test.todo( '"list" correctly lists "archived" goal data.' );
+
+test( '"progress correctly returns an object of data relating to the "active" goals.', async ( t ) => {
+	t.plan( 4 );
+
+	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
+
+	let progress = await goalist.run( 'progress' );
+
+	t.true( progress.type === 'active' );
+	t.true( progress.total !== undefined );
+	t.true( progress.complete !== undefined );
+	t.true( progress.incomplete !== undefined );
+} );
+
+test( '"remove" correctly removes a goal from the "active" goals.', async ( t ) => {
+	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
+
+	// Create new goal, add to 'active' goals, and get all 'active' goal data.
+	let newGoalTitle = 'This goal will be removed';
+	let goal = await goalist.run( 'add', [ newGoalTitle ] );
+	let activeGoals = await goalist.run( 'list' );
+
+	// Ensure that new goal is present in 'active' goals data.
+	t.true( Object.keys( activeGoals.goals ).map( ( k ) => { return +k; } ).includes( goal.id ) );
+
+	// Remove new goal.
+	let result = await goalist.run( 'remove', [ goal.id ] );
+
+	// Update 'active' goal data ref.
+	activeGoals = await goalist.run( 'list' );
+
+	// Ensure that new goal is not present in 'active' goals data.
+	t.false( Object.keys( activeGoals.goals ).map( ( k ) => { return +k; } ).includes( goal.id ) );
+} );
+
+test( '"update" correctly updates the target goal.', async ( t ) => {
+	t.plan( 2 );
+
+	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
+
+	// Create new goal, test title.
+	let newGoalTitle = 'This title will be updated';
+	let goal = await goalist.run( 'add', [ newGoalTitle ] );
+	t.is( goal.title, newGoalTitle );
+
+	// Update existing goal, ensure that new title has been correctly applied.
+	let updatedGoalTitle = 'This title has been updated';
+	let updatedGoal = await goalist.run( 'update', [ goal.id ], { title: updatedGoalTitle } );
+	t.is( updatedGoal.title, updatedGoalTitle );
+} );
+
+test( '"update" rejects when invoked with a missing or invalid identifier.', async ( t ) => {
+	t.plan( 2 );
+
+	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
+
+	await t.throws( goalist.run( 'update' ) );
+	await t.throws( goalist.run( 'update', [ 'NOT_A_REAL_ID' ] ) );
 } );
