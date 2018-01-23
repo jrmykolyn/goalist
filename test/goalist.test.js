@@ -21,41 +21,60 @@ let importPath = `${process.cwd()}/${pkg.main}`;
 const setupOpts = {
 	goalistDir: `${__dirname}/temp_${parseInt( Math.random() * new Date().getTime() )}`,
 	logsDirName: 'logs',
-	logIdentifier: '1989-12-29',
-	logName: 'goalist_active.log',
-	logData: {
-		goals: {
-			'1234567890': {
-				id: '1234567890',
-				title: 'My cool goal.',
-				active: true,
-				complete: false,
-			},
-			'0987654321': {
-				id: '0987654321',
-				title: 'My complete goal.',
-				active: true,
-				complete: true,
-			},
+	logs: [
+		{
+			name: 'goalist_active.log',
+			data: {
+				goals: {
+					'1234567890': {
+						id: '1234567890',
+						title: 'My cool goal.',
+						active: true,
+						complete: false,
+					},
+					'0987654321': {
+						id: '0987654321',
+						title: 'My complete goal.',
+						active: true,
+						complete: true,
+					},
+				},
+			}
 		},
-	},
+		{
+			name: 'goalist_archive.log',
+			data: {
+				goals: {
+					'0000000000': {
+						id: '0000000000',
+						title: 'My archived goal.',
+						active: false,
+						complete: true,
+					},
+					'1111111111': {
+						id: '1111111111',
+						title: 'My goal to be removed.',
+						active: false,
+						complete: true,
+					},
+				},
+			}
+		}
+	],
 };
 
 // --------------------------------------------------
 // DECLARE TESTS: SETUP AND TEARDOWN
 // --------------------------------------------------
 test.before( () => {
-	let {
-		goalistDir,
-		logsDirName,
-		logName,
-		logData,
-	} = setupOpts;
+	let { goalistDir, logsDirName } = setupOpts;
 
 	fs.mkdirSync( goalistDir );
 	fs.mkdirSync( `${goalistDir}/${logsDirName}` );
 
-	fs.writeFileSync( `${goalistDir}/${logsDirName}/${logName}`, JSON.stringify( logData ), 'utf8' );
+	setupOpts.logs.forEach( ( log ) => {
+		fs.writeFileSync( `${goalistDir}/${logsDirName}/${log.name}`, JSON.stringify( log.data ), 'utf8' );
+	} );
 } );
 
 test.after.always( () => {
@@ -172,8 +191,7 @@ test( '"archive" correctly archives/activates goal data.', async  ( t ) => {
 	let newGoalTitle = 'This goal will be archived.';
 	let goal = await goalist.run( 'add', [ newGoalTitle ] );
 
-	// Archive new goal.
-	// Get 'active' and 'archived' goal data.
+	// Archive new goal, get 'active' and 'archived' goal data.
 	let archivedGoals = await goalist.run( 'archive', [ goal.id ] );
 	let activeGoals = await goalist.run( 'list' );
 
@@ -184,16 +202,24 @@ test( '"archive" correctly archives/activates goal data.', async  ( t ) => {
 	t.true( Object.keys( archivedGoals.goals ).map( ( k ) => { return +k; } ).includes( goal.id ) );
 	t.true( !Object.keys( activeGoals.goals ).map( ( k ) => { return +k; } ).includes( goal.id ) );
 
-	// 'Activate' new goal.
-	// Refresh references to 'active' and 'archived' goal data.
+	// 'Activate' new goal, refresh references to 'active' and 'archived' goal data.
 	activeGoals = await goalist.run( 'archive', [ goal.id ], { active: true } );
 	archivedGoals = await goalist.run( 'list', [], { archive: true } );
 
-	/// Following 'activation', sssert that new goal:
+	/// Following 'activation', assert that new goal:
 	// - is present in 'active' goal data.
 	// - is not present in 'archived' goal data.
 	t.true( Object.keys( activeGoals.goals ).map( ( k ) => { return +k; } ).includes( goal.id ) );
 	t.true( !Object.keys( archivedGoals.goals ).map( ( k ) => { return +k; } ).includes( goal.id ) );
+} );
+
+test( '"archive" rejects when invoked with a missing or invalid identifier.', async ( t ) => {
+	t.plan( 2 );
+
+	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
+
+	await t.throws( goalist.run( 'archive' ) );
+	await t.throws( goalist.run( 'archive', [ 'NOT_A_REAL_ID' ] ) );
 } );
 
 test( '"backup" correctly creates backups of "active" goal data.', async ( t ) => {
@@ -230,6 +256,15 @@ test( '"complete" correctly sets a given goal to "complete".', async ( t ) => {
 	t.true( updatedGoal.complete );
 } );
 
+test( '"complete" rejects when invoked with a missing or invalid identifier.', async ( t ) => {
+	t.plan( 2 );
+
+	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
+
+	await t.throws( goalist.run( 'complete' ) );
+	await t.throws( goalist.run( 'complete', [ 'NOT_A_REAL_ID' ] ) );
+} );
+
 test( '"list" correctly lists "active" goal data.', async ( t ) => {
 	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
 
@@ -264,6 +299,15 @@ test( '"progress correctly returns an object of data relating to the "active" go
 	t.true( progress.incomplete !== undefined );
 } );
 
+test( '"remove" rejects when invoked with a missing or invalid identifier.', async ( t ) => {
+	t.plan( 2 );
+
+	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
+
+	await t.throws( goalist.run( 'remove' ) );
+	await t.throws( goalist.run( 'remove', [ 'NOT_A_REAL_ID' ] ) );
+} );
+
 test( '"remove" correctly removes a goal from the "active" goals.', async ( t ) => {
 	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
 
@@ -273,7 +317,7 @@ test( '"remove" correctly removes a goal from the "active" goals.', async ( t ) 
 	let activeGoals = await goalist.run( 'list' );
 
 	// Ensure that new goal is present in 'active' goals data.
-	t.true( Object.keys( activeGoals.goals ).map( ( k ) => { return +k; } ).includes( goal.id ) );
+	t.true( activeGoals.goals[ goal.id ] !== undefined );
 
 	// Remove new goal.
 	let result = await goalist.run( 'remove', [ goal.id ] );
@@ -282,7 +326,29 @@ test( '"remove" correctly removes a goal from the "active" goals.', async ( t ) 
 	activeGoals = await goalist.run( 'list' );
 
 	// Ensure that new goal is not present in 'active' goals data.
-	t.false( Object.keys( activeGoals.goals ).map( ( k ) => { return +k; } ).includes( goal.id ) );
+	t.false( activeGoals.goals[ goal.id ] !== undefined );
+} );
+
+test( '"remove" correctly removes a goal from the "archived" goals.', async ( t ) => {
+	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
+
+	// Set target goal id.
+	// NOTE: id provided by `setupOpts`.
+	let id = '1111111111';
+
+	// Get 'archived' goal data.
+	let archivedGoalData = await goalist.run( 'list', [], { archive: true } );
+
+	t.true( archivedGoalData.goals[ id ] !== undefined );
+
+	// Remove goal.
+	let result = await goalist.run( 'remove', [ '1111111111' ], { archive: true } );
+
+	// Update 'active' goal data ref.
+	archivedGoalData = await goalist.run( 'list', [], { archive: true } );
+
+	// Ensure that goal is not present in 'archived' goals data.
+	t.false( archivedGoalData.goals[ id ] !== undefined );
 } );
 
 test( '"update" correctly updates the target goal.', async ( t ) => {
