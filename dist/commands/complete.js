@@ -4,16 +4,18 @@ function complete(INPUT, ARGS, config) {
     return new Promise(function (resolve, reject) {
         var identifier = INPUT[0] || null;
         if (!identifier) {
-            config["debugger"].log('Whoops, subcommand must be invoked with a valid `identifier` argument.');
-            reject(new Error('Whoops, subcommand must be invoked with a valid `identifier` argument.'));
+            var err = 'Whoops, subcommand must be invoked with a valid `identifier` argument.';
+            config["debugger"].log(err);
+            reject(new Error(err));
             return;
         }
         var log = config.utils.getLog('active');
         var goals = log.goals;
         var goal = goals[identifier] || null;
         if (!goal) {
-            config["debugger"].log("Whoops, failed to find a goal which matches the following identifier: " + identifier);
-            reject(new Error("Whoops, failed to find a goal which matches the following identifier: " + identifier));
+            var err = "Whoops, failed to find a goal which matches the following identifier: " + identifier;
+            config["debugger"].log(err);
+            reject(new Error(err));
             return;
         }
         if (ARGS["false"]) {

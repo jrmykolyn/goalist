@@ -20,8 +20,10 @@ export default function archive( INPUT, ARGS, config ) {
 
 		/// TODO[@jrmykolyn]: Consolidate with *almost* identical logic in other subcommands.
 		if ( !identifier ) {
-			config.debugger.log( 'Whoops, subcommand must be invoked with a valid `identifier` argument.' );
-			reject( new Error( 'Whoops, subcommand must be invoked with a valid `identifier` argument.' ) );
+			let err = 'Whoops, subcommand must be invoked with a valid `identifier` argument.';
+
+			config.debugger.log( err );
+			reject( new Error( err ) );
 			return;
 		}
 
@@ -39,8 +41,10 @@ export default function archive( INPUT, ARGS, config ) {
 
 		/// TODO[@jrmykolyn]: Consolidate with identical logic in other subcommands.
 		if ( !goal ) {
-			config.debugger.log( `Whoops, failed to find a goal which matches the following identifier: ${identifier}` );
-			reject( new Error( `Whoops, failed to find a goal which matches the following identifier: ${identifier}` ) );
+			let err = `Whoops, failed to find a goal which matches the following identifier: ${identifier}`;
+
+			config.debugger.log( err );
+			reject( new Error( err ) );
 			return;
 		}
 

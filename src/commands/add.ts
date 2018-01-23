@@ -21,8 +21,10 @@ export default function add( INPUT, ARGS, config ) {
 		let title = INPUT[ 0 ] || null;
 
 		if ( !title ) {
-			config.debugger.log( 'Whoops, `add` must be invoked with a valid `title` argument.' );
-			reject( new Error( 'Whoops, `add` must be invoked with a valid `title` argument.' ) );
+			let err = 'Whoops, `add` must be invoked with a valid `title` argument.';
+
+			config.debugger.log( err );
+			reject( new Error( err ) );
 			return;
 		}
 

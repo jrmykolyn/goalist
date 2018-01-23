@@ -4,8 +4,9 @@ function add(INPUT, ARGS, config) {
     return new Promise(function (resolve, reject) {
         var title = INPUT[0] || null;
         if (!title) {
-            config["debugger"].log('Whoops, `add` must be invoked with a valid `title` argument.');
-            reject(new Error('Whoops, `add` must be invoked with a valid `title` argument.'));
+            var err = 'Whoops, `add` must be invoked with a valid `title` argument.';
+            config["debugger"].log(err);
+            reject(new Error(err));
             return;
         }
         var log = config.utils.getLog('active');

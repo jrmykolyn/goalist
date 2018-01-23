@@ -21,8 +21,10 @@ export default function update( INPUT, ARGS, config ) {
 		let identifier = INPUT[ 0 ] || null;
 
 		if ( !identifier ) {
-			config.debugger.log( 'Whoops, `update` must be invoked with a valid `identifier` argument.' );
-			reject( new Error( 'Whoops, `update` must be invoked with a valid `identifier` argument.' ) );
+			let err = 'Whoops, `update` must be invoked with a valid `identifier` argument.';
+
+			config.debugger.log( err );
+			reject( new Error( err ) );
 			return;
 		}
 
@@ -31,8 +33,10 @@ export default function update( INPUT, ARGS, config ) {
 		let goal = goals[ identifier ] || null;
 
 		if ( !goal ) {
-			config.debugger.log( `Whoops, failed to find a goal which matches the following identifier: ${identifier}` );
-			reject( new Error( `Whoops, failed to find a goal which matches the following identifier: ${identifier}` ) );
+			let err = `Whoops, failed to find a goal which matches the following identifier: ${identifier}`;
+
+			config.debugger.log( err );
+			reject( new Error( err ) );
 			return;
 		}
 
