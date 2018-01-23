@@ -182,6 +182,12 @@ test( '"add" correctly adds new goal data to "active" goals.', async ( t ) => {
 	t.is( goal.title, newGoalTitle );
 } );
 
+test( '"add" rejects if not invoked with a "title"', async ( t ) => {
+	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
+
+	await t.throws( goalist.run( 'add' ) );
+} );
+
 test( '"archive" correctly archives/activates goal data.', async  ( t ) => {
 	t.plan( 4 );
 
