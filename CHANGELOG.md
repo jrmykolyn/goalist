@@ -6,25 +6,32 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## [Unreleased]
 ### Added
 - Added `backup` subcommand.
-- Added support for `remove {{ ID }} --archive` (remove goal directly from 'archive' log file).
-- Added support for 'silent' and 'verbose' modes.
+- Added support for `remove {{ ID }} --archive` (eg. remove goal directly from 'archive' log file).
+- Added support for 'silent' and 'verbose' modes (eg. `Debugger` configuration).
 - Added support for `Utils` configuration via `Goalist` constructor.
 - Added `tslint.json`.
 - Added the follow development dependencies: `tslint`; `gulp-tslint`; `tslint-eslint-rules`.
 
 ### Changed
-- Updated `Goalist` class definition: remove `COMMAND`, `INPUT`, and `ARGS` parameters; accept `options` object;
-- Updated 'import' usage: prevent Goalist from logging to stdout by default.
-- Updated CLI entryoint logic: remove call to `#preflight()` method; simplify Promise chain; ensure that `COMMAND` is capture/provided as a string.
-- Updated `#run()` instance method: validate arguments; set default values.
-- Updated `#run()` instance method: ensure that files/folders exist at invocation time.
+- Updated `Goalist` class definition: removed `COMMAND`, `INPUT`, and `ARGS` parameters; replaced with `options` object;
+- Updated 'import' usage: Goalist now runs in 'silent' mode by default.
+- Updated CLI entryoint logic: remove call to `#preflight()` method; simplify Promise chain; ensure that `COMMAND` is captured as a string.
+- Updated `#run()` instance method: validate arguments; set default values; ensure that files/folder exist or are created at invocation time.
+- Updated `add` command: now returns individual `goal` object; now rejects with an error.
+- Updated `archive` command: now rejects with an error.
+- Updated `complete` command: now returns individual `goal` object; now rejects with an error.
+- Updated `progress` command: now returns a 'progress data' object; only displays bar chart when running in non-silent CLI mode.
+- Updated `remove` command: now rejects with an error.
+- Updated `update` command: now returns individual `goal` object; now rejects with an error.
 - Updated `Goalist` tests.
-- Updated Gulp file: added typescript linting-related tasks.
+- Updated Gulp file: added typescript linting tasks.
 - Updated `README.md` file: added documentation for non-CLI usage.
-- Removed `#preflight()` instance method.
 
 ### Fixed
 - Fixed typos and incorrect documentation in `README.md`
+
+### Removed
+- Removed `#preflight()` instance method.
 
 ## [0.12.0] - 2018-01-12
 ### Added
