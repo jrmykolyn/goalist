@@ -39,6 +39,7 @@ var INPUT = cli.input.slice( 1 );
 var ARGS = cli.flags;
 
 var goalist = new Goalist( {
+	cli: true,
 	debuggerOpts: {
 		mode: ( ARGS.silent ? 'silent' : ARGS.verbose ? 'verbose' : 'normal' ),
 	},

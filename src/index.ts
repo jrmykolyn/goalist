@@ -13,8 +13,8 @@ import Debugger from './debugger';
 import {
 	DebuggerInstance,
 	GoalistArgs,
+	GoalistConfig,
 	GoalistInput,
-	GoalistInstance,
 	GoalistOptions,
 	UtilsInstance
 } from './interfaces';
@@ -27,24 +27,23 @@ import {
 // DECLARE FUNCTIONS
 // --------------------------------------------------
 class Goalist {
-	debuggerRef: DebuggerInstance;
-	utilsRef: UtilsInstance;
+	config: GoalistConfig;
 
 	constructor( options: GoalistOptions = {} ) {
 		options = ( options && typeof options === 'object' ) ? options : {};
 
-		// Allow dependent script (eg. CLI) to specify Debugger mode at instantiation.
-		this.debuggerRef = new Debugger( options.debuggerOpts );
-
-		// Allow dependent script to configure `Utils` at instantiation.
-		this.utilsRef = new Utils( options.utilsOpts );
+		this.config = {
+			cli: !!options.cli,
+			debugger:  new Debugger( options.debuggerOpts ),
+			utils: new Utils( options.utilsOpts ),
+		};
 	}
 
 	run( COMMAND: string = '', INPUT: GoalistInput = [], ARGS: GoalistArgs = {} ) {
 		return new Promise( ( resolve, reject ) => {
 			// Ensure that `gl` is invoked with a command.
 			if ( !COMMAND || typeof COMMAND !== 'string' ) {
-				this.debuggerRef.log( 'Whoops, `goalist` must be executed with a valid command.' );
+				this.config.debugger.log( 'Whoops, `goalist` must be executed with a valid command.' );
 				reject( null );
 				return;
 			}
@@ -56,16 +55,16 @@ class Goalist {
 			ARGS = ( ARGS && typeof ARGS === 'object' ) ? ARGS : {};
 
 			/// TODO: Consider building out wrapper function around `getOrCreate*()` methods.
-			let goalistDirData = this.utilsRef.getOrCreateGoalistDir();
-			let logsDirData = this.utilsRef.getOrCreateLogsDir();
-			let bakDirData = this.utilsRef.getOrCreateBakDir();
-			let activeLogData = this.utilsRef.getOrCreateLog( 'active' );
-			let archiveLogData = this.utilsRef.getOrCreateLog( 'archive' );
+			let goalistDirData = this.config.utils.getOrCreateGoalistDir();
+			let logsDirData = this.config.utils.getOrCreateLogsDir();
+			let bakDirData = this.config.utils.getOrCreateBakDir();
+			let activeLogData = this.config.utils.getOrCreateLog( 'active' );
+			let archiveLogData = this.config.utils.getOrCreateLog( 'archive' );
 
 			if ( COMMAND in commands ) {
-				commands[ COMMAND ]( INPUT, ARGS, this.utilsRef, this.debuggerRef ).then( resolve, reject );
+				commands[ COMMAND ]( INPUT, ARGS, this.config ).then( resolve, reject );
 			} else {
-				this.debuggerRef.log( 'Whoops, `goalist` was invoked with an invalid command.' );
+				this.config.debugger.log( 'Whoops, `goalist` was invoked with an invalid command.' );
 				reject( null );
 				return;
 			}

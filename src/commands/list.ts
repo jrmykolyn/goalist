@@ -15,9 +15,9 @@ const chalk = require( 'chalk' );
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function list( INPUT, ARGS, utils, d ) {
+export default function list( INPUT, ARGS, config ) {
 	return new Promise( ( resolve, reject ) => {
-		let log = ARGS.archive ? utils.getLog( 'archive' ) : utils.getLog( 'active' );
+		let log = ARGS.archive ? config.utils.getLog( 'archive' ) : config.utils.getLog( 'active' );
 		let { goals } = log;
 
 		let whitelistProps = [ 'id', 'title' ]; // Props. to always display.
@@ -36,11 +36,11 @@ export default function list( INPUT, ARGS, utils, d ) {
 
 			whitelistProps.concat( supplementaryProps ).forEach( ( prop ) => {
 				if ( goal.hasOwnProperty( prop ) ) {
-					d.log( `${chalk.gray( prop + ':' )} ${goal[ prop ]}` );
+					config.debugger.log( `${chalk.gray( prop + ':' )} ${goal[ prop ]}` );
 				}
 			} );
 
-			d.log( '\n' );
+			config.debugger.log( '\n' );
 		} );
 
 		resolve( log );

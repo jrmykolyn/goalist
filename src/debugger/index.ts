@@ -36,6 +36,13 @@ export default class Debugger implements DebuggerInstance {
 	}
 
 	/**
+	 * Get the internal `mode` property.
+	 */
+	getMode(): string {
+		return this.mode;
+	}
+
+	/**
 	 * Conditionally log a message to stdout.
 	 *
 	 * @param {string} msg

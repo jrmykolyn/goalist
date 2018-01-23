@@ -1,18 +1,21 @@
 // --------------------------------------------------
 // IMPORT MODULES
 // --------------------------------------------------
-import { UtilsInstance } from './';
+import { DebuggerInstance, UtilsInstance } from './';
 
 // --------------------------------------------------
 // PUBLIC API
 // --------------------------------------------------
-export interface GoalistInstance {
-	utilsRef: UtilsInstance,
-};
-
 export interface GoalistOptions {
+	cli?: boolean,
 	debuggerOpts?: any,
 	utilsOpts?: any,
+};
+
+export interface GoalistConfig {
+	cli: boolean,
+	debugger: DebuggerInstance,
+	utils: UtilsInstance,
 };
 
 export interface GoalistInput {

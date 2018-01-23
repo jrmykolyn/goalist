@@ -16,17 +16,17 @@ import { Goal } from '../interfaces';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function backup( INPUT, ARGS, utils, d ) {
+export default function backup( INPUT, ARGS, config ) {
 	return new Promise( ( resolve, reject ) => {
-		let log = ARGS.archive ? utils.getLog( 'archive' ) : utils.getLog( 'active' );
+		let log = ARGS.archive ? config.utils.getLog( 'archive' ) : config.utils.getLog( 'active' );
 
 		try {
-			fs.writeFileSync( `${utils.getBakPath()}/goalist_${ARGS.archive ? 'archive' : 'active'}_${new Date().getTime()}.bak`, JSON.stringify( log ), 'utf8' );
-			d.log( `Successfully backed up log: ${ARGS.archive ? 'archive' : 'active'}` );
+			fs.writeFileSync( `${config.utils.getBakPath()}/goalist_${ARGS.archive ? 'archive' : 'active'}_${new Date().getTime()}.bak`, JSON.stringify( log ), 'utf8' );
+			config.debugger.log( `Successfully backed up log: ${ARGS.archive ? 'archive' : 'active'}` );
 			resolve( log );
 			return;
 		} catch ( err ) {
-			d.log( `Failed to back up log: ${ARGS.archive ? 'archive' : 'active'}` );
+			config.debugger.log( `Failed to back up log: ${ARGS.archive ? 'archive' : 'active'}` );
 			reject( err );
 			return;
 		}

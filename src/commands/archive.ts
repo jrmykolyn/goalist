@@ -14,13 +14,13 @@
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function archive( INPUT, ARGS, utils, d ) {
+export default function archive( INPUT, ARGS, config ) {
 	return new Promise( ( resolve, reject ) => {
 		let identifier = INPUT[ 0 ] || null;
 
 		/// TODO[@jrmykolyn]: Consolidate with *almost* identical logic in other subcommands.
 		if ( !identifier ) {
-			d.log( 'Whoops, subcommand must be invoked with a valid `identifier` argument.' );
+			config.debugger.log( 'Whoops, subcommand must be invoked with a valid `identifier` argument.' );
 			reject( null );
 			return;
 		}
@@ -29,8 +29,8 @@ export default function archive( INPUT, ARGS, utils, d ) {
 		// - If flag is present, 'archived data' is being activated.
 		// - Otherwise, 'active data' is being archived.
 		let isActive = !ARGS.active;
-		let sourceData = isActive ? utils.getLog( 'active' ) : utils.getLog( 'archive' );
-		let targetData = isActive ? utils.getLog( 'archive' ) : utils.getLog( 'active' );
+		let sourceData = isActive ? config.utils.getLog( 'active' ) : config.utils.getLog( 'archive' );
+		let targetData = isActive ? config.utils.getLog( 'archive' ) : config.utils.getLog( 'active' );
 
 		// Destructure 'source' data, extract target goal.
 		/// TODO[@jrmykolyn]: Consolidate with identical logic in other subcommands.
@@ -39,17 +39,17 @@ export default function archive( INPUT, ARGS, utils, d ) {
 
 		/// TODO[@jrmykolyn]: Consolidate with identical logic in other subcommands.
 		if ( !goal ) {
-			d.log( 'Whoops, failed to find a goal which matches the following identifier:', identifier );
+			config.debugger.log( 'Whoops, failed to find a goal which matches the following identifier:', identifier );
 			reject( null );
 			return;
 		}
 
 		// Update `active` key.
 		if ( isActive ) {
-			d.log( `Deactivating the following task: ${identifier}` );
+			config.debugger.log( `Deactivating the following task: ${identifier}` );
 			goal.active = false;
 		} else {
-			d.log( `Activating the following task: ${identifier}` );
+			config.debugger.log( `Activating the following task: ${identifier}` );
 			goal.active = true;
 		}
 
@@ -59,8 +59,8 @@ export default function archive( INPUT, ARGS, utils, d ) {
 		targetData.goals = Object.assign( targetData.goals, { [ identifier ]: goal } );
 
 		// Write 'active' and 'archive' data back to disk.
-		utils.writeLog( 'active', JSON.stringify( isActive ? sourceData : targetData ) );
-		utils.writeLog( 'archive', JSON.stringify( isActive ? targetData : sourceData ) );
+		config.utils.writeLog( 'active', JSON.stringify( isActive ? sourceData : targetData ) );
+		config.utils.writeLog( 'archive', JSON.stringify( isActive ? targetData : sourceData ) );
 
 		resolve( targetData );
 		return;

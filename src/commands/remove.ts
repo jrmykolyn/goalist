@@ -16,23 +16,23 @@ import * as readline from 'readline';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function remove( INPUT, ARGS, utils, d ) {
+export default function remove( INPUT, ARGS, config ) {
 	return new Promise( ( resolve, reject ) => {
 		let identifier = INPUT[ 0 ] || null;
 
 		if ( !identifier ) {
-			d.log( 'Whoops, `remove` must be invoked with a valid `identifier` argument.' );
+			config.debugger.log( 'Whoops, `remove` must be invoked with a valid `identifier` argument.' );
 			reject( null );
 			return;
 		}
 
-		let log = ARGS.archive ? utils.getLog( 'archive' ) : utils.getLog( 'active' );
+		let log = ARGS.archive ? config.utils.getLog( 'archive' ) : config.utils.getLog( 'active' );
 		let { goals } = log;
 		let goal = goals[ identifier ] || null;
 		let userConf = null;
 
 		if ( !goal ) {
-			d.log( 'Whoops, failed to find a goal which matches the following identifier:', identifier );
+			config.debugger.log( 'Whoops, failed to find a goal which matches the following identifier:', identifier );
 			reject( null );
 			return;
 		}
@@ -43,28 +43,42 @@ export default function remove( INPUT, ARGS, utils, d ) {
 		} );
 
 		/// TODO[@jrmykolyn]: Convert nested callback to Promise chain if possible.
-		rl.question( 'Please note, this is a destructive action! Do you wish to continue? (y/n)\n', ( response ) => {
-			if ( response.toString().toLowerCase() === 'y' ) {
-				d.log( `Removing task: ${identifier}` );
+		if ( config.cli ) {
+			rl.question( 'Please note, this is a destructive action! Do you wish to continue? (y/n)\n', ( response ) => {
+				if ( response.toString().toLowerCase() === 'y' ) {
+					config.debugger.log( `Removing task: ${identifier}` );
 
-				for ( let key in goals ) {
-					if ( goals[ key ] === goal ) {
-						delete goals[ key ];
+					for ( let key in goals ) {
+						if ( goals[ key ] === goal ) {
+							delete goals[ key ];
+						}
 					}
+
+					// Write new data back to file system.
+					config.utils.writeLog( ARGS.archive ? 'archive' : 'active', JSON.stringify( log ) );
+
+					resolve( log );
+				} else {
+					config.debugger.log( 'Aborting.' );
+					reject( log );
 				}
 
-				// Write new data back to file system.
-				utils.writeLog( ARGS.archive ? 'archive' : 'active', JSON.stringify( log ) );
+				rl.close();
+				return;
+			} );
+		} else {
+			config.debugger.log( `Removing task: ${identifier}` );
 
-				resolve( log );
-			} else {
-				d.log( `Aborting.` );
-
-				reject( log );
+			for ( let key in goals ) {
+				if ( goals[ key ] === goal ) {
+					delete goals[ key ];
+				}
 			}
 
-			rl.close();
-			return;
-		} );
+			// Write new data back to file system.
+			config.utils.writeLog( ARGS.archive ? 'archive' : 'active', JSON.stringify( log ) );
+
+			resolve( log );
+		}
 	} );
 }

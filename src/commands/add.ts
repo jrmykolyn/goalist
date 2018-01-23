@@ -16,17 +16,17 @@ import { Goal } from '../interfaces';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function add( INPUT, ARGS, utils, d ) {
+export default function add( INPUT, ARGS, config ) {
 	return new Promise( ( resolve, reject ) => {
 		let title = INPUT[ 0 ] || null;
 
 		if ( !title ) {
-			d.log( 'Whoops, `add` must be invoked with a valid `title` argument.' );
+			config.debugger.log( 'Whoops, `add` must be invoked with a valid `title` argument.' );
 			reject( null );
 			return;
 		}
 
-		let log = utils.getLog( 'active' );
+		let log = config.utils.getLog( 'active' );
 		let { goals } = log;
 
 		// Create and update `goal`.
@@ -43,9 +43,9 @@ export default function add( INPUT, ARGS, utils, d ) {
 		goals[ id ] = goal;
 
 		// Write new data back to file system.
-		utils.writeLog( 'active', JSON.stringify( log ) );
+		config.utils.writeLog( 'active', JSON.stringify( log ) );
 
-		d.log( `Successfully created goal: ${id}` );
+		config.debugger.log( `Successfully created goal: ${id}` );
 
 		resolve( goal );
 	} );

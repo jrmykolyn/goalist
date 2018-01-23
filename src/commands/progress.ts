@@ -15,25 +15,40 @@ import * as barHorizontal from 'bar-horizontal';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function progress( INPUT, ARGS, utils, d ) {
+export default function progress( INPUT, ARGS, config ) {
 	return new Promise( ( resolve, reject ) => {
-		let log = utils.getLog( 'active' );
+		let log = config.utils.getLog( 'active' );
 		let { goals } = log;
 
-		let totalGoals = Object.keys( goals ).length;
-		let numComplete = utils.getComplete( goals ).length;
-		let numIncomplete = totalGoals - numComplete;
+		let total = Object.keys( goals ).length;
+		let complete = config.utils.getComplete( goals ).length;
+		let incomplete = total - complete;
 
-		d.log( 'OVERVIEW' );
-		d.log( `Total: ${totalGoals}\r` );
-		d.log( `Complete: ${numComplete}\r` );
-		d.log( `Incomplete: ${numIncomplete}\n` );
+		config.debugger.log( 'OVERVIEW' );
+		config.debugger.log( `Total: ${total}\r` );
+		config.debugger.log( `Complete: ${complete}\r` );
+		config.debugger.log( `Incomplete: ${incomplete}\n` );
 
-		barHorizontal( {
-			'Complete': numComplete,
-			'Incomplete': numIncomplete,
-		}, { labels: true } );
+		// Only display bar chars when:
+		// - command was executed from CLI;
+		// - Goalist is not running in 'silent' mode.
+		if ( config.cli && config.debugger.getMode() !== 'silent' ) {
+			barHorizontal(
+				{
+					'Complete': complete,
+					'Incomplete': incomplete,
+				},
+				{
+					labels: true,
+				},
+			);
+		}
 
-		resolve( log );
+		resolve( {
+			type: 'active', /// TODO: Ensure that `type` value reflects 'active' or 'archived' progress.
+			total,
+			complete,
+			incomplete,
+		} );
 	} );
 }
