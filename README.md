@@ -12,6 +12,7 @@
 - [Setup](#setup)
 - [Usage](#usage)
 	- Overview
+	- Subcommands
 	- CLI
 	- Import
 - [Documentation](#documentation)
@@ -42,6 +43,7 @@ npm install --save goalist
 ```
 
 ## Setup
+
 Goalist does not require any additional configuration.
 
 ## Usage
@@ -54,6 +56,21 @@ The Goalist module may used/accessed in either of the following ways:
 - via CLI.
 
 Documentation for both modes is provided below.
+
+### Subcommands
+
+Included below is an overview of all subcommands exposed by the Goalist package. See the **CLI** and/or **Import** sections below for detailed usage instructions.
+
+| Subcommand | Description |
+| --- | --- |
+| add | Add a new goal. |
+| archive | Archive an existing goal. |
+| backup | Create a backup of all goal data. |
+| complete | Mark an existing goal as complete. |
+| list | List all goal data. |
+| progress | Display progress data, including: total number of goals; complete goals; incomplete goals; etc. |
+| remove | Remove an existing goal. |
+| update | Update an existing goal. |
 
 ### CLI
 
