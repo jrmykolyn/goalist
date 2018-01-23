@@ -5,7 +5,7 @@ function remove(INPUT, ARGS, config) {
         var identifier = INPUT[0] || null;
         if (!identifier) {
             config["debugger"].log('Whoops, `remove` must be invoked with a valid `identifier` argument.');
-            reject(null);
+            reject(new Error('Whoops, `remove` must be invoked with a valid `identifier` argument.'));
             return;
         }
         var log = ARGS.archive ? config.utils.getLog('archive') : config.utils.getLog('active');
@@ -13,8 +13,8 @@ function remove(INPUT, ARGS, config) {
         var goal = goals[identifier] || null;
         var userConf = null;
         if (!goal) {
-            config["debugger"].log('Whoops, failed to find a goal which matches the following identifier:', identifier);
-            reject(null);
+            config["debugger"].log("Whoops, failed to find a goal which matches the following identifier: " + identifier);
+            reject(new Error("Whoops, failed to find a goal which matches the following identifier: " + identifier));
             return;
         }
         if (!config.cli || ARGS.force) {
