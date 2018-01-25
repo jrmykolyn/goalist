@@ -124,20 +124,26 @@ gl backup --archive
 ```
 
 ### `complete` / `c`
-This command is used to set the status of a specific goal to 'complete'.
+This command is used to toggle the 'complete' property for a specific goal. By default, this command operates on 'active' goals.
+
+To mark a goal as complete, invoke the subcommand with the goal ID.
 
 ```
 gl complete {{ ID }}
-
-// Please note: this is equivalent to invoking: gl update {{ ID }} --complete=true
 ```
 
 This command can also be used to set the status of a goal to 'incomplete'.
 
 ```
 gl complete {{ ID }} --false
+```
 
-// Please note: this is equivalent to invoking: gl update {{ ID }} --complete=false
+To toggle the 'complete' state of a goal within the 'archive' log, provide the `--archive` flag.
+
+```
+gl complete {{ ID }} --archive // Set an archived goal to complete.
+
+gl complete {{ ID }} --archive --false // Set an archived goal to incomplete.
 ```
 
 ### `list` / `l`
