@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- Added support for setting 'complete' state of archived goals (eg. `gl complete {{ ID }} --archive`).
+
 ## [0.13.0] - 2018-01-23
 ### Added
 - Added `backup` subcommand.
