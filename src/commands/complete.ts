@@ -29,7 +29,7 @@ export default function complete( INPUT, ARGS, config ) {
 		}
 
 		/// TODO[@jrmykolyn]: Consolidate with identical logic in other subcommands.
-		let log = config.utils.getLog( 'active' );
+		let log = ARGS.archive ? config.utils.getLog( 'archive' ) : config.utils.getLog( 'active' );
 		let { goals } = log;
 		let goal = goals[ identifier ] || null;
 
@@ -52,7 +52,8 @@ export default function complete( INPUT, ARGS, config ) {
 			goal.complete = true;
 		}
 
-		config.utils.writeLog( 'active', JSON.stringify( log ) );
+		// Write new data back to file system.
+		config.utils.writeLog( ARGS.archive ? 'archive' : 'active', JSON.stringify( log ) );
 
 		resolve( goal );
 		return;

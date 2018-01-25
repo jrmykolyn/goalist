@@ -9,7 +9,7 @@ function complete(INPUT, ARGS, config) {
             reject(new Error(err));
             return;
         }
-        var log = config.utils.getLog('active');
+        var log = ARGS.archive ? config.utils.getLog('archive') : config.utils.getLog('active');
         var goals = log.goals;
         var goal = goals[identifier] || null;
         if (!goal) {
@@ -26,7 +26,7 @@ function complete(INPUT, ARGS, config) {
             config["debugger"].log("Setting the following task to complete: " + identifier);
             goal.complete = true;
         }
-        config.utils.writeLog('active', JSON.stringify(log));
+        config.utils.writeLog(ARGS.archive ? 'archive' : 'active', JSON.stringify(log));
         resolve(goal);
         return;
     });
