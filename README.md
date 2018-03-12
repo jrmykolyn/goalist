@@ -6,15 +6,15 @@
 ## Table of Contents
 - [About](#about)
 - [Installation](#installation)
-	- Overview
-	- CLI
-	- Import
+	- [Installation Overview](#installation-overview)
+	- [CLI Installation](#cli-installation)
+	- [Import Installation](#import-installation)
 - [Setup](#setup)
 - [Usage](#usage)
-	- Overview
-	- Subcommands
-	- CLI
-	- Import
+	- [Usage Overview](#usage-overview)
+	- [Subcommands](#subcommands)
+	- [CLI Usage](#cli-usage)
+	- [Import Usage](#import-usage)
 - [Documentation](#documentation)
 
 ## About
@@ -36,7 +36,7 @@ npm install -g goalist
 
 ### Import
 
-To install Goalist as a dependency within a node/npm project, run the command below:
+To install Goalist for use within a node project, run the command below:
 
 ```
 npm install --save goalist
@@ -83,14 +83,14 @@ Please note:
 - Goalist can be run in 'verbose' mode by invoking `gl {{ COMMAND }}` with the `--verbose` flag (eg. `gl list --verbose`). This displays additional information about the internals of a given command, and may be useful for debugging purposes.
 
 ### `add` / `a`
-This command is used to add a new goal to the log file for the current.
+Add a new goal to the log file. Please note: new goals are always 'active'.
 
 ```
 gl add "This is the title of the goal."
 ```
 
 ### `archive` / `ar`
-This command is used to archive/deactivate a given goal.
+Archive/deactivate the goal with the matching ID.
 
 ```
 gl archive {{ ID }}
@@ -111,7 +111,7 @@ Executing the command above will result in the following:
 - Target goal will have its `active` key/property set to `true`.
 
 ### `backup` / `b`
-This command is used to created a backup of the 'active' log file.
+Backup the 'active' log file.
 
 ```
 gl backup
@@ -124,15 +124,13 @@ gl backup --archive
 ```
 
 ### `complete` / `c`
-This command is used to toggle the 'complete' property for a specific goal. By default, this command operates on 'active' goals.
-
-To mark a goal as complete, invoke the subcommand with the goal ID.
+Mark the 'active' goal with the matching ID as complete.
 
 ```
 gl complete {{ ID }}
 ```
 
-This command can also be used to set the status of a goal to 'incomplete'.
+This command can also be used to set the status of an 'active' goal to 'incomplete'.
 
 ```
 gl complete {{ ID }} --false
@@ -147,7 +145,7 @@ gl complete {{ ID }} --archive --false // Set an archived goal to incomplete.
 ```
 
 ### `list` / `l`
-This command is used to list all goals present in the 'active' log file. This command is especially useful for goal IDs, which are required by the `update` subcommand. By default, only the ID and title for each goal will be displayed.
+List all goals present in the 'active' log file. By default, only the ID and title for each goal will be displayed.
 
 ```
 gl list
@@ -176,14 +174,14 @@ gl list --show=title,complete
 ```
 
 ### `progress` / `p`
-This command is used to display progress information relating to the 'active' log file (eg. total number of goals, number of completed goals, etc.).
+Display progress information relating to the 'active' log file (eg. total number of goals, number of completed goals, etc.).
 
 ```
 gl progress
 ```
 
 ### `remove` / `r`
-This command is used to remove a specific goal within the 'active' log file.
+Remove the 'active' goal with the matching ID.
 
 ```
 gl remove {{ ID }}
@@ -196,7 +194,7 @@ gl remove {{ ID }} --archive
 ```
 
 ### `update` / `u`
-This command is used to update a specific goal within the 'active' log file.
+Update a specific goal within the 'active' log file.
 
 ```
 gl update {{ ID }} --title="This is the new title of the goal."
@@ -242,7 +240,7 @@ Goalist exposes the `#run()` instance method, which is used to execute individua
 goalist.run( 'list' ); // Execute the 'list' subcommand.
 ```
 
-`#run()` returns a Promise, which will resolve or reject depending on whether the operation was successful. To access the data returned by the `#run()` method, invoke the `.then( ... )` on the value returned by `#run()`.
+`#run()` returns a Promise, which will resolve or reject depending on whether the operation was successful. To access the data returned by the `#run()` method, invoke the `.then( ... )` method on the value returned by `#run()`.
 
 ```
 goalist.run( 'list' )
