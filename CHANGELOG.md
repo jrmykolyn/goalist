@@ -5,7 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Changed
-- Improve `README.md`
+- Improve `README.md`.
+
+### Removed
+- Remove `TODO.md`.
 
 ## [0.13.1] - 2018-01-25
 ### Added
