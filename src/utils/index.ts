@@ -36,6 +36,10 @@ export default class Utils implements UtilsInstance {
 		this.goalistDirPath = ( opts.path && typeof opts.path === 'string' ) ? opts.path : `${this.goalistDirRoot}/${this.goalistDirName}`;
 	}
 
+	generateId() {
+		return +Math.random().toString().substr(3);
+	}
+
 	getGoalistDirName() {
 		return this.goalistDirName;
 	}
