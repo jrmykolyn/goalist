@@ -11,7 +11,7 @@ function add(INPUT, ARGS, config) {
         }
         var log = config.utils.getLog('active');
         var goals = log.goals;
-        var id = new Date().getTime();
+        var id = config.utils.generateId();
         var goal = {
             id: id,
             title: title,
