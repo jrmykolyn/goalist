@@ -15,6 +15,7 @@ function add(INPUT, ARGS, config) {
         var goal = {
             id: id,
             title: title,
+            category: ARGS.category || '',
             description: ARGS.description || '',
             complete: false,
             active: true

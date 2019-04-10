@@ -51,12 +51,13 @@ test( 'resolve with the new goal', ( t ) => {
 test( 'should write the new goal data to disk', ( t ) => {
   const id = 1;
   const title = 'foo';
+  const goal = { id, title, category: '', description: '', complete: false, active: true };
   const generateId = config.utils.generateId = sinon.spy( () => id );
   const writeLog = config.utils.writeLog = sinon.spy();
 
   add( [ title ], {}, config );
 
-  t.is( writeLog.calledWith( 'active', JSON.stringify( { goals: { [id]: { id, title, description: '', complete: false, active: true } } } ) ), true );
+  t.is( writeLog.calledWith( 'active', JSON.stringify( { goals: { [id]: goal } } ) ), true );
 } );
 
 test( 'it should reject if no "title" is provided', ( t ) => {

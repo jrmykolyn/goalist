@@ -36,6 +36,7 @@ export default function add( INPUT, ARGS, config ) {
 		let goal: Goal = {
 			id: id,
 			title: title,
+			category: ARGS.category || '',
 			description: ARGS.description || '',
 			complete: false,
 			active: true,
