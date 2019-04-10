@@ -12,6 +12,9 @@ var Utils = (function () {
         this.goalistDirRoot = (opts.path && typeof opts.path === 'string') ? path.parse(opts.path).dir : os.homedir();
         this.goalistDirPath = (opts.path && typeof opts.path === 'string') ? opts.path : this.goalistDirRoot + "/" + this.goalistDirName;
     }
+    Utils.prototype.generateId = function () {
+        return +Math.random().toString().substr(3);
+    };
     Utils.prototype.getGoalistDirName = function () {
         return this.goalistDirName;
     };

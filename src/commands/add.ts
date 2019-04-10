@@ -32,10 +32,11 @@ export default function add( INPUT, ARGS, config ) {
 		let { goals } = log;
 
 		// Create and update `goal`.
-		let id = new Date().getTime();
+		let id = config.utils.generateId();
 		let goal: Goal = {
 			id: id,
 			title: title,
+			category: ARGS.category || '',
 			description: ARGS.description || '',
 			complete: false,
 			active: true,

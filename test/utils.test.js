@@ -52,6 +52,17 @@ test.after.always( () => {
 // --------------------------------------------------
 // DECLARE TESTS
 // --------------------------------------------------
+test( 'Test `generateId()`', ( t ) => {
+  const ids = new Array(100).fill(null).map(() => utils.generateId());
+
+  const result = ids.every((id, i, arr) => {
+    return typeof id === 'number'
+      && arr.indexOf(id) === arr.lastIndexOf(id);
+  });
+
+  t.is(result, true);
+});
+
 test( 'Test `getGoalistDirName()`', ( t ) => {
 	let dirName = utils.getGoalistDirName();
 

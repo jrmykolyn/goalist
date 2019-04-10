@@ -4,6 +4,7 @@
   "description": "Goalist is a command line tool for managing daily goals.",
   "main": "./dist",
   "scripts": {
+    "build": "gulp",
     "test": "nyc ava",
     "test:verbose": "nyc ava --verbose",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
@@ -42,6 +43,7 @@
     "gulp-tslint": "^8.1.2",
     "gulp-typescript": "^3.2.3",
     "nyc": "^11.3.0",
+    "sinon": "^7.3.1",
     "tslint": "^5.9.1",
     "tslint-eslint-rules": "^4.1.1",
     "typescript": "^2.6.1"

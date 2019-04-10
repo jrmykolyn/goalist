@@ -4,8 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Added `generateId()` method to `utils`.
+- Added `build` to `package.json`.
+
 ### Changed
 - Improve `README.md`.
+- Increased test coverage for 'add' command.
+- Updated `add` command to support 'category' property.
 
 ### Removed
 - Remove `TODO.md`.
