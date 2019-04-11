@@ -7,8 +7,14 @@ function list(INPUT, ARGS, config) {
         var goals = log.goals;
         var whitelistProps = ['id', 'title'];
         var supplementaryProps = !ARGS.all && ARGS.show ? ARGS.show.split(',').filter(function (prop) { return whitelistProps.indexOf(prop) === -1; }) : [];
-        Object.keys(goals).forEach(function (key) {
-            var goal = goals[key];
+        var allGoals = Object.keys(goals).map(function (key) { return goals[key]; });
+        var filteredGoals = ARGS.category
+            ? allGoals.filter(function (_a) {
+                var category = _a.category;
+                return !!category && category.toLowerCase().includes(ARGS.category.toLowerCase());
+            })
+            : allGoals;
+        filteredGoals.forEach(function (goal) {
             if (ARGS.all) {
                 supplementaryProps = Object.keys(goal).filter(function (prop) { return whitelistProps.indexOf(prop) === -1; });
             }

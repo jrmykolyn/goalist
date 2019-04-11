@@ -23,10 +23,13 @@ export default function list( INPUT, ARGS, config ) {
 		let whitelistProps = [ 'id', 'title' ]; // Props. to always display.
 		let supplementaryProps = !ARGS.all && ARGS.show ? ARGS.show.split( ',' ).filter( ( prop ) => whitelistProps.indexOf( prop ) === -1 ) : []; // Set 'supplementary' if possible.
 
-		// Print out info for each `goal` in current log.
-		Object.keys( goals ).forEach( ( key ) => {
-			let goal = goals[ key ];
+		const allGoals = Object.keys( goals ).map( ( key ) => goals[ key ] );
+		const filteredGoals = ARGS.category
+			? allGoals.filter( ( { category } ) => !!category && category.toLowerCase().includes( ARGS.category.toLowerCase() ) )
+			: allGoals;
 
+		// Print out info for each `goal` in current log.
+		filteredGoals.forEach( ( goal ) => {
 			// Update `supplementaryProps` for current `goal`.
 			/// NOTE: Since not all `goal` objects are exactly the same, `supplementaryProps` must be updated within each loop iteration.
 			/// TODO[@jrmykolyn]: Normalize shape of `goal`.
