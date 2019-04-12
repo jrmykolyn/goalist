@@ -1,6 +1,6 @@
 {
   "name": "goalist",
-  "version": "0.13.1",
+  "version": "0.14.0",
   "description": "Goalist is a command line tool for managing daily goals.",
   "main": "./dist",
   "scripts": {
