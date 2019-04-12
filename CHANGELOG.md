@@ -3,19 +3,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [0.14.0] - 2019-04-12
 ### Added
 - Added `generateId()` method to `utils`.
 - Added `build` to `package.json`.
 
 ### Changed
-- Improve `README.md`.
+- Improved `README.md`.
 - Increased test coverage for 'add' command.
 - Updated `add` command to support 'category' property.
 - Updated `list` command to support filtering goals by 'category'.
 
 ### Removed
-- Remove `TODO.md`.
+- Removed `TODO.md`.
 
 ## [0.13.1] - 2018-01-25
 ### Added
