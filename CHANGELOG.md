@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Improve `README.md`.
 - Increased test coverage for 'add' command.
 - Updated `add` command to support 'category' property.
+- Updated `list` command to support filtering goals by 'category'.
 
 ### Removed
 - Remove `TODO.md`.
