@@ -3,7 +3,7 @@ exports.__esModule = true;
 var barHorizontal = require("bar-horizontal");
 function progress(INPUT, ARGS, config) {
     return new Promise(function (resolve, reject) {
-        var log = config.utils.getLog('active');
+        var log = ARGS.archive ? config.utils.getLog('archive') : config.utils.getLog('active');
         var goals = log.goals;
         var total = Object.keys(goals).length;
         var complete = config.utils.getComplete(goals).length;
@@ -21,7 +21,7 @@ function progress(INPUT, ARGS, config) {
             });
         }
         resolve({
-            type: 'active',
+            type: ARGS.archive ? 'archive' : 'active',
             total: total,
             complete: complete,
             incomplete: incomplete

@@ -17,7 +17,7 @@ import * as barHorizontal from 'bar-horizontal';
 // --------------------------------------------------
 export default function progress( INPUT, ARGS, config ) {
 	return new Promise( ( resolve, reject ) => {
-		let log = config.utils.getLog( 'active' );
+		let log = ARGS.archive ? config.utils.getLog( 'archive' ) : config.utils.getLog( 'active' );
 		let { goals } = log;
 
 		let total = Object.keys( goals ).length;
@@ -45,7 +45,7 @@ export default function progress( INPUT, ARGS, config ) {
 		}
 
 		resolve( {
-			type: 'active', /// TODO: Ensure that `type` value reflects 'active' or 'archived' progress.
+			type: ARGS.archive ? 'archive' : 'active',
 			total,
 			complete,
 			incomplete,
