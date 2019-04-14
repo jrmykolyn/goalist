@@ -23,5 +23,7 @@ export interface GoalistInput {
 };
 
 export interface GoalistArgs {
-	verbose?: boolean,
+	category?: string;
+	description?: string;
+	verbose?: boolean;
 };
