@@ -45,7 +45,7 @@ test( 'It should return a Promise', ( t ) => {
 
 test( 'It should resolve with an object of "active" goal data', ( t ) => {
   const log = { goals: { '1': goal1 } };
-  const getLog = config.utils.getLog = sinon.stub().withArgs( 'active' ).returns( log );
+  config.utils.getLog = sinon.stub().withArgs( 'active' ).returns( log );
 
   return progress( [], {}, config )
     .then( ( data ) => {
@@ -55,9 +55,9 @@ test( 'It should resolve with an object of "active" goal data', ( t ) => {
 
 test( 'It should display information about the state of the "active" goals', ( t ) => {
   const activeLog = { goals: { '1': goal1 } };
-  const getLog = config.utils.getLog = sinon.spy( () => activeLog );
-  const getComplete = config.utils.getComplete = sinon.stub().withArgs( activeLog ).returns( [ goal1 ] );
   const log = config.debugger.log = sinon.spy();
+  config.utils.getLog = sinon.spy( () => activeLog );
+  config.utils.getComplete = sinon.stub().withArgs( activeLog ).returns( [ goal1 ] );
 
   progress( [], {}, config );
 
@@ -83,7 +83,7 @@ test( 'It should visualize the "active" goal progress as a bar chart when in CLI
 
 test( 'It should resolve with an object of "archive" goal data', ( t ) => {
   const log = { goals: { '2': goal2 } };
-  const getLog = config.utils.getLog = sinon.stub().withArgs( 'archive' ).returns( log );
+  config.utils.getLog = sinon.stub().withArgs( 'archive' ).returns( log );
 
   return progress( [], { archive: true }, config )
     .then( ( data ) => {
@@ -93,9 +93,9 @@ test( 'It should resolve with an object of "archive" goal data', ( t ) => {
 
 test( 'It should display information about the state of the "archive" goals', ( t ) => {
   const archiveLog = { goals: { '2': goal2 } };
-  const getLog = config.utils.getLog = sinon.stub().withArgs( 'archive' ).returns( archiveLog );
-  const getComplete = config.utils.getComplete = sinon.stub().withArgs( archiveLog ).returns( [ goal1 ] );
   const log = config.debugger.log = sinon.spy();
+  config.utils.getLog = sinon.stub().withArgs( 'archive' ).returns( archiveLog );
+  config.utils.getComplete = sinon.stub().withArgs( archiveLog ).returns( [ goal1 ] );
 
   progress( [], {}, config );
 
