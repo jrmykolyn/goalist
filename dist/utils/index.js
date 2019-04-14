@@ -4,6 +4,7 @@ var fs = require("fs");
 var os = require("os");
 var path = require("path");
 var pkgDir = require("pkg-dir");
+var barHorizontal = require("bar-horizontal");
 var root = pkgDir.sync(__dirname);
 var Utils = (function () {
     function Utils(opts) {
@@ -12,6 +13,13 @@ var Utils = (function () {
         this.goalistDirRoot = (opts.path && typeof opts.path === 'string') ? path.parse(opts.path).dir : os.homedir();
         this.goalistDirPath = (opts.path && typeof opts.path === 'string') ? opts.path : this.goalistDirRoot + "/" + this.goalistDirName;
     }
+    Utils.prototype.barHorizontal = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        barHorizontal.apply(void 0, args);
+    };
     Utils.prototype.generateId = function () {
         return +Math.random().toString().substr(3);
     };
