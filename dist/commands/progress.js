@@ -1,9 +1,8 @@
 "use strict";
 exports.__esModule = true;
-var barHorizontal = require("bar-horizontal");
 function progress(INPUT, ARGS, config) {
     return new Promise(function (resolve, reject) {
-        var log = config.utils.getLog('active');
+        var log = ARGS.archive ? config.utils.getLog('archive') : config.utils.getLog('active');
         var goals = log.goals;
         var total = Object.keys(goals).length;
         var complete = config.utils.getComplete(goals).length;
@@ -12,8 +11,8 @@ function progress(INPUT, ARGS, config) {
         config["debugger"].log("Total: " + total + "\r");
         config["debugger"].log("Complete: " + complete + "\r");
         config["debugger"].log("Incomplete: " + incomplete + "\n");
-        if (config.cli && config["debugger"].getMode() !== 'silent') {
-            barHorizontal({
+        if (total && config.cli && config["debugger"].getMode() !== 'silent') {
+            config.utils.barHorizontal({
                 'Complete': complete,
                 'Incomplete': incomplete
             }, {
@@ -21,7 +20,7 @@ function progress(INPUT, ARGS, config) {
             });
         }
         resolve({
-            type: 'active',
+            type: ARGS.archive ? 'archive' : 'active',
             total: total,
             complete: complete,
             incomplete: incomplete

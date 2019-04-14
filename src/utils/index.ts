@@ -10,6 +10,7 @@ import * as path from 'path';
 import * as moment from 'moment';
 import * as pkgDir from 'pkg-dir';
 import * as merge from 'merge';
+import * as barHorizontal from 'bar-horizontal';
 
 // Project
 import { UtilsStore, UtilsInstance } from '../interfaces';
@@ -34,6 +35,10 @@ export default class Utils implements UtilsInstance {
 		this.goalistDirName = ( opts.path && typeof opts.path === 'string' ) ? path.parse( opts.path ).name : '.goalist';
 		this.goalistDirRoot = ( opts.path && typeof opts.path === 'string' ) ? path.parse( opts.path ).dir : os.homedir();
 		this.goalistDirPath = ( opts.path && typeof opts.path === 'string' ) ? opts.path : `${this.goalistDirRoot}/${this.goalistDirName}`;
+	}
+
+	barHorizontal(...args) {
+		barHorizontal(...args);
 	}
 
 	generateId() {

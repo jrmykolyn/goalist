@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+- Fixed issue where 'progress' command could not display 'archive' goals.
+- Fixed issue where attempting to display non-existent goal data as a bar chart would throw an error.
+
 ## [0.14.0] - 2019-04-12
 ### Added
 - Added `generateId()` method to `utils`.
