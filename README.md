@@ -180,6 +180,12 @@ Display progress information relating to the 'active' log file (eg. total number
 gl progress
 ```
 
+To display progress for the 'archive' log file, include the `--archive` flag.
+
+```
+gl progress --archive
+```
+
 ### `remove` / `r`
 Remove the 'active' goal with the matching ID.
 
