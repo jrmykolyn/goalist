@@ -33,7 +33,7 @@ export default function progress( INPUT, ARGS, config ) {
 		// - command was executed from CLI;
 		// - Goalist is not running in 'silent' mode.
 		if ( config.cli && config.debugger.getMode() !== 'silent' ) {
-			barHorizontal(
+			config.utils.barHorizontal(
 				{
 					'Complete': complete,
 					'Incomplete': incomplete,
