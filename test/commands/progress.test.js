@@ -81,6 +81,19 @@ test( 'It should visualize the "active" goal progress as a bar chart when in CLI
   t.is( barHorizontal.calledWithExactly( { 'Complete': 1, 'Incomplete': 0 }, { labels: true } ), true );
 } );
 
+test( 'It should not visualize the "active" goal progress if no data exists', ( t ) => {
+  const log = { goals: {} };
+  const barHorizontal = config.utils.barHorizontal = sinon.spy();
+  config.utils.getLog = sinon.stub().withArgs( 'active' ).returns( log );
+  config.utils.getComplete = () => [];
+  config.cli = true;
+  config.debugger.getMode = () => null;
+
+  progress( [], {}, config );
+
+   t.is( barHorizontal.callCount, 0 );
+} );
+
 test( 'It should resolve with an object of "archive" goal data', ( t ) => {
   const log = { goals: { '2': goal2 } };
   config.utils.getLog = sinon.stub().withArgs( 'archive' ).returns( log );
@@ -117,4 +130,17 @@ test( 'It should visualize the "archive" goal progress as a bar chart when in CL
   progress( [], { archive: true }, config );
 
   t.is( barHorizontal.calledWithExactly( { 'Complete': 1, 'Incomplete': 0 }, { labels: true } ), true );
+} );
+
+test( 'It should not visualize the "archive" goal progress if no data exists', ( t ) => {
+  const log = { goals: {} };
+  const barHorizontal = config.utils.barHorizontal = sinon.spy();
+  config.utils.getLog = sinon.stub().withArgs( 'archive' ).returns( log );
+  config.utils.getComplete = () => [];
+  config.cli = true;
+  config.debugger.getMode = () => null;
+
+  progress( [], { archive: true }, config );
+
+   t.is( barHorizontal.callCount, 0 );
 } );

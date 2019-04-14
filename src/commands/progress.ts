@@ -30,9 +30,10 @@ export default function progress( INPUT, ARGS, config ) {
 		config.debugger.log( `Incomplete: ${incomplete}\n` );
 
 		// Only display bar chars when:
+		// - goal data exist;
 		// - command was executed from CLI;
 		// - Goalist is not running in 'silent' mode.
-		if ( config.cli && config.debugger.getMode() !== 'silent' ) {
+		if ( total && config.cli && config.debugger.getMode() !== 'silent' ) {
 			config.utils.barHorizontal(
 				{
 					'Complete': complete,

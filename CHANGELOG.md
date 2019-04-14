@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Fixed
 - Fixed issue where 'progress' command could not display 'archive' goals.
+- Fixed issue where attempting to display non-existent goal data as a bar chart would throw an error.
 
 ## [0.14.0] - 2019-04-12
 ### Added

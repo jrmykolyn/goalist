@@ -11,7 +11,7 @@ function progress(INPUT, ARGS, config) {
         config["debugger"].log("Total: " + total + "\r");
         config["debugger"].log("Complete: " + complete + "\r");
         config["debugger"].log("Incomplete: " + incomplete + "\n");
-        if (config.cli && config["debugger"].getMode() !== 'silent') {
+        if (total && config.cli && config["debugger"].getMode() !== 'silent') {
             config.utils.barHorizontal({
                 'Complete': complete,
                 'Incomplete': incomplete
