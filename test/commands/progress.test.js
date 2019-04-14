@@ -68,7 +68,18 @@ test( 'It should display information about the state of the "active" goals', ( t
   t.is( log.args[3][0].includes( '0' ), true );
 } );
 
-test.todo( 'It should visualize the "active" goal progress as a bar chart when in CLI mode' );
+test( 'It should visualize the "active" goal progress as a bar chart when in CLI mode', ( t ) => {
+  const log = { goals: { '1': goal1 } };
+  const barHorizontal = config.utils.barHorizontal = sinon.spy();
+  config.utils.getLog = sinon.stub().withArgs( 'active' ).returns( log );
+  config.utils.getComplete = () => [ goal1 ];
+  config.cli = true;
+  config.debugger.getMode = () => null;
+
+  progress( [], {}, config );
+
+  t.is( barHorizontal.calledWithExactly( { 'Complete': 1, 'Incomplete': 0 }, { labels: true } ), true );
+} );
 
 test( 'It should resolve with an object of "archive" goal data', ( t ) => {
   const log = { goals: { '2': goal2 } };
@@ -95,4 +106,15 @@ test( 'It should display information about the state of the "archive" goals', ( 
   t.is( log.args[3][0].includes( '0' ), true );
 } );
 
-test.todo( 'It should visualize the "archive" goal progress as a bar chart when in CLI mode' );
+test( 'It should visualize the "archive" goal progress as a bar chart when in CLI mode', ( t ) => {
+  const log = { goals: { '2': goal2 } };
+  const barHorizontal = config.utils.barHorizontal = sinon.spy();
+  config.utils.getLog = sinon.stub().withArgs( 'archive' ).returns( log );
+  config.utils.getComplete = () => [ goal2 ];
+  config.cli = true;
+  config.debugger.getMode = () => null;
+
+  progress( [], { archive: true }, config );
+
+  t.is( barHorizontal.calledWithExactly( { 'Complete': 1, 'Incomplete': 0 }, { labels: true } ), true );
+} );
