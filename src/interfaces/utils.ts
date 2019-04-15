@@ -2,13 +2,19 @@
 // PUBLIC API
 // --------------------------------------------------
 export interface UtilsInstance {
-	goalistDirName: any,
-	goalistDirRoot: any,
-	goalistDirPath: any,
-	getOrCreateGoalistDir: any,
-	getOrCreateLogsDir: any,
-	getOrCreateBakDir: any,
-	getOrCreateLog: any,
+	barHorizontal: any;
+	goalistDirName: any;
+	goalistDirRoot: any;
+	goalistDirPath: any;
+	generateId: any;
+	getBakPath: any;
+	getComplete: any;
+	getLog: any;
+	getOrCreateGoalistDir: any;
+	getOrCreateLogsDir: any;
+	getOrCreateBakDir: any;
+	getOrCreateLog: any;
+	writeLog: any;
 };
 
 export interface UtilsStore {
