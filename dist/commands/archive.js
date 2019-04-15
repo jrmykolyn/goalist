@@ -2,6 +2,7 @@
 exports.__esModule = true;
 function archive(INPUT, ARGS, config) {
     return new Promise(function (resolve, reject) {
+        var _a;
         var identifier = INPUT[0] || null;
         if (!identifier) {
             var err = 'Whoops, subcommand must be invoked with a valid `identifier` argument.';
@@ -35,7 +36,6 @@ function archive(INPUT, ARGS, config) {
         config.utils.writeLog('archive', JSON.stringify(isActive ? targetData : sourceData));
         resolve(targetData);
         return;
-        var _a;
     });
 }
 exports["default"] = archive;
