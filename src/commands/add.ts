@@ -7,7 +7,7 @@ import * as fs from 'fs';
 // Vendors
 
 // Project
-import { Goal } from '../interfaces';
+import { Goal, GoalistArgs, GoalistConfig, GoalistInput } from '../interfaces';
 
 // --------------------------------------------------
 // DECLARE VARS
@@ -16,7 +16,7 @@ import { Goal } from '../interfaces';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function add( INPUT, ARGS, config ) {
+export default function add( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Promise<Goal> {
 	return new Promise( ( resolve, reject ) => {
 		let title = INPUT[ 0 ] || null;
 

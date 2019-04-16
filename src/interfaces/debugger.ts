@@ -2,9 +2,10 @@
 // PUBLIC API
 // --------------------------------------------------
 export interface DebuggerInstance {
-	// Propertyies
+	// Properties
 	mode: string;
 	// Methods
-	log: any,
-	setMode: any,
+	log: any;
+	getMode: any;
+	setMode: any;
 };

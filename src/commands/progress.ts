@@ -7,6 +7,7 @@
 import * as barHorizontal from 'bar-horizontal';
 
 // Project
+import { Goal, GoalistArgs, GoalistConfig, GoalistInput, GoalistProgress } from '../interfaces';
 
 // --------------------------------------------------
 // DECLARE VARS
@@ -15,7 +16,7 @@ import * as barHorizontal from 'bar-horizontal';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function progress( INPUT, ARGS, config ) {
+export default function progress( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Promise<GoalistProgress> {
 	return new Promise( ( resolve, reject ) => {
 		let log = ARGS.archive ? config.utils.getLog( 'archive' ) : config.utils.getLog( 'active' );
 		let { goals } = log;

@@ -7,7 +7,7 @@ import * as fs from 'fs';
 // Vendors
 
 // Project
-import { Goal } from '../interfaces';
+import { GoalistLog, GoalistArgs, GoalistConfig, GoalistInput } from '../interfaces';
 
 // --------------------------------------------------
 // DECLARE VARS
@@ -16,7 +16,7 @@ import { Goal } from '../interfaces';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function backup( INPUT, ARGS, config ) {
+export default function backup( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Promise<GoalistLog> {
 	return new Promise( ( resolve, reject ) => {
 		let log = ARGS.archive ? config.utils.getLog( 'archive' ) : config.utils.getLog( 'active' );
 

@@ -6,6 +6,7 @@
 // Vendor
 
 // Project
+import { GoalistLog, GoalistArgs, GoalistConfig, GoalistInput } from '../interfaces';
 
 // --------------------------------------------------
 // DECLARE VARS
@@ -14,7 +15,7 @@
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function archive( INPUT, ARGS, config ) {
+export default function archive( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Promise<GoalistLog> {
 	return new Promise( ( resolve, reject ) => {
 		let identifier = INPUT[ 0 ] || null;
 
