@@ -7,6 +7,7 @@
 // Vendor
 
 // Project
+import { Goal, GoalistArgs, GoalistConfig, GoalistInput } from '../interfaces';
 
 // --------------------------------------------------
 // DECLARE VARS
@@ -15,7 +16,7 @@
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function complete( INPUT, ARGS, config ) {
+export default function complete( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Promise<Goal> {
 	return new Promise( ( resolve, reject ) => {
 		let identifier = INPUT[ 0 ] || null;
 

@@ -7,6 +7,7 @@
 const chalk = require( 'chalk' );
 
 // Project
+import { GoalistLog, GoalistArgs, GoalistConfig, GoalistInput } from '../interfaces';
 
 // --------------------------------------------------
 // DECLARE VARS
@@ -15,7 +16,7 @@ const chalk = require( 'chalk' );
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function list( INPUT, ARGS, config ) {
+export default function list( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Promise<GoalistLog> {
 	return new Promise( ( resolve, reject ) => {
 		let log = ARGS.archive ? config.utils.getLog( 'archive' ) : config.utils.getLog( 'active' );
 		let { goals } = log;
