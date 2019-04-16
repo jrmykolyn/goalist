@@ -23,7 +23,13 @@ export interface GoalistInput {
 };
 
 export interface GoalistArgs {
+	active?: boolean;
+	all?: boolean;
+	archive?: boolean;
 	category?: string;
 	description?: string;
+	false?: boolean;
+	force?: boolean;
+	show?: string;
 	verbose?: boolean;
 };
