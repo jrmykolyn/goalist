@@ -1,7 +1,7 @@
 // --------------------------------------------------
 // IMPORT MODULES
 // --------------------------------------------------
-import { DebuggerInstance, UtilsInstance } from './';
+import { Goal, DebuggerInstance, UtilsInstance } from './';
 
 // --------------------------------------------------
 // PUBLIC API
@@ -27,6 +27,10 @@ export interface GoalistProgress {
 	total: number;
 	complete: number;
 	incomplete: number;
+};
+
+export interface GoalistLog {
+	goals: { [key: string]: Goal },
 };
 
 export interface GoalistArgs {
