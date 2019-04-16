@@ -22,6 +22,13 @@ export interface GoalistInput {
 	[ index: number ]: string,
 };
 
+export interface GoalistProgress {
+	type: string;
+	total: number;
+	complete: number;
+	incomplete: number;
+};
+
 export interface GoalistArgs {
 	active?: boolean;
 	all?: boolean;
