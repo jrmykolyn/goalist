@@ -55,9 +55,15 @@ test( 'should write the new goal data to disk', ( t ) => {
   const generateId = config.utils.generateId = sinon.spy( () => id );
   const writeLog = config.utils.writeLog = sinon.spy();
 
-  add( [ title ], {}, config );
-
-  t.is( writeLog.calledWith( 'active', JSON.stringify( { goals: { [id]: goal } } ) ), true );
+	return add( [ title ], { tags: 'foo, bar, baz' }, config ).then((goal) => {
+		t.is(
+			writeLog.calledWith(
+				'active',
+				JSON.stringify( { goals: { [id]: Object.assign({}, goal, { tags: [ 'foo', 'bar', 'baz' ] } ) } } )
+			),
+			true
+		);
+	});
 } );
 
 test( 'it should reject if no "title" is provided', ( t ) => {

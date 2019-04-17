@@ -17,6 +17,7 @@ function add(INPUT, ARGS, config) {
             title: title,
             category: ARGS.category || '',
             description: ARGS.description || '',
+            tags: ARGS.tags ? ARGS.tags.split(',').map(function (str) { return str.trim(); }) : [],
             complete: false,
             active: true
         };
