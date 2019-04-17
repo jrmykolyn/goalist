@@ -50,7 +50,7 @@ var goalist = new Goalist( {
 // --------------------------------------------------
 goalist.run( COMMAND, INPUT, ARGS )
 	.then( ( data ) => {
-		/// TODO
+		goalist.config.debugger.log(`Successfully executed command: ${COMMAND}`);
 	} )
 	.catch( ( err ) => {
 		cli.showHelp();
