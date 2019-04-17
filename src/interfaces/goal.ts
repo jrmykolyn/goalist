@@ -4,8 +4,8 @@
 export interface Goal {
 	id: number;
 	title: string;
-	category?: string;
-	description?: string;
+	category: string;
+	description: string;
 	tags: string[];
 	complete: boolean;
 	active: boolean;
