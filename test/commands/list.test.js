@@ -123,3 +123,35 @@ test( 'it should allow goals to be filtered by category', ( t ) => {
   t.is(args.some( ( arg ) => arg.includes( title1 ) ), true);
   t.is(args.every( ( arg ) => !arg.includes( title2 ) ), true);
 } );
+
+test( 'it should allow goals to be filtered by tag', ( t ) => {
+  const title1 = 'Goal 1';
+  const title2 = 'Goal 2';
+  const category1 = 'Foo';
+  const category2 = 'Bar';
+  const goal1 = { title: title1, tags: [ 'foo', 'bar' ] };
+  const goal2 = { title: title2, tags: [ 'baz', 'quux' ] };
+  const getLog = config.utils.getLog = sinon.spy( () => ( { goals: { '1': goal1, '2': goal2 } } ) );
+  const log = config.debugger.log = sinon.spy();
+
+  list( [], { tags: 'foo,bar' }, config );
+
+  // Flatten `log()` arugments into a 1-dimensional array.
+  const args = log.args.reduce( ( acc, args ) => [...acc, ...args], [] );
+  t.is(args.some( ( arg ) => arg.includes( title1 ) ), true);
+  t.is(args.every( ( arg ) => !arg.includes( title2 ) ), true);
+} );
+
+test( 'it should allow goals to be filtered by category or tag', ( t ) => {
+  const goal1 = { title, tags: [ 'foo', 'bar' ] };
+  const goal2 = { title: title2, category: 'baz' };
+  const getLog = config.utils.getLog = sinon.spy( () => ( { goals: { '1': goal1, '2': goal2 } } ) );
+  const log = config.debugger.log = sinon.spy();
+
+  list( [], { tags: 'foo,bar', category: 'baz' }, config );
+
+  // Flatten `log()` arugments into a 1-dimensional array.
+  const args = log.args.reduce( ( acc, args ) => [...acc, ...args], [] );
+  t.is(args.some( ( arg ) => arg.includes( title ) ), true);
+  t.is(args.some( ( arg ) => arg.includes( title2 ) ), true);
+} );
