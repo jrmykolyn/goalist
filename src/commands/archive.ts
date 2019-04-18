@@ -42,13 +42,7 @@ function archive( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig 
 	}
 
 	// Update `active` key.
-	if ( isActive ) {
-		config.debugger.log( `Deactivating the following task: ${identifier}` );
-		goal.active = false;
-	} else {
-		config.debugger.log( `Activating the following task: ${identifier}` );
-		goal.active = true;
-	}
+	goal.active = isActive ? false : true;
 
 	// Remove target goal; update 'source' and 'target' data.
 	delete goals[ identifier ];

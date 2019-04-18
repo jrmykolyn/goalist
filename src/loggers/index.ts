@@ -3,6 +3,7 @@
 // --------------------------------------------------
 // Project
 import add from './add';
+import archive from './archive';
 
 // --------------------------------------------------
 // PUBLIC API
@@ -13,4 +14,6 @@ import add from './add';
 module.exports = {
 	add,
 	a: add,
+	archive,
+	ar: archive,
 };
