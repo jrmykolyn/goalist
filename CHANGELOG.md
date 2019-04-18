@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Added support for `tags` data point on goal records.
+  - `gl add "Do the needful" --tags foo,bar,baz`
+- Added support for filtering goals by tag.
+  - `gl list --tags foo`
 
 ### Changed
 - Updated CLI to display success message.
