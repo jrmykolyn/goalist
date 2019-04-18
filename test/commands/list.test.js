@@ -14,6 +14,9 @@ const { default: list } = require('../../dist/commands/list');
 let config;
 let id;
 let title;
+let title2;
+let category;
+let category2;
 let description;
 let complete;
 let active;
@@ -24,6 +27,9 @@ let active;
 test.beforeEach(() => {
   id = 'TEST_ID';
   title = 'TEST_TITLE';
+  title2 = 'TEST_TITLE_2';
+  category = 'Foo';
+  category2 = 'Bar';
   description = 'TEST_DESCRIPTION';
   complete = 'TEST_COMPLETE';
   active = 'TEST_ACTIVE';
@@ -107,29 +113,21 @@ test( 'should display all of the data for each goal when the "all" argument is p
 } );
 
 test( 'it should allow goals to be filtered by category', ( t ) => {
-  const title1 = 'Goal 1';
-  const title2 = 'Goal 2';
-  const category1 = 'Foo';
-  const category2 = 'Bar';
-  const goal1 = { title: title1, category: category1 };
+  const goal1 = { title, category };
   const goal2 = { title: title2, category: category2 };
   const getLog = config.utils.getLog = sinon.spy( () => ( { goals: { '1': goal1, '2': goal2 } } ) );
   const log = config.debugger.log = sinon.spy();
 
-  list( [], { category: category1 }, config );
+  list( [], { category }, config );
 
   // Flatten `log()` arugments into a 1-dimensional array.
   const args = log.args.reduce( ( acc, args ) => [...acc, ...args], [] );
-  t.is(args.some( ( arg ) => arg.includes( title1 ) ), true);
+  t.is(args.some( ( arg ) => arg.includes( title ) ), true);
   t.is(args.every( ( arg ) => !arg.includes( title2 ) ), true);
 } );
 
 test( 'it should allow goals to be filtered by tag', ( t ) => {
-  const title1 = 'Goal 1';
-  const title2 = 'Goal 2';
-  const category1 = 'Foo';
-  const category2 = 'Bar';
-  const goal1 = { title: title1, tags: [ 'foo', 'bar' ] };
+  const goal1 = { title, tags: [ 'foo', 'bar' ] };
   const goal2 = { title: title2, tags: [ 'baz', 'quux' ] };
   const getLog = config.utils.getLog = sinon.spy( () => ( { goals: { '1': goal1, '2': goal2 } } ) );
   const log = config.debugger.log = sinon.spy();
@@ -138,7 +136,7 @@ test( 'it should allow goals to be filtered by tag', ( t ) => {
 
   // Flatten `log()` arugments into a 1-dimensional array.
   const args = log.args.reduce( ( acc, args ) => [...acc, ...args], [] );
-  t.is(args.some( ( arg ) => arg.includes( title1 ) ), true);
+  t.is(args.some( ( arg ) => arg.includes( title ) ), true);
   t.is(args.every( ( arg ) => !arg.includes( title2 ) ), true);
 } );
 
