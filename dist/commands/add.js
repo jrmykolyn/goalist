@@ -18,7 +18,6 @@ function add(INPUT, ARGS, config) {
     };
     goals[id] = goal;
     config.utils.writeLog('active', JSON.stringify(log));
-    config["debugger"].log("Successfully created goal: " + id);
     return goal;
 }
 exports["default"] = utils_1["default"](add, [validators_1.hasValidInput({ msg: 'Whoops, `add` must be invoked with a valid `title` argument.' })]);
