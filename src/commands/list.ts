@@ -18,6 +18,9 @@ import { GoalistLog, GoalistArgs, GoalistConfig, GoalistInput } from '../interfa
 // --------------------------------------------------
 export default function list( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Promise<GoalistLog> {
 	return new Promise( ( resolve, reject ) => {
+		const CATEGORY = ARGS.category ? ARGS.category.toLowerCase() : null;
+		const TAGS = ARGS.tags ? ARGS.tags.split( ',' ).map( ( str ) => str.trim().toLowerCase() ) : [];
+
 		let log = ARGS.archive ? config.utils.getLog( 'archive' ) : config.utils.getLog( 'active' );
 		let { goals } = log;
 
@@ -25,8 +28,14 @@ export default function list( INPUT: GoalistInput, ARGS: GoalistArgs, config: Go
 		let supplementaryProps = !ARGS.all && ARGS.show ? ARGS.show.split( ',' ).filter( ( prop ) => whitelistProps.indexOf( prop ) === -1 ) : []; // Set 'supplementary' if possible.
 
 		const allGoals = Object.keys( goals ).map( ( key ) => goals[ key ] );
-		const filteredGoals = ARGS.category
-			? allGoals.filter( ( { category } ) => !!category && category.toLowerCase().includes( ARGS.category.toLowerCase() ) )
+		const filteredGoals = ( ARGS.category || TAGS.length )
+			? allGoals.filter( ( { category, tags } ) => {
+				const sanitizedTags = tags && tags.length ? tags.map( ( tag ) => tag.toLowerCase() ) : [];
+				return (
+					( !!category && category.toLowerCase().includes( CATEGORY ) )
+					|| ( !!sanitizedTags.length && sanitizedTags.some( ( tag ) => TAGS.includes( tag ) ) )
+				);
+			} )
 			: allGoals;
 
 		// Print out info for each `goal` in current log.

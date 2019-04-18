@@ -38,6 +38,7 @@ export default function add( INPUT: GoalistInput, ARGS: GoalistArgs, config: Goa
 			title: title,
 			category: ARGS.category || '',
 			description: ARGS.description || '',
+			tags: ARGS.tags ? ARGS.tags.split( ',' ).map((str) => str.trim()) : [],
 			complete: false,
 			active: true,
 		};

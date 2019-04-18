@@ -39,6 +39,7 @@ export interface GoalistArgs {
 	archive?: boolean;
 	category?: string;
 	description?: string;
+	tags?: string;
 	false?: boolean;
 	force?: boolean;
 	show?: string;
