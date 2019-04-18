@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [0.15.0] - 2019-04-17
 ### Added
 - Added support for `tags` data point on goal records.
   - `gl add "Do the needful" --tags foo,bar,baz`
