@@ -4,6 +4,7 @@
 // Project
 import add from './add';
 import archive from './archive';
+import complete from './complete';
 
 // --------------------------------------------------
 // PUBLIC API
@@ -16,4 +17,6 @@ module.exports = {
 	a: add,
 	archive,
 	ar: archive,
+	complete,
+	c: complete,
 };
