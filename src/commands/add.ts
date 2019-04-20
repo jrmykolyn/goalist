@@ -1,11 +1,6 @@
 // --------------------------------------------------
 // IMPORT MODULES
 // --------------------------------------------------
-// Node
-import * as fs from 'fs';
-
-// Vendors
-
 // Project
 import makeCommand from './utils';
 import { Goal, GoalistArgs, GoalistConfig, GoalistInput } from '../interfaces';
