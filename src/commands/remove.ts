@@ -42,7 +42,7 @@ export default function remove( INPUT: GoalistInput, ARGS: GoalistArgs, config: 
 		}
 
 		// Proceed if:
-		// - we're not running in CLU mode;
+		// - we're not running in CLI mode;
 		// - or the `--force` flag was provided.
 		if ( !config.cli || ARGS.force ) {
 			config.debugger.log( `Removing task: ${identifier}` );
