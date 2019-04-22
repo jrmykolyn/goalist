@@ -1,13 +1,10 @@
 // --------------------------------------------------
 // IMPORT MODULES
 // --------------------------------------------------
-// Node
-import * as fs from 'fs';
-
-// Vendors
-
 // Project
+import makeCommand from './utils';
 import { Goal, GoalistArgs, GoalistConfig, GoalistInput } from '../interfaces';
+import { hasValidTitle } from '../validators';
 
 // --------------------------------------------------
 // DECLARE VARS
@@ -16,41 +13,33 @@ import { Goal, GoalistArgs, GoalistConfig, GoalistInput } from '../interfaces';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function add( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Promise<Goal> {
-	return new Promise( ( resolve, reject ) => {
-		let title = INPUT[ 0 ] || null;
+function add( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Goal {
+	let title = INPUT[ 0 ] || null;
 
-		if ( !title ) {
-			let err = 'Whoops, `add` must be invoked with a valid `title` argument.';
+	let log = config.utils.getLog( 'active' );
+	let { goals } = log;
 
-			config.debugger.log( err );
-			reject( new Error( err ) );
-			return;
-		}
+	// Create and update `goal`.
+	let id = config.utils.generateId();
+	let goal: Goal = {
+		id: id,
+		title: title,
+		category: ARGS.category || '',
+		description: ARGS.description || '',
+		tags: ARGS.tags ? ARGS.tags.split( ',' ).map((str) => str.trim()) : [],
+		complete: false,
+		active: true,
+	};
 
-		let log = config.utils.getLog( 'active' );
-		let { goals } = log;
+	// Add `goal`.
+	goals[ id ] = goal;
 
-		// Create and update `goal`.
-		let id = config.utils.generateId();
-		let goal: Goal = {
-			id: id,
-			title: title,
-			category: ARGS.category || '',
-			description: ARGS.description || '',
-			tags: ARGS.tags ? ARGS.tags.split( ',' ).map((str) => str.trim()) : [],
-			complete: false,
-			active: true,
-		};
+	// Write new data back to file system.
+	config.utils.writeLog( 'active', JSON.stringify( log ) );
 
-		// Add `goal`.
-		goals[ id ] = goal;
+	config.debugger.log( `Successfully created goal: ${id}` );
 
-		// Write new data back to file system.
-		config.utils.writeLog( 'active', JSON.stringify( log ) );
-
-		config.debugger.log( `Successfully created goal: ${id}` );
-
-		resolve( goal );
-	} );
+	return goal;
 }
+
+export default makeCommand( add, [ hasValidTitle ] );

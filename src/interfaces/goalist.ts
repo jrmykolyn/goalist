@@ -18,9 +18,7 @@ export interface GoalistConfig {
 	utils: UtilsInstance,
 };
 
-export interface GoalistInput {
-	[ index: number ]: string,
-};
+export type GoalistInput = string[];
 
 export interface GoalistProgress {
 	type: string;
