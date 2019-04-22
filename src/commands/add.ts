@@ -4,6 +4,7 @@
 // Project
 import makeCommand from './utils';
 import { Goal, GoalistArgs, GoalistConfig, GoalistInput } from '../interfaces';
+import { hasValidTitle } from '../validators';
 
 // --------------------------------------------------
 // DECLARE VARS
@@ -40,18 +41,5 @@ function add( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): G
 
 	return goal;
 }
-
-const hasValidTitle = ( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ) => {
-	return new Promise( ( resolve, reject ) => {
-		const [title] = INPUT;
-
-		if ( !title ) {
-			reject( new Error( 'Whoops, `add` must be invoked with a valid `title` argument.' ) );
-		} else {
-			resolve();
-		}
-	} );
-};
-
 
 export default makeCommand( add, [ hasValidTitle ] );
