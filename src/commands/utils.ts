@@ -9,7 +9,12 @@
  */
 const makeCommand = (command, validators = []) => {
 	return (input, args, config) => {
-		return Promise.all(validators.map((validator) => validator(input, args, config)))
+		return Promise.all(validators.map((validator) => {
+			return new Promise((resolve, reject) => {
+				validator(input, args, config);
+				resolve();
+			});
+		}))
 			.then(() => command(input, args, config))
 			.catch((err) => { throw err });
 	};

@@ -54,7 +54,12 @@ test( 'It should propagate validation errors', ( t ) => {
   const errorMsg = 'Whoops, something went wrong!';
   const validator = () => { throw new Error( errorMsg ) };
 
-  t.throws( () => makeCommand( noop, [ validator ] )() );
+  return makeCommand( noop, [ validator ] )()
+    .then( noop )
+    .catch( ( err ) => {
+      t.is( err instanceof Error, true )
+      t.is( err.message === errorMsg, true );
+    } );
 } );
 
 test( 'It should propagate command errors', ( t ) => {
