@@ -7,7 +7,9 @@
 // Vendor
 
 // Project
+import makeCommand from './utils';
 import { Goal, GoalistArgs, GoalistConfig, GoalistInput } from '../interfaces';
+import { hasValidInput } from '../validators';
 
 // --------------------------------------------------
 // DECLARE VARS
@@ -16,47 +18,37 @@ import { Goal, GoalistArgs, GoalistConfig, GoalistInput } from '../interfaces';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function complete( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Promise<Goal> {
-	return new Promise( ( resolve, reject ) => {
-		let identifier = INPUT[ 0 ] || null;
+function complete( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Promise<Goal> {
+	let identifier = INPUT[ 0 ] || null;
 
-		/// TODO[@jrmykolyn]: Consolidate with *almost* identical logic in other subcommands.
-		if ( !identifier ) {
-			let err = 'Whoops, subcommand must be invoked with a valid `identifier` argument.';
+	/// TODO[@jrmykolyn]: Consolidate with identical logic in other subcommands.
+	let log = ARGS.archive ? config.utils.getLog( 'archive' ) : config.utils.getLog( 'active' );
+	let { goals } = log;
+	let goal = goals[ identifier ] || null;
 
-			config.debugger.log( err );
-			reject( new Error( err ) );
-			return;
-		}
+	/// TODO[@jrmykolyn]: Consolidate with identical logic in other subcommands.
+	if ( !goal ) {
+		let err = `Whoops, failed to find a goal which matches the following identifier: ${identifier}`;
 
-		/// TODO[@jrmykolyn]: Consolidate with identical logic in other subcommands.
-		let log = ARGS.archive ? config.utils.getLog( 'archive' ) : config.utils.getLog( 'active' );
-		let { goals } = log;
-		let goal = goals[ identifier ] || null;
-
-		/// TODO[@jrmykolyn]: Consolidate with identical logic in other subcommands.
-		if ( !goal ) {
-			let err = `Whoops, failed to find a goal which matches the following identifier: ${identifier}`;
-
-			config.debugger.log( err );
-			reject( new Error( err ) );
-			return;
-		}
-
-		// If invoked with the `--false` flag, set matched goal to incomplete.
-		// Otherwise, set to complete.
-		if ( ARGS.false ) {
-			config.debugger.log( `Setting the following task to incomplete: ${identifier}` );
-			goal.complete = false;
-		} else {
-			config.debugger.log( `Setting the following task to complete: ${identifier}` );
-			goal.complete = true;
-		}
-
-		// Write new data back to file system.
-		config.utils.writeLog( ARGS.archive ? 'archive' : 'active', JSON.stringify( log ) );
-
-		resolve( goal );
+		config.debugger.log( err );
+		throw new Error( err );
 		return;
-	} );
+	}
+
+	// If invoked with the `--false` flag, set matched goal to incomplete.
+	// Otherwise, set to complete.
+	if ( ARGS.false ) {
+		config.debugger.log( `Setting the following task to incomplete: ${identifier}` );
+		goal.complete = false;
+	} else {
+		config.debugger.log( `Setting the following task to complete: ${identifier}` );
+		goal.complete = true;
+	}
+
+	// Write new data back to file system.
+	config.utils.writeLog( ARGS.archive ? 'archive' : 'active', JSON.stringify( log ) );
+
+	return goal;
 }
+
+export default makeCommand( complete, [ hasValidInput( { msg: 'Whoops, `complete` must be invoked with a valid `identifier` argument.' } ) ] );
