@@ -8,7 +8,7 @@
 // Project
 import makeCommand from './utils';
 import { GoalistLog, GoalistArgs, GoalistConfig, GoalistInput } from '../interfaces';
-import { hasValidTitle } from '../validators';
+import { hasValidInput } from '../validators';
 
 // --------------------------------------------------
 // DECLARE VARS
@@ -62,4 +62,4 @@ function archive( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig 
 	return targetData;
 }
 
-export default makeCommand( archive, [ hasValidTitle ] );
+export default makeCommand( archive, [ hasValidInput( { msg: 'Whoops, `archive` must be invoked with a valid `identifier` argument.' } ) ] );

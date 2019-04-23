@@ -4,7 +4,7 @@
 // Project
 import makeCommand from './utils';
 import { Goal, GoalistArgs, GoalistConfig, GoalistInput } from '../interfaces';
-import { hasValidTitle } from '../validators';
+import { hasValidInput } from '../validators';
 
 // --------------------------------------------------
 // DECLARE VARS
@@ -42,4 +42,4 @@ function add( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): G
 	return goal;
 }
 
-export default makeCommand( add, [ hasValidTitle ] );
+export default makeCommand( add, [ hasValidInput( { msg: 'Whoops, `add` must be invoked with a valid `title` argument.' } ) ] );

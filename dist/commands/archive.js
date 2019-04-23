@@ -31,4 +31,4 @@ function archive(INPUT, ARGS, config) {
     config.utils.writeLog('archive', JSON.stringify(isActive ? targetData : sourceData));
     return targetData;
 }
-exports["default"] = utils_1["default"](archive, [validators_1.hasValidTitle]);
+exports["default"] = utils_1["default"](archive, [validators_1.hasValidInput({ msg: 'Whoops, `archive` must be invoked with a valid `identifier` argument.' })]);
