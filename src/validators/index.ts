@@ -7,8 +7,10 @@ import { GoalistInput, GoalistArgs, GoalistConfig } from '../interfaces';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export const hasValidTitle = ( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ) => {
-	const [title] = INPUT;
+export const hasValidInput = ( { msg = '' } = {} ) => {
+	return ( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ) => {
+		const [input] = INPUT;
 
-	if ( !title ) throw new Error( 'Whoops, `add` must be invoked with a valid `title` argument.' );
+		if ( !input ) throw new Error( msg || 'Whoops, something went wrong!' );
+	};
 };
