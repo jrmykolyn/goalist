@@ -25,27 +25,6 @@ export default function progress( INPUT: GoalistInput, ARGS: GoalistArgs, config
 		let complete = config.utils.getComplete( goals ).length;
 		let incomplete = total - complete;
 
-		config.debugger.log( 'OVERVIEW' );
-		config.debugger.log( `Total: ${total}\r` );
-		config.debugger.log( `Complete: ${complete}\r` );
-		config.debugger.log( `Incomplete: ${incomplete}\n` );
-
-		// Only display bar chars when:
-		// - goal data exist;
-		// - command was executed from CLI;
-		// - Goalist is not running in 'silent' mode.
-		if ( total && config.cli && config.debugger.getMode() !== 'silent' ) {
-			config.utils.barHorizontal(
-				{
-					'Complete': complete,
-					'Incomplete': incomplete,
-				},
-				{
-					labels: true,
-				},
-			);
-		}
-
 		resolve( {
 			type: ARGS.archive ? 'archive' : 'active',
 			total,
