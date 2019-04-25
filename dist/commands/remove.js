@@ -9,23 +9,19 @@ function remove(INPUT, ARGS, config) {
     var goal = goals[identifier] || null;
     var userConf = null;
     if (!goal) {
-        var err = "Whoops, failed to find a goal which matches the following identifier: " + identifier;
-        config["debugger"].log(err);
-        throw new Error(err);
+        throw new Error("Whoops, failed to find a goal which matches the following identifier: " + identifier);
     }
     if (!config.cli || ARGS.force) {
-        config["debugger"].log("Removing task: " + identifier);
         for (var key in goals) {
             if (goals[key] === goal) {
                 delete goals[key];
             }
         }
         config.utils.writeLog(ARGS.archive ? 'archive' : 'active', JSON.stringify(log));
-        return log;
+        return goal;
     }
     else {
-        config["debugger"].log('This is a destructive action and can only be executed if the `--force` flag is provided. Aborting.');
-        return;
+        throw new Error('This is a destructive action and can only be executed if the `--force` flag is provided. Aborting.');
     }
 }
 exports["default"] = utils_1["default"](remove, [validators_1.hasValidInput({ msg: 'Whoops, `remove` must be invoked with a valid `identifier` argument.' })]);

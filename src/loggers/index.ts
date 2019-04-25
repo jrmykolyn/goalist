@@ -6,6 +6,7 @@ import add from './add';
 import archive from './archive';
 import complete from './complete';
 import progress from './progress';
+import remove from './remove';
 
 // --------------------------------------------------
 // PUBLIC API
@@ -22,4 +23,6 @@ module.exports = {
 	c: complete,
 	progress,
 	p: progress,
+	remove,
+	r: remove,
 };
