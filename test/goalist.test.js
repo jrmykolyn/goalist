@@ -369,7 +369,8 @@ test( '"update" correctly updates the target goal.', async ( t ) => {
 
 	// Update existing goal, ensure that new title has been correctly applied.
 	let updatedGoalTitle = 'This title has been updated';
-	let updatedGoal = await goalist.run( 'update', [ goal.id ], { title: updatedGoalTitle } );
+	let { payload: updatedGoal } = await goalist.run( 'update', [ goal.id ], { title: updatedGoalTitle } );
+
 	t.is( updatedGoal.title, updatedGoalTitle );
 } );
 

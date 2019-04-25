@@ -8,6 +8,7 @@ import backup from './backup';
 import complete from './complete';
 import progress from './progress';
 import remove from './remove';
+import update from './update';
 
 // --------------------------------------------------
 // PUBLIC API
@@ -28,4 +29,6 @@ module.exports = {
 	p: progress,
 	remove,
 	r: remove,
+	update,
+	u: update,
 };
