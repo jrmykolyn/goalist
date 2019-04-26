@@ -8,7 +8,7 @@ import * as fs from 'fs';
 
 // Project
 import makeCommand from './utils';
-import { GoalistLog, GoalistArgs, GoalistConfig, GoalistInput } from '../interfaces';
+import { Goal, GoalistLog, GoalistArgs, GoalistConfig, GoalistInput } from '../interfaces';
 import { hasValidInput } from '../validators';
 
 // --------------------------------------------------
@@ -18,7 +18,7 @@ import { hasValidInput } from '../validators';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-function remove( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Promise<GoalistLog> {
+function remove( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Goal {
 	let identifier = INPUT[ 0 ] || null;
 
 	let log = ARGS.archive ? config.utils.getLog( 'archive' ) : config.utils.getLog( 'active' );

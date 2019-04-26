@@ -18,7 +18,7 @@ import { hasValidInput } from '../validators';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-function complete( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Promise<Goal> {
+function complete( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Goal {
 	let identifier = INPUT[ 0 ] || null;
 
 	/// TODO[@jrmykolyn]: Consolidate with identical logic in other subcommands.

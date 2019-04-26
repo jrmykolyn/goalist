@@ -17,7 +17,7 @@ import { hasValidInput } from '../validators';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-function archive( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Promise<GoalistLog> {
+function archive( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): GoalistLog {
 	let identifier = INPUT[ 0 ] || null;
 
 	// Read in 'source' and 'target' data based on presence of '--active' flag.
