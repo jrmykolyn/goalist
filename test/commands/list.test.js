@@ -62,17 +62,19 @@ test( 'resolve with the log', ( t ) => {
 test( 'it should extract the "archive" log', ( t ) => {
   const getLog = config.utils.getLog = sinon.spy( () => ( { goals: {} } ) );
 
-  list( [], { archive: true }, config );
-
-  t.is( getLog.calledWith( 'archive' ), true);
+  return list( [], { archive: true }, config ).
+    then( () => {
+      t.is( getLog.calledWith( 'archive' ), true);
+    } );
 } );
 
 test( 'it should extract the "active" log', ( t ) => {
   const getLog = config.utils.getLog = sinon.spy( () => ( { goals: {} } ) );
 
-  list( [], {}, config );
-
-  t.is( getLog.calledWith( 'active' ), true );
+  return list( [], {}, config )
+    .then( () => {
+      t.is( getLog.calledWith( 'active' ), true );
+    } );
 } );
 
 test( 'should display the "id" and "title" data for each goal', ( t ) => {
@@ -80,10 +82,11 @@ test( 'should display the "id" and "title" data for each goal', ( t ) => {
   const getLog = config.utils.getLog = sinon.spy( () => ( { goals: { [id]: goal } } ) );
   const log = config.debugger.log = sinon.spy();
 
-  list( [], {}, config );
-
-  t.is( log.args[0][0].includes( id ), true );
-  t.is( log.args[1][0].includes( title ), true );
+  return list( [], {}, config )
+    .then( () => {
+      t.is( log.args[0][0].includes( id ), true );
+      t.is( log.args[1][0].includes( title ), true );
+    } );
 } );
 
 test( 'should display the supplementary data for each goal when the "show" argument is provided', ( t ) => {
@@ -91,11 +94,12 @@ test( 'should display the supplementary data for each goal when the "show" argum
   const getLog = config.utils.getLog = sinon.spy( () => ( { goals: { [id]: goal } } ) );
   const log = config.debugger.log = sinon.spy();
 
-  list( [], { show: 'description' }, config );
-
-  t.is( log.args[0][0].includes( id ), true );
-  t.is( log.args[1][0].includes( title ), true );
-  t.is( log.args[2][0].includes( description ), true );
+  return list( [], { show: 'description' }, config )
+    .then( () => {
+      t.is( log.args[0][0].includes( id ), true );
+      t.is( log.args[1][0].includes( title ), true );
+      t.is( log.args[2][0].includes( description ), true );
+    } );
 } );
 
 test( 'should display all of the data for each goal when the "all" argument is provided', ( t ) => {
@@ -103,13 +107,14 @@ test( 'should display all of the data for each goal when the "all" argument is p
   const getLog = config.utils.getLog = sinon.spy( () => ( { goals: { [ id ]: goal } } ) );
   const log = config.debugger.log = sinon.spy();
 
-  list( [], { all: true }, config );
-
-  t.is( log.args[0][0].includes( id ), true );
-  t.is( log.args[1][0].includes( title ), true );
-  t.is( log.args[2][0].includes( description ), true );
-  t.is( log.args[3][0].includes( complete ), true );
-  t.is( log.args[4][0].includes( active ), true );
+  return list( [], { all: true }, config )
+    .then( () => {
+      t.is( log.args[0][0].includes( id ), true );
+      t.is( log.args[1][0].includes( title ), true );
+      t.is( log.args[2][0].includes( description ), true );
+      t.is( log.args[3][0].includes( complete ), true );
+      t.is( log.args[4][0].includes( active ), true );
+    } );
 } );
 
 test( 'it should allow goals to be filtered by category', ( t ) => {
@@ -118,12 +123,13 @@ test( 'it should allow goals to be filtered by category', ( t ) => {
   const getLog = config.utils.getLog = sinon.spy( () => ( { goals: { '1': goal1, '2': goal2 } } ) );
   const log = config.debugger.log = sinon.spy();
 
-  list( [], { category }, config );
-
-  // Flatten `log()` arugments into a 1-dimensional array.
-  const args = log.args.reduce( ( acc, args ) => [...acc, ...args], [] );
-  t.is(args.some( ( arg ) => arg.includes( title ) ), true);
-  t.is(args.every( ( arg ) => !arg.includes( title2 ) ), true);
+  return list( [], { category }, config )
+    .then( () => {
+      // Flatten `log()` arugments into a 1-dimensional array.
+      const args = log.args.reduce( ( acc, args ) => [...acc, ...args], [] );
+      t.is(args.some( ( arg ) => arg.includes( title ) ), true);
+      t.is(args.every( ( arg ) => !arg.includes( title2 ) ), true);
+    } );
 } );
 
 test( 'it should allow goals to be filtered by tag', ( t ) => {
@@ -132,12 +138,13 @@ test( 'it should allow goals to be filtered by tag', ( t ) => {
   const getLog = config.utils.getLog = sinon.spy( () => ( { goals: { '1': goal1, '2': goal2 } } ) );
   const log = config.debugger.log = sinon.spy();
 
-  list( [], { tags: 'foo,bar' }, config );
-
-  // Flatten `log()` arugments into a 1-dimensional array.
-  const args = log.args.reduce( ( acc, args ) => [...acc, ...args], [] );
-  t.is(args.some( ( arg ) => arg.includes( title ) ), true);
-  t.is(args.every( ( arg ) => !arg.includes( title2 ) ), true);
+  return list( [], { tags: 'foo,bar' }, config )
+    .then( () => {
+      // Flatten `log()` arugments into a 1-dimensional array.
+      const args = log.args.reduce( ( acc, args ) => [...acc, ...args], [] );
+      t.is(args.some( ( arg ) => arg.includes( title ) ), true);
+      t.is(args.every( ( arg ) => !arg.includes( title2 ) ), true);
+    } );
 } );
 
 test( 'it should allow goals to be filtered by category or tag', ( t ) => {
@@ -146,10 +153,11 @@ test( 'it should allow goals to be filtered by category or tag', ( t ) => {
   const getLog = config.utils.getLog = sinon.spy( () => ( { goals: { '1': goal1, '2': goal2 } } ) );
   const log = config.debugger.log = sinon.spy();
 
-  list( [], { tags: 'foo,bar', category: 'baz' }, config );
-
-  // Flatten `log()` arugments into a 1-dimensional array.
-  const args = log.args.reduce( ( acc, args ) => [...acc, ...args], [] );
-  t.is(args.some( ( arg ) => arg.includes( title ) ), true);
-  t.is(args.some( ( arg ) => arg.includes( title2 ) ), true);
+  return list( [], { tags: 'foo,bar', category: 'baz' }, config )
+    .then( () => {
+      // Flatten `log()` arugments into a 1-dimensional array.
+      const args = log.args.reduce( ( acc, args ) => [...acc, ...args], [] );
+      t.is(args.some( ( arg ) => arg.includes( title ) ), true);
+      t.is(args.some( ( arg ) => arg.includes( title2 ) ), true);
+    } );
 } );
