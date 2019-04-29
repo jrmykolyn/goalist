@@ -7,6 +7,7 @@
 import * as barHorizontal from 'bar-horizontal';
 
 // Project
+import makeCommand from './utils';
 import { Goal, GoalistArgs, GoalistConfig, GoalistInput, GoalistProgress } from '../interfaces';
 
 // --------------------------------------------------
@@ -16,20 +17,20 @@ import { Goal, GoalistArgs, GoalistConfig, GoalistInput, GoalistProgress } from 
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-export default function progress( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Promise<GoalistProgress> {
-	return new Promise( ( resolve, reject ) => {
-		let log = ARGS.archive ? config.utils.getLog( 'archive' ) : config.utils.getLog( 'active' );
-		let { goals } = log;
+function progress( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): GoalistProgress {
+	let log = ARGS.archive ? config.utils.getLog( 'archive' ) : config.utils.getLog( 'active' );
+	let { goals } = log;
 
-		let total = Object.keys( goals ).length;
-		let complete = config.utils.getComplete( goals ).length;
-		let incomplete = total - complete;
+	let total = Object.keys( goals ).length;
+	let complete = config.utils.getComplete( goals ).length;
+	let incomplete = total - complete;
 
-		resolve( {
-			type: ARGS.archive ? 'archive' : 'active',
-			total,
-			complete,
-			incomplete,
-		} );
-	} );
+	return {
+		type: ARGS.archive ? 'archive' : 'active',
+		total,
+		complete,
+		incomplete,
+	};
 }
+
+export default makeCommand( progress, [ () => Promise.resolve() ] );
