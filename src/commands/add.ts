@@ -37,8 +37,6 @@ function add( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): G
 	// Write new data back to file system.
 	config.utils.writeLog( 'active', JSON.stringify( log ) );
 
-	config.debugger.log( `Successfully created goal: ${id}` );
-
 	return goal;
 }
 

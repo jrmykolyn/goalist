@@ -8,7 +8,7 @@ import * as fs from 'fs';
 
 // Project
 import makeCommand from './utils';
-import { Goal, GoalistArgs, GoalistConfig, GoalistInput } from '../interfaces';
+import { CommandPayload, Goal, GoalistArgs, GoalistConfig, GoalistInput } from '../interfaces';
 import { hasValidInput } from '../validators';
 
 // --------------------------------------------------
@@ -19,7 +19,7 @@ const keyBlacklist = [ '_' ];
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-function update( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Promise<Goal> {
+function update( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): CommandPayload<Goal> {
 	let identifier = INPUT[ 0 ] || null;
 
 	let log = config.utils.getLog( 'active' );
@@ -27,11 +27,7 @@ function update( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig )
 	let goal = goals[ identifier ] || null;
 
 	if ( !goal ) {
-		let err = `Whoops, failed to find a goal which matches the following identifier: ${identifier}`;
-
-		config.debugger.log( err );
-		throw new Error( err );
-		return;
+		throw new Error( `Whoops, failed to find a goal which matches the following identifier: ${identifier}` );
 	}
 
 	// Update selected `goal`.
@@ -44,10 +40,10 @@ function update( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig )
 	// Write new data back to file system.
 	config.utils.writeLog( 'active', JSON.stringify( log ) );
 
-	// Log out updated properties.
-	config.debugger.log( `Successfully updated the following properties: ${ Object.keys( ARGS ).filter( key => key !== '_' ).join( '; ' ) }` );
-
-	return goal;
+	return {
+		msg: `Successfully updated the following properties: ${ Object.keys( ARGS ).filter( key => key !== '_' ).join( '; ' ) }`,
+		payload: goal,
+	};
 }
 
 export default makeCommand( update, [ hasValidInput( { msg: 'Whoops, `update` must be invoked with a valid `identifier` argument.' } ) ] );

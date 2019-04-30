@@ -12,7 +12,7 @@ const meow = require( 'meow' );
 
 // Project
 const Goalist = require( './dist' );
-
+const loggers = require('./dist/loggers');
 
 // --------------------------------------------------
 // DECLARE VARS
@@ -50,6 +50,7 @@ var goalist = new Goalist( {
 // --------------------------------------------------
 goalist.run( COMMAND, INPUT, ARGS )
 	.then( ( data ) => {
+		if (COMMAND in loggers) loggers[COMMAND](data, goalist);
 		goalist.config.debugger.log(`Successfully executed command: ${COMMAND}`);
 	} )
 	.catch( ( err ) => {

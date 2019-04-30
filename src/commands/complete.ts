@@ -18,7 +18,7 @@ import { hasValidInput } from '../validators';
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-function complete( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Promise<Goal> {
+function complete( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Goal {
 	let identifier = INPUT[ 0 ] || null;
 
 	/// TODO[@jrmykolyn]: Consolidate with identical logic in other subcommands.
@@ -32,18 +32,11 @@ function complete( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig
 
 		config.debugger.log( err );
 		throw new Error( err );
-		return;
 	}
 
 	// If invoked with the `--false` flag, set matched goal to incomplete.
 	// Otherwise, set to complete.
-	if ( ARGS.false ) {
-		config.debugger.log( `Setting the following task to incomplete: ${identifier}` );
-		goal.complete = false;
-	} else {
-		config.debugger.log( `Setting the following task to complete: ${identifier}` );
-		goal.complete = true;
-	}
+	goal.complete = ARGS.false ? false : true;
 
 	// Write new data back to file system.
 	config.utils.writeLog( ARGS.archive ? 'archive' : 'active', JSON.stringify( log ) );

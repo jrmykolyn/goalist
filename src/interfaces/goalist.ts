@@ -43,3 +43,8 @@ export interface GoalistArgs {
 	show?: string;
 	verbose?: boolean;
 };
+
+export interface CommandPayload<T> {
+	msg: string;
+	payload: T;
+};

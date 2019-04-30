@@ -4,8 +4,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Added 'logger' functions for the following commands:
+  - `add`;
+  - `archive`;
+  - `backup`;
+  - `complete`;
+  - `list`;
+  - `progress`;
+  - `remove`;
+  - `update`;
+
 ### Changed
-- Updated `add` subcommand: Decouple validation from primary command logic.
+- Decoupled validation and logic in the following commands:
+  - `add`;
+  - `archive`;
+  - `backup`;
+  - `complete`;
+  - `list`;
+  - `progress`;
+  - `remove`;
+  - `update`;
+- Updated return values for the following commands:
+  - `backup`;
+  - `update`;
 
 ## [0.15.0] - 2019-04-17
 ### Added

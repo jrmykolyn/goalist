@@ -11,16 +11,8 @@ function complete(INPUT, ARGS, config) {
         var err = "Whoops, failed to find a goal which matches the following identifier: " + identifier;
         config["debugger"].log(err);
         throw new Error(err);
-        return;
     }
-    if (ARGS["false"]) {
-        config["debugger"].log("Setting the following task to incomplete: " + identifier);
-        goal.complete = false;
-    }
-    else {
-        config["debugger"].log("Setting the following task to complete: " + identifier);
-        goal.complete = true;
-    }
+    goal.complete = ARGS["false"] ? false : true;
     config.utils.writeLog(ARGS.archive ? 'archive' : 'active', JSON.stringify(log));
     return goal;
 }

@@ -16,14 +16,7 @@ function archive(INPUT, ARGS, config) {
         throw new Error(err);
         return;
     }
-    if (isActive) {
-        config["debugger"].log("Deactivating the following task: " + identifier);
-        goal.active = false;
-    }
-    else {
-        config["debugger"].log("Activating the following task: " + identifier);
-        goal.active = true;
-    }
+    goal.active = isActive ? false : true;
     delete goals[identifier];
     sourceData.goals = goals;
     targetData.goals = Object.assign(targetData.goals, (_a = {}, _a[identifier] = goal, _a));
