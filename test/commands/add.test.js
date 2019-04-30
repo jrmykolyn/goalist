@@ -13,14 +13,18 @@ const { default: add } = require('../../dist/commands/add');
 // --------------------------------------------------
 let config;
 let log;
+let timestamp;
 
 // --------------------------------------------------
 // DECLARE TESTS
 // --------------------------------------------------
 test.beforeEach(() => {
+  timestamp = 1;
+
   log = {
     goals: {},
   };
+
   config = {
     debugger: {
       log: () => null
@@ -29,6 +33,7 @@ test.beforeEach(() => {
       generateId: () => 1,
       getLog: () => log,
       writeLog: () => null,
+      getTimestamp: () => timestamp,
     },
   };
 } );
@@ -45,6 +50,9 @@ test( 'resolve with the new goal', ( t ) => {
   return add( [ title ], {}, config )
     .then( ( goal ) => {
       t.is( goal.title, 'foo' );
+      t.true( 'id' in goal );
+      t.is( goal.createdAt, timestamp );
+      t.is( goal.updatedAt, timestamp );
     } );
 } );
 
