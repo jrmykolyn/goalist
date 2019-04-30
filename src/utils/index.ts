@@ -196,6 +196,10 @@ export default class Utils implements UtilsInstance {
 			.map( ( id ) => { return goals[ id ]; } );
 	}
 
+	getTimestamp() {
+		return new Date().getTime();
+	}
+
 	checkComplete( goal ) {
 		if ( !goal || typeof goal !== 'object' ) {
 			return null;

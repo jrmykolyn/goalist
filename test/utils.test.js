@@ -149,6 +149,10 @@ test( 'Test `getComplete()`', ( t ) => {
 	t.is( completeGoals.length, Math.ceil( num / 2 ) );
 } );
 
+test( 'Test `getTimestamp()`', ( t ) => {
+  t.is( typeof utils.getTimestamp(), 'number' );
+} );
+
 test( 'Test `checkComplete()`', ( t ) => {
 	let goal = {
 		id: new Date().getTime(),
