@@ -206,7 +206,7 @@ test( '"archive" correctly archives/activates goal data.', async  ( t ) => {
 	// - is not present in 'active' goal data.
 	// NOTE: Goal data keys must be coerced from strings to integers.
 	t.true( Object.keys( archivedGoals.goals ).map( ( k ) => { return +k; } ).includes( goal.id ) );
-	t.true( !Object.keys( activeGoals.goals ).map( ( k ) => { return +k; } ).includes( goal.id ) );
+	t.true( !activeGoals.map( ( { id } ) => id ).includes( goal.id ) );
 
 	// 'Activate' new goal, refresh references to 'active' and 'archived' goal data.
 	activeGoals = await goalist.run( 'archive', [ goal.id ], { active: true } );
@@ -216,7 +216,7 @@ test( '"archive" correctly archives/activates goal data.', async  ( t ) => {
 	// - is present in 'active' goal data.
 	// - is not present in 'archived' goal data.
 	t.true( Object.keys( activeGoals.goals ).map( ( k ) => { return +k; } ).includes( goal.id ) );
-	t.true( !Object.keys( archivedGoals.goals ).map( ( k ) => { return +k; } ).includes( goal.id ) );
+	t.true( !archivedGoals.map( ( { id } ) => id ).includes( goal.id ) );
 } );
 
 test( '"archive" rejects when invoked with a missing or invalid identifier.', async ( t ) => {
@@ -278,13 +278,9 @@ test( '"list" correctly lists "active" goal data.', async ( t ) => {
 	let activeGoals = await goalist.run( 'list' );
 
 	// Exract initial goal (added via `setupOpts`) from 'active' goal data.
-	let goal = Object.keys( activeGoals.goals )
-		.map( ( k ) => {
-			return activeGoals.goals[ k ];
-		} )
-		.filter( ( goal ) => {
-			return goal.id === '1234567890';
-		} )[ 0 ];
+	let goal = activeGoals.filter( ( goal ) => {
+		return goal.id === '1234567890';
+	} )[ 0 ];
 
 	// Test.
 	t.truthy( goal );
@@ -323,7 +319,7 @@ test( '"remove" correctly removes a goal from the "active" goals.', async ( t ) 
 	let activeGoals = await goalist.run( 'list' );
 
 	// Ensure that new goal is present in 'active' goals data.
-	t.true( activeGoals.goals[ goal.id ] !== undefined );
+	t.true( activeGoals.filter( ( g ) => g.id === goal.id ).length === 1 );
 
 	// Remove new goal.
 	let result = await goalist.run( 'remove', [ goal.id ] );
@@ -332,7 +328,7 @@ test( '"remove" correctly removes a goal from the "active" goals.', async ( t ) 
 	activeGoals = await goalist.run( 'list' );
 
 	// Ensure that new goal is not present in 'active' goals data.
-	t.false( activeGoals.goals[ goal.id ] !== undefined );
+	t.true( activeGoals.filter( ( g ) => g.id === goal.id ).length === 0 );
 } );
 
 test( '"remove" correctly removes a goal from the "archived" goals.', async ( t ) => {
@@ -345,7 +341,7 @@ test( '"remove" correctly removes a goal from the "archived" goals.', async ( t 
 	// Get 'archived' goal data.
 	let archivedGoalData = await goalist.run( 'list', [], { archive: true } );
 
-	t.true( archivedGoalData.goals[ id ] !== undefined );
+	t.true( archivedGoalData.filter( ( g ) => g.id === id ).length === 1 );
 
 	// Remove goal.
 	let result = await goalist.run( 'remove', [ '1111111111' ], { archive: true } );
@@ -354,7 +350,7 @@ test( '"remove" correctly removes a goal from the "archived" goals.', async ( t 
 	archivedGoalData = await goalist.run( 'list', [], { archive: true } );
 
 	// Ensure that goal is not present in 'archived' goals data.
-	t.false( archivedGoalData.goals[ id ] !== undefined );
+	t.true( archivedGoalData.filter( ( g ) => g.id === id ).length === 0 );
 } );
 
 test( '"update" correctly updates the target goal.', async ( t ) => {

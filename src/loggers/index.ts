@@ -6,6 +6,7 @@ import add from './add';
 import archive from './archive';
 import backup from './backup';
 import complete from './complete';
+import list from './list';
 import progress from './progress';
 import remove from './remove';
 import update from './update';
@@ -25,6 +26,8 @@ module.exports = {
 	b: backup,
 	complete,
 	c: complete,
+	list,
+	l: list,
 	progress,
 	p: progress,
 	remove,

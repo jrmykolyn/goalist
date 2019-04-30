@@ -1,6 +1,5 @@
 "use strict";
 exports.__esModule = true;
-var chalk = require('chalk');
 var utils_1 = require("./utils");
 function list(INPUT, ARGS, config) {
     var CATEGORY = ARGS.category ? ARGS.category.toLowerCase() : null;
@@ -22,13 +21,12 @@ function list(INPUT, ARGS, config) {
         if (ARGS.all) {
             supplementaryProps = Object.keys(goal).filter(function (prop) { return whitelistProps.indexOf(prop) === -1; });
         }
-        whitelistProps.concat(supplementaryProps).forEach(function (prop) {
-            if (goal.hasOwnProperty(prop)) {
-                config["debugger"].log(chalk.gray(prop + ':') + " " + goal[prop]);
-            }
+        var finalProps = whitelistProps.concat(supplementaryProps);
+        Object.keys(goal).forEach(function (key) {
+            if (!finalProps.includes(key))
+                delete goal[key];
         });
-        config["debugger"].log('\n');
     });
-    return log;
+    return filteredGoals;
 }
 exports["default"] = utils_1["default"](list, [function () { return Promise.resolve(); }]);

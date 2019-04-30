@@ -1,14 +1,9 @@
 // --------------------------------------------------
 // IMPORT MODULES
 // --------------------------------------------------
-// Node
-
-// Vendor
-const chalk = require( 'chalk' );
-
 // Project
 import makeCommand from './utils';
-import { GoalistLog, GoalistArgs, GoalistConfig, GoalistInput } from '../interfaces';
+import { Goal, GoalistArgs, GoalistConfig, GoalistInput } from '../interfaces';
 
 // --------------------------------------------------
 // DECLARE VARS
@@ -17,7 +12,7 @@ import { GoalistLog, GoalistArgs, GoalistConfig, GoalistInput } from '../interfa
 // --------------------------------------------------
 // DECLARE FUNCTIONS
 // --------------------------------------------------
-function list( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): GoalistLog {
+function list( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): Goal[] {
 	const CATEGORY = ARGS.category ? ARGS.category.toLowerCase() : null;
 	const TAGS = ARGS.tags ? ARGS.tags.split( ',' ).map( ( str ) => str.trim().toLowerCase() ) : [];
 
@@ -29,16 +24,15 @@ function list( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): 
 
 	const allGoals = Object.keys( goals ).map( ( key ) => goals[ key ] );
 	const filteredGoals = ( ARGS.category || TAGS.length )
-	? allGoals.filter( ( { category, tags } ) => {
-		const sanitizedTags = tags && tags.length ? tags.map( ( tag ) => tag.toLowerCase() ) : [];
-		return (
-			( !!category && category.toLowerCase().includes( CATEGORY ) )
-			|| ( !!sanitizedTags.length && sanitizedTags.some( ( tag ) => TAGS.includes( tag ) ) )
-		);
-	} )
-	: allGoals;
+		? allGoals.filter( ( { category, tags } ) => {
+			const sanitizedTags = tags && tags.length ? tags.map( ( tag ) => tag.toLowerCase() ) : [];
+			return (
+				( !!category && category.toLowerCase().includes( CATEGORY ) )
+				|| ( !!sanitizedTags.length && sanitizedTags.some( ( tag ) => TAGS.includes( tag ) ) )
+			);
+		} )
+		: allGoals;
 
-	// Print out info for each `goal` in current log.
 	filteredGoals.forEach( ( goal ) => {
 		// Update `supplementaryProps` for current `goal`.
 		/// NOTE: Since not all `goal` objects are exactly the same, `supplementaryProps` must be updated within each loop iteration.
@@ -47,16 +41,14 @@ function list( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): 
 			supplementaryProps = Object.keys( goal ).filter( ( prop ) => whitelistProps.indexOf( prop ) === -1 );
 		}
 
-		whitelistProps.concat( supplementaryProps ).forEach( ( prop ) => {
-			if ( goal.hasOwnProperty( prop ) ) {
-				config.debugger.log( `${chalk.gray( prop + ':' )} ${goal[ prop ]}` );
-			}
-		} );
+		const finalProps = whitelistProps.concat( supplementaryProps );
 
-		config.debugger.log( '\n' );
+		Object.keys( goal ).forEach( ( key ) => {
+			if ( !finalProps.includes( key ) ) delete goal[ key ];
+		} );
 	} );
 
-	return log;
+	return filteredGoals;
 }
 
 export default makeCommand( list, [ () => Promise.resolve() ] );
