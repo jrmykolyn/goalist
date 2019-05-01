@@ -37,6 +37,8 @@ function update( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig )
 		}
 	}
 
+	goal.updatedAt = config.utils.getTimestamp();
+
 	// Write new data back to file system.
 	config.utils.writeLog( 'active', JSON.stringify( log ) );
 

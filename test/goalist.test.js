@@ -6,6 +6,7 @@ const fs = require( 'fs' );
 
 // Vendor
 const test = require( 'ava' );
+const sinon = require( 'sinon' );
 const del = require( 'del' );
 
 // Project
@@ -354,9 +355,10 @@ test( '"remove" correctly removes a goal from the "archived" goals.', async ( t 
 } );
 
 test( '"update" correctly updates the target goal.', async ( t ) => {
-	t.plan( 2 );
+	t.plan( 3 );
 
 	let goalist = new Goalist( { utilsOpts: { path: setupOpts.goalistDir } } );
+	const getTimestamp = goalist.config.utils.getTimestamp = sinon.spy();
 
 	// Create new goal, test title.
 	let newGoalTitle = 'This title will be updated';
@@ -368,6 +370,7 @@ test( '"update" correctly updates the target goal.', async ( t ) => {
 	let { payload: updatedGoal } = await goalist.run( 'update', [ goal.id ], { title: updatedGoalTitle } );
 
 	t.is( updatedGoal.title, updatedGoalTitle );
+	t.is( getTimestamp.callCount, 2 );
 } );
 
 test( '"update" rejects when invoked with a missing or invalid identifier.', async ( t ) => {

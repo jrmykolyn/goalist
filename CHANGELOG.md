@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
   - `remove`;
   - `update`;
 - Updated `add` command to set 'createdAt' and 'updatedAt' properties.
+- Updated `update` command to set 'updatedAt' property.
 - Updated return values for the following commands:
   - `backup`;
   - `update`;
