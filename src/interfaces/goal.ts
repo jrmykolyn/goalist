@@ -9,4 +9,6 @@ export interface Goal {
 	tags: string[];
 	complete: boolean;
 	active: boolean;
+	createdAt: number;
+	updatedAt: number;
 };

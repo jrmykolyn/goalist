@@ -21,6 +21,7 @@ function add( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): G
 
 	// Create and update `goal`.
 	let id = config.utils.generateId();
+	let timestamp = config.utils.getTimestamp();
 	let goal: Goal = {
 		id: id,
 		title: title,
@@ -29,6 +30,8 @@ function add( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig ): G
 		tags: ARGS.tags ? ARGS.tags.split( ',' ).map((str) => str.trim()) : [],
 		complete: false,
 		active: true,
+		createdAt: timestamp,
+		updatedAt: timestamp,
 	};
 
 	// Add `goal`.

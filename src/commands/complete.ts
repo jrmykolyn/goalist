@@ -37,6 +37,7 @@ function complete( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig
 	// If invoked with the `--false` flag, set matched goal to incomplete.
 	// Otherwise, set to complete.
 	goal.complete = ARGS.false ? false : true;
+	goal.updatedAt = config.utils.getTimestamp();
 
 	// Write new data back to file system.
 	config.utils.writeLog( ARGS.archive ? 'archive' : 'active', JSON.stringify( log ) );

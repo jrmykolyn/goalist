@@ -16,6 +16,7 @@ function update(INPUT, ARGS, config) {
             goal[key] = ARGS[key];
         }
     }
+    goal.updatedAt = config.utils.getTimestamp();
     config.utils.writeLog('active', JSON.stringify(log));
     return {
         msg: "Successfully updated the following properties: " + Object.keys(ARGS).filter(function (key) { return key !== '_'; }).join('; '),

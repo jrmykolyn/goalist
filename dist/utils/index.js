@@ -148,6 +148,9 @@ var Utils = (function () {
             .filter(function (id) { return _this.checkComplete(goals[id]); })
             .map(function (id) { return goals[id]; });
     };
+    Utils.prototype.getTimestamp = function () {
+        return new Date().getTime();
+    };
     Utils.prototype.checkComplete = function (goal) {
         if (!goal || typeof goal !== 'object') {
             return null;

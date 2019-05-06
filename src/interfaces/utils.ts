@@ -14,6 +14,7 @@ export interface UtilsInstance {
 	getOrCreateLogsDir: any;
 	getOrCreateBakDir: any;
 	getOrCreateLog: any;
+	getTimestamp: any;
 	writeLog: any;
 };
 

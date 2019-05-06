@@ -13,6 +13,7 @@ function complete(INPUT, ARGS, config) {
         throw new Error(err);
     }
     goal.complete = ARGS["false"] ? false : true;
+    goal.updatedAt = config.utils.getTimestamp();
     config.utils.writeLog(ARGS.archive ? 'archive' : 'active', JSON.stringify(log));
     return goal;
 }

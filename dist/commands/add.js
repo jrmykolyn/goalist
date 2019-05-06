@@ -7,6 +7,7 @@ function add(INPUT, ARGS, config) {
     var log = config.utils.getLog('active');
     var goals = log.goals;
     var id = config.utils.generateId();
+    var timestamp = config.utils.getTimestamp();
     var goal = {
         id: id,
         title: title,
@@ -14,7 +15,9 @@ function add(INPUT, ARGS, config) {
         description: ARGS.description || '',
         tags: ARGS.tags ? ARGS.tags.split(',').map(function (str) { return str.trim(); }) : [],
         complete: false,
-        active: true
+        active: true,
+        createdAt: timestamp,
+        updatedAt: timestamp
     };
     goals[id] = goal;
     config.utils.writeLog('active', JSON.stringify(log));
