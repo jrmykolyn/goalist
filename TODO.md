@@ -1,0 +1,1 @@
+- [ ] Update `Debugger#log()` to accept a variable number of 'msg' args.
