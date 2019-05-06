@@ -51,12 +51,7 @@ export default class Debugger implements DebuggerInstance {
 	log( msg: string, opts: any = {} ) {
 		opts = opts && typeof opts === 'object' ? opts : {};
 
-		// Log the `msg` if:
-		// - We're running in 'verbose' mode...
-		// - ...or the current mode is not 'silent *and* `log()` was not invoked with `opts.mode`.
-		if ( this.mode === 'verbose' ) {
-			console.log( msg );
-		} else if ( this.mode !== 'silent' && !opts.mode ) {
+		if (this.getMode() !== 'silent' || ['normal', 'verbose'].includes(opts.mode)) {
 			console.log( msg );
 		}
 	}

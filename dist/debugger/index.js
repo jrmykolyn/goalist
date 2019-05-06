@@ -16,10 +16,7 @@ var Debugger = (function () {
     Debugger.prototype.log = function (msg, opts) {
         if (opts === void 0) { opts = {}; }
         opts = opts && typeof opts === 'object' ? opts : {};
-        if (this.mode === 'verbose') {
-            console.log(msg);
-        }
-        else if (this.mode !== 'silent' && !opts.mode) {
+        if (this.getMode() !== 'silent' || ['normal', 'verbose'].includes(opts.mode)) {
             console.log(msg);
         }
     };
