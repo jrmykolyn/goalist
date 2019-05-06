@@ -12,7 +12,6 @@ function archive(INPUT, ARGS, config) {
     var goal = goals[identifier] || null;
     if (!goal) {
         var err = "Whoops, failed to find a goal which matches the following identifier: " + identifier;
-        config["debugger"].log(err);
         throw new Error(err);
         return;
     }

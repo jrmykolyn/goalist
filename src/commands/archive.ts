@@ -36,7 +36,6 @@ function archive( INPUT: GoalistInput, ARGS: GoalistArgs, config: GoalistConfig 
 	if ( !goal ) {
 		let err = `Whoops, failed to find a goal which matches the following identifier: ${identifier}`;
 
-		config.debugger.log( err );
 		throw new Error( err );
 		return;
 	}
